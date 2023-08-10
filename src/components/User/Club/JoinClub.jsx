@@ -1,13 +1,19 @@
 import React,{useState} from 'react'
 import { axiosInstance } from '../../../../Api/config'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../../../redux/UserSlice/UserSlice'
+
 
 function JoinClub() {
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const [joinclub,setJoinclub]=useState({
     clubName:"",
     securityCode:""
   })
+ 
+
   const handleSubmit=async(e)=>{
     e.preventDefault()
     console.log(joinclub)
@@ -15,6 +21,7 @@ function JoinClub() {
     const email = user?.email 
   const {data}=await axiosInstance.post('/joinclub',{...joinclub})
   console.log(data)
+  console.log("responseeeeeeeeeeeee",data.updatedClubData.clubName)
   if(data.auth==true){
     navigate('/clubhome',{state:{userRole:data.userRole,id:data.id,club:data.updatedClubData.clubName}})
   }
@@ -22,6 +29,7 @@ function JoinClub() {
   }
   return (
     <div>
+     
       <section className="bg-primary overflow-y-hidden">
 <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-20">
   <div className="md:flex md:gap-x-6 md:items-center mb-10">

@@ -1,9 +1,14 @@
 import React,{useEffect, useState} from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../../Api/config';
+import ClubNav from './ClubNav';
+
 function ClubHome() {
-const location=useLocation();
+
+    const location = useLocation();
+    const navigate=useNavigate()
+
 const role=location.state?.userRole;
 // const id=location.state?.id;
 const clubName=location.state?.club;
@@ -16,7 +21,7 @@ const [events,SetEvents]=useState([])
 useEffect(()=>{
      fetchdata()
      fetchevent()
-},[])
+}, [])
 const fetchevent=async()=>{
     const {data}= await axiosInstance.post('/get-event',{clubName})
     console.log(data)
@@ -26,6 +31,7 @@ const fetchevent=async()=>{
 
 
 const fetchdata=async()=>{
+
     const {data}= await axiosInstance.post('/clubhome',{clubName})
     console.log(data)
     setClubData(data.data)
@@ -60,6 +66,7 @@ const deleteEvent=async( id)=>{
 
 return (
 <div>
+<ClubNav state={clubName}/>
 <section className="pt-16 bg-primary">
 <div className="container mx-auto">
     <div className="flex flex-col md:flex-row items-center">
@@ -73,7 +80,9 @@ return (
                     Club description goes here.
                 </p>
                 <div className="mt-4 flex justify-start items-start">
-                    <button className="btn text-black font-mono rounded-lg px-4 py-2 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+                    <button 
+                    onClick={()=>{navigate('/payment',{state:{club:clubData.clubName}})}}
+                    className="btn text-black font-mono rounded-lg px-4 py-2 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
                         Donate to Club
                     </button>
                 </div>

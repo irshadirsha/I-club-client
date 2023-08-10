@@ -7,8 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 import { axiosInstance } from '../../../../Api/config'
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../../../redux/UserSlice/UserSlice'
+
 
 function UserSignup() {
+  const dispatch=useDispatch()
 const navigate=useNavigate()
   const [user,setUser]=useState({
     username:"",
@@ -44,6 +48,7 @@ const navigate=useNavigate()
           else if(confirmpassword) generateError(confirmpassword)
         }else{
           localStorage.setItem('user',JSON.stringify({token,user:data.data[0]}))
+          dispatch(updateUser({username:data.data[0].username,email:data.data[0].email,id:data.data[0].id}));
           navigate('/')
 
         }
@@ -88,7 +93,7 @@ const navigate=useNavigate()
               <div className="bg-glass rounded-lg  ">
 
                 <div className='hero-title text-hsl(217, 93%, 28%) text-center pt-5 '>
-                  <h1>SignIn</h1>
+                  <h1>SignUp</h1>
                 </div>
 
 
@@ -145,7 +150,7 @@ const navigate=useNavigate()
 
                   <div className='text-center  flex justify-center items-center'>
                     <div  className='text-center border-current borde  bg-primary w-32 p-2 rounded-lg text-black'>
-                      <button  >SignIn</button>
+                      <button  >SignUp</button>
                     </div>
                   </div>
                  
@@ -169,7 +174,7 @@ const navigate=useNavigate()
                       const {token}=data
 
                      localStorage.setItem('user',JSON.stringify({token,user:data.user}))
-                   
+                     dispatch(updateUser({username:data.user.username,email:data.user.email,id:data.user.id}));
                       navigate('/')                      
                     }   
                     }}

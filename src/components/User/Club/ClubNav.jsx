@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 // import { FaBeer } from "react-icons/fa";
-function ClubNav() {
+function ClubNav({state}) {
+    const clubName=state
+    console.log("my",clubName);
     const navigate = useNavigate();
     const [showNavbar, setShowNavbar] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [clubdropdown, setClubDropDown] = useState(false);
-
+    const {username}=useSelector((state)=>state.user)
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
@@ -24,6 +27,8 @@ function ClubNav() {
         console.log('User logged out');
         navigate('/login');
     };
+
+
 
     const user = JSON.parse(localStorage.getItem('user'))?.user || null;
     const Name = user?.email;
@@ -57,11 +62,13 @@ function ClubNav() {
                             </li>
                             <li>
 
-                                <a href="#" className="block py-3 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2.5 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Finance</a>
+                                <a onClick={(e)=>navigate('/finance',{state:{club:clubName}})} className="block py-3 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2.5 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                                    Finance</a>
                             </li>
                             <li>
-                                <div className='w-10 bg-gray-200   rounded-full'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
+                                   
+                                <div className='w-7 bg-gray-200   rounded-full'  onClick={(e)=>navigate('/notification')}>       
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-10">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
                                 </svg>
                             </div>
@@ -131,7 +138,7 @@ function ClubNav() {
                                             onClick={toggleDropdown}
                                         >
 
-                                            {Name}
+                                            {username}
 
                                             <svg
                                                 className={`w-2.5 h-2.5 ml-2.5 transition-transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}

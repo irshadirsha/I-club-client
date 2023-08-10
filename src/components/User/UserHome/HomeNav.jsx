@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate,NavLink } from 'react-router-dom'
+import { logoutUser } from '../../../redux/UserSlice/UserSlice';
+
 const HomeNav = () => {
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const [showNavbar, setShowNavbar] = useState(false);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
    
-
+ 
+ const {username}=useSelector((state)=>state.user)
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -18,7 +23,9 @@ const HomeNav = () => {
   const handleLogout=(e)=>{
      localStorage.removeItem('user')
      console.log("user logout");
+     dispatch(logoutUser())
        navigate('/login')
+
   }
  
     const user = JSON.parse(localStorage.getItem("user"))?.user || null;
@@ -82,7 +89,7 @@ const HomeNav = () => {
         type="button"
         onClick={toggleDropdown}
       >
-      {Name}
+      {username}
        
         <svg
           className={`w-2.5 h-2.5 ml-2.5 transition-transform ${

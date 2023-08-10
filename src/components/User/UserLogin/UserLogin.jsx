@@ -5,8 +5,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import './UserLogin.css'
 import { axiosInstance } from '../../../../Api/config';
-axiosInstance
+import { useDispatch } from 'react-redux';
+import {updateUser} from '../../../redux/UserSlice/UserSlice'
 function UserLogin() {
+  const dispatch = useDispatch();
   const navigate = useNavigate()
   const [sendemail, setSendEmail] = useState("")
   const [showModal, setShowModal] = useState(false);
@@ -55,6 +57,7 @@ function UserLogin() {
       } else {
         console.log("nav to home", data);
         localStorage.setItem('user', JSON.stringify({ token, user: data.userData }))
+        dispatch(updateUser({username:data.userData.username,email:data.userData.email,id:data.userData.id}));
         navigate('/')
       }
     } catch (error) {

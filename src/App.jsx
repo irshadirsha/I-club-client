@@ -18,6 +18,9 @@ import UserProfilePage from './pages/user/UserProfilePage';
 import ClubHomePage from './pages/Club/ClubHomePage';
 import ClubManagePage from './pages/admin/ClubManagePage';
 import AdminClubViewPage from './pages/admin/AdminClubViewPage';
+import ClubPaymentPage from './pages/Club/ClubPaymentPage';
+import FinancePage from './pages/Club/FinancePage';
+import NotificationPage from './pages/Club/NotificationPage';
 
 
 function App() {
@@ -50,6 +53,10 @@ function App() {
           <Route path='/createclub' element={<ProtectedRoute><CreateClubPage/></ProtectedRoute>}></Route>
           <Route path='/joinclub' element={<ProtectedRoute><JoinClubPage/></ProtectedRoute>}></Route>
           <Route path='/clubhome' element={<ProtectedRoute><ClubHomePage/></ProtectedRoute>}></Route>
+          <Route path='/payment' element={<ClubPaymentPage/>}></Route>
+          <Route path='/finance' element={<FinancePage/>}></Route>
+          <Route path='/notification' element={<NotificationPage/>}></Route>
+
 
   
           </Routes>
