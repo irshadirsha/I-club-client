@@ -1,12 +1,14 @@
 import React,{useState} from 'react'
 import { axiosInstance } from '../../../../Api/config'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../../redux/UserSlice/UserSlice'
 
 
 function JoinClub() {
-  const dispatch=useDispatch()
+ 
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
   const navigate=useNavigate()
   const [joinclub,setJoinclub]=useState({
     clubName:"",
@@ -23,6 +25,12 @@ function JoinClub() {
   console.log(data)
   console.log("responseeeeeeeeeeeee",data.updatedClubData.clubName)
   if(data.auth==true){
+    dispatch(updateUser({
+      id:user.id,
+      username:user.username,
+      email:user.email,
+      clubName: data.updatedClubData.clubName,
+    }));
     navigate('/clubhome',{state:{userRole:data.userRole,id:data.id,club:data.updatedClubData.clubName}})
   }
   

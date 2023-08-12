@@ -7,7 +7,7 @@ function Finance() {
 
   const {clubName}=useSelector((state)=>state.user)
   const location = useLocation();
-  // const clubname = location.state?.club;
+  // const clubName = location.state?.club;
   const [showIncome, setShowIncome] = useState(true);
   const [financeData, setFinanceData] = useState([]);
   const [financeExpData, setFinanceExpData] = useState([]);
@@ -17,7 +17,7 @@ function Finance() {
 
   const toggleIncomeExpense = () => {
     setShowIncome(!showIncome);
-    fetchdata()
+    fetchdata();
     setCurrentPage(1); // Reset current page when toggling
   };
 
@@ -35,14 +35,13 @@ function Finance() {
   };
 
   const filteredData = showIncome ? financeData : financeExpData;
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentData = filteredData.slice(startIndex, endIndex);
+  const currentData = filteredData?.slice(startIndex, endIndex);
 
   return (
     <div>
-      <h1>{clubName}</h1>
       <div className="bg-primary min-h-screen py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl text-center font-semibold mb-4">Finance</h1>
         {userRole === 'treasurer' && <FinanceTreasur state={clubName} />}
@@ -89,7 +88,7 @@ function Finance() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {currentData.map((item, index) => (
+              {currentData?.map((item, index) => (
                 <tr key={item._id}>
                   <td className="px-6 py-4 whitespace-nowrap text-md text-black">
                     {startIndex + index + 1}

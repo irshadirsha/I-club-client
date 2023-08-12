@@ -37,6 +37,7 @@ const navigate=useNavigate()
       console.log("befoor",user)
       const {data} =await axiosInstance.post('/signup',{...user},{withCredentials:true}, )
       console.log(data,"//////////////////////////")
+      console.log(data.data[0],"//////////////////////////")
       if(data){
         console.log("downnnn");     
         const { token } = data;
@@ -47,8 +48,9 @@ const navigate=useNavigate()
           else if (email) generateError (email)
           else if(confirmpassword) generateError(confirmpassword)
         }else{
-          localStorage.setItem('user',JSON.stringify({token,user:data.data[0]}))
-          dispatch(updateUser({username:data.data[0].username,email:data.data[0].email,id:data.data[0].id}));
+          localStorage.setItem('user',JSON.stringify({token,user:data.data}))
+          // localStorage.setItem('user',JSON.stringify({token,user:data.data[0]}))
+          dispatch(updateUser({username:data.data.username,email:data.data.email,id:data.data.id}));
           navigate('/')
 
         }

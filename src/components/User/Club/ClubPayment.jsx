@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { axiosInstance } from '../../../../Api/config';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ClubNav from './ClubNav';
+
 function ClubPayment() {
+  const navigate=useNavigate()
     const location=useLocation();
 const clubName=location.state?.club;
   const [paymentdata, setPaymentdata] = useState({
@@ -30,7 +33,8 @@ const clubName=location.state?.club;
 
   return (
     <div>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <ClubNav/>
+      <div className="bg-primary flex justify-center items-center min-h-screen bg-gray-100">
         <div className="bg-white rounded-lg p-6 shadow-md w-full max-w-md">
           <h2 className="text-xl text-center font-semibold mb-4">Paying  To {<span className='text-lx text-blue-600 font-mono'>{clubName}</span>}</h2>
           <form onSubmit={handlePayment}>
@@ -132,6 +136,7 @@ const clubName=location.state?.club;
                            console.log(data);
                            console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
                            console.log(data.added);
+                             navigate('/clubHome')
                           })
                           .catch(function (error) {
                             // Payment capture error logic

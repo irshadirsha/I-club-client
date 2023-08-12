@@ -4,9 +4,13 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { axiosInstance } from '../../../Api/config';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../redux/UserSlice/UserSlice';
 
 // import { CloudinaryContext, Image, Transformation } from 'cloudinary-react';
 function UserProfile() {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
   const navigate=useNavigate()
   const [profile, setProfile] = useState({
     username: "",
@@ -98,15 +102,15 @@ function UserProfile() {
         <div className="bg-primary md:mx-20 text-white p-8 rounded-t-lg flex flex-col sm:flex-row items-center">
           <div className="bg-white rounded-md  mr-4 flex-shrink-0 " >
             <img
-             src={fetched ? profile.image ||'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' :'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='}
+             src={fetched ? profile?.image ||'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' :'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='}
              alt="Profile"
               className="w-36 h-36 rounded-md object-cover"
             />
           </div>
 
           <div className="flex flex-col mt-4 sm:mt-0">
-            <h5 className="text-xl text-black font-bold">{fetched ? profile.username : "username"}</h5>
-            <p className='text-black'>{fetched ? profile.email : "email"}</p>
+            <h5 className="text-xl text-black font-bold">{fetched ? profile?.username : "username"}</h5>
+            <p className='text-black'>{fetched ? profile?.email : "email"}</p>
             <br></br>
             <button
               type="button"
@@ -175,7 +179,7 @@ function UserProfile() {
                       name="username"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       onChange={(e) => setProfile({ ...profile, [e.target.name]: e.target.value })}
-                      placeholder={fetched ? (profile.username || "username") : ""}
+                      placeholder={fetched ? (profile?.username || "username") : ""}
                       required
                     />
                 </div>
@@ -190,7 +194,7 @@ function UserProfile() {
                       id="las"
                       name="email"
                       className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder={fetched ? (profile.email || "email") : ""}
+                      placeholder={fetched ? (profile?.email || "email") : ""}
                       required
                       readOnly
                     />
@@ -207,7 +211,7 @@ function UserProfile() {
                       name='gender'
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       onChange={(e) => setProfile({ ...profile, [e.target.name]: e.target.value })}
-                      placeholder={fetched ? (profile.gender || "gender") : ""}
+                      placeholder={fetched ? (profile?.gender || "gender") : ""}
                       required
                     />
                 </div>
@@ -223,7 +227,7 @@ function UserProfile() {
                       name='phone'
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       onChange={(e) => setProfile({ ...profile, [e.target.name]: e.target.value })}
-                      placeholder={fetched ? (profile.phone || "phone") : ""}
+                      placeholder={fetched ? (profile?.phone || "phone") : ""}
                       required
                     />
                 </div>
@@ -239,7 +243,7 @@ function UserProfile() {
                       name='address'
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       onChange={(e) => setProfile({ ...profile, [e.target.name]: e.target.value })}
-                      placeholder={fetched ? (profile.address || "address") : ""}
+                      placeholder={fetched ? (profile?.address || "address") : ""}
                       required
                     />
                 </div>
@@ -257,7 +261,7 @@ function UserProfile() {
             <p className="text-xl font-semibold mb-0">Your clubs</p>
             <p className="mb-0"></p>
           </div>
-          {profile.clubs.map((club) => (
+          {profile?.clubs.map((club) => (
             <div className="bg-primary m-6 grid grid-cols-1 rounded-md gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {/* Other grid items */}
               <div key={club._id} className='bg-slate-400 m-2  rounded-md col-span-1 sm:col-span-2 lg:col-span-1 mx-auto flex items-center'>
@@ -273,7 +277,16 @@ function UserProfile() {
               </div>
               <div className="md:py-6 ">
                 <button
-                onClick={()=>{navigate('/clubhome',{state:{userRole:club.role,id:profile._id,club:club.clubName}})}}
+                onClick={()=>{
+                  const updatedUser = {
+                    id: user.id, 
+                    username: user.username,
+                    email: user.email,
+                    clubName: club.clubName,
+                  };
+                  dispatch(updateUser(updatedUser));
+                  navigate('/clubhome',
+                  {state:{userRole:club.role,id:profile._id,club:club.clubName}})}}
                 type="submit" className="btn text-black font-mono rounded-lg px-4 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
                   Join To {club.clubName}
                 </button>

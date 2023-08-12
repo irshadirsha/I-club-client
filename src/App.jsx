@@ -21,6 +21,7 @@ import AdminClubViewPage from './pages/admin/AdminClubViewPage';
 import ClubPaymentPage from './pages/Club/ClubPaymentPage';
 import FinancePage from './pages/Club/FinancePage';
 import NotificationPage from './pages/Club/NotificationPage';
+import MembersPage from './pages/Club/MembersPage';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
           <Route path='/payment' element={<ClubPaymentPage/>}></Route>
           <Route path='/finance' element={<FinancePage/>}></Route>
           <Route path='/notification' element={<NotificationPage/>}></Route>
+          <Route path='/members' element={<MembersPage/>}></Route>
 
 
   

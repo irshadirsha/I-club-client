@@ -4,7 +4,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { axiosInstance } from '../../../../Api/config';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../../redux/UserSlice/UserSlice';
+
 function CreateClub() {
+  const dispatch=useDispatch()
+  const user=useSelector(state=>state.user)
   const navigate = useNavigate()
   const [createClub, setCreateClub] = useState({
     clubName: "",
@@ -80,6 +85,13 @@ function CreateClub() {
       if (response.data.created === true) {
         const userRole = "president";
         const club = response.data.newclubs.clubName;
+
+        const updatedUser = {
+          id:user.id,
+          username:user.username,
+          email:user.email,
+          clubName: club 
+        };
         navigate('/clubhome', { state: { userRole, club } });
       }
 

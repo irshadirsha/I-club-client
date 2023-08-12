@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-// import { FaBeer } from "react-icons/fa";
+import { logoutUser, updateUser } from '../../../redux/UserSlice/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 function ClubNav({state}) {
     const clubName=state
     console.log("my",clubName);
+    const dispatch=useDispatch()
     const navigate = useNavigate();
+    const users=useSelector(state=>state.user)
     const [showNavbar, setShowNavbar] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [clubdropdown, setClubDropDown] = useState(false);
-    const {username}=useSelector((state)=>state.user)
+    // const {username}=useSelector((state)=>state.user)
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
@@ -25,8 +29,18 @@ function ClubNav({state}) {
     const handleLogout = (e) => {
         localStorage.removeItem('user');
         console.log('User logged out');
+        dispatch(logoutUser())
         navigate('/login');
     };
+    const naveToHome=()=>{
+        dispatch(updateUser({
+            id:user.id,
+            username:user.username,
+            email:user.email,
+            clubName:"",
+          }));
+       navigate('/')
+    }
 
 
 
@@ -36,7 +50,7 @@ function ClubNav({state}) {
     return (
         <div>
             <nav className="border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-                <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <div className=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a className="flex items-center">
                         <span className="self-center text-2xl font-mono font-bold whitespace-nowrap pl-16 text-yellow-600">I-club</span>
                     </a>
@@ -53,12 +67,12 @@ function ClubNav({state}) {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
                         </svg>
                     </button>
-                    <div className={`${showNavbar ? 'block' : 'hidden'} w-full md:block md:w-auto`} id="navbar-dropdown">
-                        <ul className="z-10 flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900  dark:border-gray-700">
+                    <div className={`${showNavbar ? 'block' : 'hidden'}  w-full md:block md:w-auto`} id="navbar-dropdown">
+                        <ul className="z-10 flex flex-col font-medium p-4 md:p-0 md:mr-24 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-12 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900  dark:border-gray-700">
                             <li>
-                                <NavLink to="/" className="block py-3 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-2.5 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page" exact>
+                                <a onClick={naveToHome} className="block py-3 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-2.5 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page" exact>
                                     Home
-                                </NavLink>
+                                </a>
                             </li>
                             <li>
 
@@ -113,9 +127,9 @@ function ClubNav({state}) {
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                    <NavLink to='/members' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"exact>
                                                         Member
-                                                    </a>
+                                                    </NavLink>
                                                 </li>
                                                 <li>
                                                     <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
@@ -138,7 +152,8 @@ function ClubNav({state}) {
                                             onClick={toggleDropdown}
                                         >
 
-                                            {username}
+                                            {/* {username} */}
+                                            {users.username}
 
                                             <svg
                                                 className={`w-2.5 h-2.5 ml-2.5 transition-transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
