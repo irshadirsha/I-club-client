@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../../../Api/config'
 import { useSelector } from 'react-redux'
+import { ToastContainer,toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 function Notification() {
   const { clubName } = useSelector((state) => state.user)
   const [note, setNote] = useState('')
@@ -26,16 +28,29 @@ function Notification() {
     console.log(note);
     const { data } = await axiosInstance.post('/send-note', { note, clubName })
     console.log(data);
+    if (data.message) {
+      toast.success(data.message, {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_RIGHT
+      })}
+      if (data.errors) {
+        toast.error(data.errors, {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_RIGHT
+       })} 
     if(data){
       setNote('')
     fetchnote()
-  
-    }
-  }
+    }}
   const handleNoteDlt = async (e,id) =>{
     e.preventDefault()
     const {data}=await axiosInstance.post('/delete-note',{deleteid:id})
     console.log(data)
+    if (data.message) {
+      toast.success(data.message, {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_RIGHT
+      })}
     if(data.deleted){
       fetchnote()
     }
@@ -81,7 +96,7 @@ function Notification() {
         </div>
       </div>)}
       <div className=" py-8 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-semibold mb-4">Notification</h1>
+        <h1 className="text-2xl text-center font-semibold mb-4">Notification</h1>
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-200 divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -125,6 +140,7 @@ function Notification() {
           </table>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   )
 }

@@ -100,13 +100,22 @@ function UserProfile() {
     <div>
       <div className="container mx-auto p-4">
         <div className="bg-primary md:mx-20 text-white p-8 rounded-t-lg flex flex-col sm:flex-row items-center">
-          <div className="bg-white rounded-md  mr-4 flex-shrink-0 " >
+          {/* <div className="bg-white rounded-md  mr-4 flex-shrink-0 " >
             <img
              src={fetched ? profile?.image ||'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' :'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='}
              alt="Profile"
               className="w-36 h-36 rounded-md object-cover"
             />
-          </div>
+          </div> */}
+         <div className="bg-white rounded-md mr-4 flex-shrink-0">
+         <img
+         src={fetched ? profile?.image || 'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' : 'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='}
+         alt="Profile"
+         className="w-36 h-36 rounded-md object-cover object-top"
+         />
+        </div>
+
+
 
           <div className="flex flex-col mt-4 sm:mt-0">
             <h5 className="text-xl text-black font-bold">{fetched ? profile?.username : "username"}</h5>
