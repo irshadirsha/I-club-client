@@ -122,9 +122,9 @@ function ClubNav({state}) {
                                         >
                                             <ul className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                                 <li>
-                                                    <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                    <NavLink to='/club-profile' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"exact>
                                                         Club Profile
-                                                    </a>
+                                                    </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink to='/members' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"exact>

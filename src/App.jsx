@@ -3,13 +3,9 @@ import AdminLogin from './components/Admin/AdminLogin';
 import UserHomePage from './pages/User/UserHomePage';
 import UserSignupPage from './pages/user/userSignupPage';
 import UserLoginPage from './pages/user/UserLoginPage';
-import './App.css'
 import CreateClubPage from './pages/user/CreateClubPage';
 import JoinClubPage from './pages/user/JoinClubPage';
-
-
 import ProtectedRoute from './components/User/ProtectedRoute';
-// import EmailSendPage from './pages/user/EmailSendPage';
 import ChangePasswordPage from './pages/user/ChangePasswordPage';
 import SetnewPassPage from './pages/user/SetnewPassPage';
 import AdminDashBordPage from './pages/admin/AdminDashBordPage';
@@ -22,7 +18,8 @@ import ClubPaymentPage from './pages/Club/ClubPaymentPage';
 import FinancePage from './pages/Club/FinancePage';
 import NotificationPage from './pages/Club/NotificationPage';
 import MembersPage from './pages/Club/MembersPage';
-
+import './App.css'
+import ClubProfilePage from './pages/Club/ClubProfilePage';
 
 function App() {
   
@@ -58,6 +55,7 @@ function App() {
           <Route path='/finance' element={<FinancePage/>}></Route>
           <Route path='/notification' element={<NotificationPage/>}></Route>
           <Route path='/members' element={<MembersPage/>}></Route>
+          <Route path='/club-profile' element={<ClubProfilePage/>}></Route>
 
 
   

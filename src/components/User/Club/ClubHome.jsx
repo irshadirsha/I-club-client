@@ -89,19 +89,20 @@ return (
             </div>
         </div>
 
-        <div className="md:w-6/12 md:order-0 order-1 md:text-center mt-5 md:mt-0">
-            <div className="rounded-lg p-4 overflow-hidden event-style">
-                <div className="relative w-full h-full">
-                    <div className="relative top-0 right-0 bottom-0 left-0 rounded-lg overflow-hidden">
-                        <img
-                            className="pt-7 rounded-xl md:pt-0 w-full h-auto md:w-96 md:h-96 lg:w-120 lg:h-120 xl:w-160 xl:h-160 mx-auto object-cover"
-                            src="https://images.squarespace-cdn.com/content/v1/6192d0ae6818523e63640e70/ea3bb75a-2729-4887-bee4-3eef6a9e40a6/unnamed+%2819%29.jpg"
-                            alt="Club image"
-                        />
-                    </div>
-                </div>
+        <div className=" md:w-6/12 md:order-0 order-1 md:text-center mt-5 md:mt-0">
+    <div className="rounded-lg p-4 overflow-hidden event-style">
+        <div className="relative w-full h-full">
+            <div className="relative top-0 right-0 bottom-0 left-0 rounded-lg overflow-hidden">
+                <img
+                    className="pt-7 rounded-xl md:pt-0 w-full h-auto md:w-120 md:h-96 lg:w-120 lg:h-120 xl:w-160 xl:h-160 mx-auto object-cover"
+                    src="https://images.squarespace-cdn.com/content/v1/6192d0ae6818523e63640e70/ea3bb75a-2729-4887-bee4-3eef6a9e40a6/unnamed+%2819%29.jpg"
+                    alt="Club image"
+                />
             </div>
         </div>
+    </div>
+</div>
+
     </div>
 
     <div className="flex flex-col pt-12 md:flex-row items-center">
