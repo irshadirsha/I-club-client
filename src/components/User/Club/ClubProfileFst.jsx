@@ -242,18 +242,19 @@ function ClubProfileFst() {
  </div>
  <div className="flex justify-center p-8 space-x-4 flex-wrap">
     {postdata?.map((post, index) => (
-        <div className="w-full md:w-1/4 p-6 overflow-hidden" key={index}>
-            <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                <img
-                    className="w-full h-56 object-cover"
-                    src={post.postimg}
-                    alt="Post"
-                />
-                <div className="p-4">
-                    <p className="text-gray-700 text-lg font-semibold">{post.desc}</p>
-                </div>
-            </div>
-        </div>
+      <div className="w-full md:w-1/4 p-6 overflow-hidden" key={index}>
+      <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+          <img
+              className="w-full h-56 object-contain"
+              src={post.postimg}
+              alt="Post"
+          />
+          <div className="p-4">
+              <p className="text-gray-700 text-lg font-semibold">{post.desc}</p>
+          </div>
+      </div>
+  </div>
+  
     ))}
 </div>
 

@@ -297,7 +297,7 @@ function UserProfile() {
                   navigate('/clubhome',
                   {state:{userRole:club.role,id:profile._id,club:club.clubName}})}}
                 type="submit" className="btn text-black font-mono rounded-lg px-4 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
-                  Join To {club.clubName}
+                  View {club.clubName}
                 </button>
               </div>
 
