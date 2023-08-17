@@ -4,7 +4,9 @@ import { axiosInstance } from '../../../../Api/config';
 import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 function ClubProfileFst() {
+  const navigate=useNavigate()
     const {clubName}=useSelector((state)=>state.user)
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
     const [postmodalOpen, setPostModalOpen]=useState(false)
@@ -90,7 +92,9 @@ function ClubProfileFst() {
             toast.success(res.data.message, {
               autoClose: 2000,
               position: toast.POSITION.TOP_RIGHT
-            })}
+            })
+            fetchdata()
+          }
         } catch (error) {
             console.log(" internal error clubpost")
         }
@@ -109,8 +113,8 @@ function ClubProfileFst() {
                 <p className='font-bold text-2xl font-mono p-1 text-black '>member:{profiledata?.members?.length}</p>
                 <p className='font-bold text-2xl font-mono p-1 text-black '>category:{profiledata?.category}</p>
                 <p className='font-bold text-2xl font-mono p-1 text-black '>register no:{profiledata?.registerNo}</p>
-                <p className='font-bold text-2xl font-mono p-1 text-black '>about:</p>
-                <div className='md:flex justify-evenly p-2 '>
+                <p className='font-bold text-2xl font-mono p-1 text-black '>about:{profiledata?.about}</p>
+               {(userRole ==='president' || userRole === 'secretory') && (<div className=' md:flex justify-evenly p-2 '>
                 <div className="mt-4 ">
                     <button
                     onClick={openImageModal}
@@ -127,12 +131,12 @@ function ClubProfileFst() {
                 </div>
                 <div className="mt-4 ">
                     <button 
-                    // onClick={()=>{navigate('/payment',{state:{club:clubData.clubName}})}}
+                    onClick={()=>{navigate('/club-setting')}}
                     className="btn text-black font-mono rounded-lg px-2 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
                         Club Setting
                     </button>
                 </div>
-                </div>
+                </div>)}
             </div>
         </div>
 {/* ////////////////////////////// */}

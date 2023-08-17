@@ -7,8 +7,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../redux/UserSlice/UserSlice';
 
-// import { CloudinaryContext, Image, Transformation } from 'cloudinary-react';
 function UserProfile() {
+  const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const navigate=useNavigate()
@@ -41,7 +41,7 @@ function UserProfile() {
     setIsImageModalOpen(false);
     console.log(formData)
     try {
-      const  data = await axios.post(`https://api.cloudinary.com/v1_1/dce326gqy/image/upload?upload_preset=I-club`,formData);
+      const  data = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
       console.log(data.data.secure_url);
       if(data.data.secure_url){
       const imageUrl = data.data.secure_url;

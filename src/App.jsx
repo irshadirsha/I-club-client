@@ -20,6 +20,7 @@ import NotificationPage from './pages/Club/NotificationPage';
 import MembersPage from './pages/Club/MembersPage';
 import './App.css'
 import ClubProfilePage from './pages/Club/ClubProfilePage';
+import ClubSettingPage from './pages/Club/ClubSettingPage';
 
 function App() {
   
@@ -56,6 +57,7 @@ function App() {
           <Route path='/notification' element={<NotificationPage/>}></Route>
           <Route path='/members' element={<MembersPage/>}></Route>
           <Route path='/club-profile' element={<ClubProfilePage/>}></Route>
+          <Route path='/club-setting' element={<ClubSettingPage/>}></Route>
 
 
   

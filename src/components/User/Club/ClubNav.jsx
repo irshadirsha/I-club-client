@@ -4,9 +4,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { logoutUser, updateUser } from '../../../redux/UserSlice/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-function ClubNav({state}) {
-    const clubName=state
-    console.log("my",clubName);
+function ClubNav() {
+   
     const dispatch=useDispatch()
     const navigate = useNavigate();
     const users=useSelector(state=>state.user)
@@ -76,7 +75,7 @@ function ClubNav({state}) {
                             </li>
                             <li>
 
-                                <a onClick={(e)=>navigate('/finance',{state:{club:clubName}})} className="block py-3 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2.5 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                                <a onClick={(e)=>navigate('/finance')} className="block py-3 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2.5 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
                                     Finance</a>
                             </li>
                             <li>

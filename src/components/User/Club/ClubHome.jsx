@@ -3,15 +3,16 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../../Api/config';
 import ClubNav from './ClubNav';
-
+import { useSelector } from 'react-redux';
+useSelector
 function ClubHome() {
-
+       const {clubName}=useSelector((state)=>state.user)
     const location = useLocation();
     const navigate=useNavigate()
 
 const role=location.state?.userRole;
 // const id=location.state?.id;
-const clubName=location.state?.club;
+// const clubName=location.state?.club;
 console.log("club home");
 console.log(role,clubName); 
 const [clubData,setClubData]=useState(null)
@@ -45,8 +46,8 @@ const fetchdata=async()=>{
 const handleEventSubmit=async(e)=>{
     e.preventDefault()
     try {
-        console.log("eventss",messages,clubData._id,);
-        const {data} =await axiosInstance.post('/add-events',{messages,club:clubData._id})
+        console.log("eventss",messages,clubData?._id,);
+        const {data} =await axiosInstance.post('/add-events',{messages,club:clubData?._id})
         console.log(data);  
         setMessages({
             message:"",
@@ -89,7 +90,8 @@ return (
                 </p>
                 <div className="mt-4 flex justify-start items-start">
                     <button 
-                    onClick={()=>{navigate('/payment',{state:{club:clubData.clubName}})}}
+                    onClick={()=>{navigate('/payment',{state:{club:clubName}})}}
+                    // onClick={()=>{navigate('/payment',{state:{club:clubData.clubName}})}}
                     className="btn text-black font-mono rounded-lg px-4 py-2 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
                         Donate to Club
                     </button>
@@ -103,7 +105,7 @@ return (
             <div className="relative top-0 right-0 bottom-0 left-0 rounded-lg overflow-hidden">
                 <img
                     className="pt-7 rounded-xl md:pt-0 w-full h-auto md:w-120 md:h-96 lg:w-120 lg:h-120 xl:w-160 xl:h-160 mx-auto object-cover"
-                    src="https://images.squarespace-cdn.com/content/v1/6192d0ae6818523e63640e70/ea3bb75a-2729-4887-bee4-3eef6a9e40a6/unnamed+%2819%29.jpg"
+                    src={clubData?.clubimg || "https://images.squarespace-cdn.com/content/v1/6192d0ae6818523e63640e70/ea3bb75a-2729-4887-bee4-3eef6a9e40a6/unnamed+%2819%29.jpg"}
                     alt="Club image"
                 />
             </div>

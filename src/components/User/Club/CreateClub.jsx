@@ -86,12 +86,19 @@ function CreateClub() {
         const userRole = "president";
         const club = response.data.newclubs.clubName;
 
-        const updatedUser = {
+        // const updatedUser = {
+        //   id:user.id,
+        //   username:user.username,
+        //   email:user.email,
+        //   clubName: club 
+        // };
+        dispatch(updateUser({
           id:user.id,
           username:user.username,
           email:user.email,
-          clubName: club 
-        };
+          clubName:club 
+        }));
+
         navigate('/clubhome', { state: { userRole, club } });
       }
 
