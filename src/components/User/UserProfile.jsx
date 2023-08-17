@@ -69,6 +69,7 @@ function UserProfile() {
       console.log("getuserprofil", email)
       const { data } = await axiosInstance.post('/getuser-profile');
       console.log(data.userdata);
+      console.log("============",data.clubs)
       console.log("fetching");
       setProfile(data.userdata);
       setFetched(true);
@@ -275,7 +276,7 @@ function UserProfile() {
               {/* Other grid items */}
               <div key={club._id} className='bg-slate-400 m-2  rounded-md col-span-1 sm:col-span-2 lg:col-span-1 mx-auto flex items-center'>
                 <img
-                  src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
+                  src={club?.clubimg || "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="}
                   alt="Profile"
                   className="w-20 h-20 rounded-md object-cover mx-auto"
                 />

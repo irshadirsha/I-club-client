@@ -6,6 +6,7 @@ import { ToastContainer,toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 function ClubProfileFst() {
+  const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const navigate=useNavigate()
     const {clubName}=useSelector((state)=>state.user)
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -51,7 +52,7 @@ function ClubProfileFst() {
           formData.append('upload_preset', 'I-club');
           console.log(formData)
 
-          const  data = await axios.post(`https://api.cloudinary.com/v1_1/dce326gqy/image/upload?upload_preset=I-club`,formData);
+          const  data = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
           closeImageModal()
           console.log(data.data.secure_url);
           const imageUrl = data.data.secure_url;
@@ -74,7 +75,7 @@ function ClubProfileFst() {
         formData.append('file', postimage.image);
         formData.append('upload_preset', 'I-club');
         try {
-            const  response = await axios.post(`https://api.cloudinary.com/v1_1/dce326gqy/image/upload?upload_preset=I-club`,formData);
+            const  response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
         console.log(response)
         closePostModal()
         console.log(response.data.secure_url);
@@ -233,7 +234,7 @@ function ClubProfileFst() {
             <div className="relative top-0 right-0 bottom-0 left-0 rounded-lg overflow-hidden">
                 <img
                     className="pt-7 rounded-xl md:pt-0 w-full h-auto md:w-120 md:h-96 lg:w-120 lg:h-120 xl:w-160 xl:h-160 mx-auto object-contain"
-                    src={profiledata?.clubimg || "https://images.squarespace-cdn.com/content/v1/6192d0ae6818523e63640e70/ea3bb75a-2729-4887-bee4-3eef6a9e40a6/unnamed+%2819%29.jpg"}
+                    src={profiledata?.clubimg || "https://cdn.w600.comps.canstockphoto.com/no-image-available-picture_csp11465811.jpg"}
                     alt="Club image"
                 />
             </div>

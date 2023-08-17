@@ -21,6 +21,25 @@ axiosInstance.interceptors.request.use(
   
   export { axiosInstance };
 
+//   const adminaxios=axios.create({
+//     baseURL:baseURL
+// })
+// adminaxios.interceptors.request.use(
+//     config => {
+//       const token = JSON.parse(localStorage.getItem('admin'))?.token || null;
+
+//       if (token) {
+//         config.headers['authorization'] = `Bearer ${token}`;
+//       }
+//       return config;
+//     },
+//     error => {
+//       return Promise.reject(error);
+//     }
+//   );
+  
+//   export { adminaxios };
+
 
 
 

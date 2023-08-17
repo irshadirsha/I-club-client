@@ -17,6 +17,7 @@ function ClubSetting() {
     category:"",
     about:""
   })
+  const [Committe,setCommitte]=useState({})
   const [club,setClub]=useState([])
    useEffect(()=>{
         fetchdata()
@@ -74,10 +75,24 @@ function ClubSetting() {
             toast.error(data.errors, {
             autoClose: 2000,
             position: toast.POSITION.TOP_RIGHT
-           })} 
-   
+           })}}
 
-  }
+           const handlecommite= async (e) =>{
+            e.preventDefault()
+            console.log("----------------------------",Committe)
+            const res=await axiosInstance.post('/change-committe',{...Committe,clubName})
+            console.log(res);
+            if (res.data.errors) {
+              toast.error(res.data.errors, {
+              autoClose: 2000,
+              position: toast.POSITION.TOP_RIGHT
+             })}
+            if (res.data.message) {
+              toast.success(res.data.message, {
+                autoClose: 2000,
+                position: toast.POSITION.TOP_RIGHT
+              })}
+           }
   const generateError = (err) => toast.error(err, {
     autoClose: 2000,
     position: toast.POSITION.TOP_RIGHT
@@ -197,29 +212,31 @@ function ClubSetting() {
               // Render Change Committee form
               <div>
                 <h2 className="text-2xl text-center font-semibold mb-4">Change Committee</h2>
-                <form className="space-y-2">
+                <form className="space-y-2" onSubmit={handlecommite}>
                   {/* ...input fields */}
                   <div>
       <label htmlFor="president" className="block font-medium">
         President
       </label>
       <input
-        type="text"
+        type="email"
         id="president"
         name="president"
         placeholder='President Email'
+        onChange={(e)=>{setCommitte({...Committe,[e.target.name]:e.target.value})}}
         className="border border-gray-300 rounded-md p-1 w-full"
       />
     </div>
     <div>
-      <label htmlFor="secretary" className="block font-medium">
-        Secretary
+      <label htmlFor="secretory" className="block font-medium">
+        Secretory
       </label>
       <input
-        type="text"
-        id="secretary"
-        name="secretary"
+        type="email"
+        id="secretory"
+        name="secretory"
         placeholder='Secretory Email'
+        onChange={(e)=>{setCommitte({...Committe,[e.target.name]:e.target.value})}}
         className="border border-gray-300 rounded-md p-1 w-full"
       />
     </div>
@@ -228,10 +245,11 @@ function ClubSetting() {
         Treasurer
       </label>
       <input
-        type="text"
+        type="email"
         id="treasurer"
         name="treasurer"
         placeholder='Treasurer Email'
+        onChange={(e)=>{setCommitte({...Committe,[e.target.name]:e.target.value})}}
         className="border border-gray-300 rounded-md p-1 w-full"
       />
     </div>
