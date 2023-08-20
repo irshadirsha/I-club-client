@@ -3,7 +3,7 @@ import { axiosInstance } from '../../../../Api/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../redux/UserSlice/UserSlice';
 import { ToastContainer,toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+
 
 function ClubSetting() {
     const dispatch=useDispatch()
@@ -67,15 +67,9 @@ function ClubSetting() {
         clubName:club 
       }));
     if (data.message) {
-        toast.success(data.message, {
-          autoClose: 2000,
-          position: toast.POSITION.TOP_RIGHT
-        })}
+        toast.success(data.message)}
         if (data.errors) {
-            toast.error(data.errors, {
-            autoClose: 2000,
-            position: toast.POSITION.TOP_RIGHT
-           })}}
+            toast.error(data.errors)}}
 
            const handlecommite= async (e) =>{
             e.preventDefault()
@@ -83,15 +77,9 @@ function ClubSetting() {
             const res=await axiosInstance.post('/change-committe',{...Committe,clubName})
             console.log(res);
             if (res.data.errors) {
-              toast.error(res.data.errors, {
-              autoClose: 2000,
-              position: toast.POSITION.TOP_RIGHT
-             })}
+              toast.error(res.data.errors)}
             if (res.data.message) {
-              toast.success(res.data.message, {
-                autoClose: 2000,
-                position: toast.POSITION.TOP_RIGHT
-              })}
+              toast.success(res.data.message)}
            }
   const generateError = (err) => toast.error(err, {
     autoClose: 2000,

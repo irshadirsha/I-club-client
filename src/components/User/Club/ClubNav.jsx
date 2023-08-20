@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logoutUser, updateUser } from '../../../redux/UserSlice/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { axiosInstance } from '../../../../Api/config';
 
 function ClubNav() {
    
     const dispatch=useDispatch()
     const navigate = useNavigate();
     const users=useSelector(state=>state.user)
+    const clubName=users.clubName
     const [showNavbar, setShowNavbar] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [clubdropdown, setClubDropDown] = useState(false);
+    const [reqcount,setReqCount]=useState('')
     // const {username}=useSelector((state)=>state.user)
+    useEffect(()=>{
+        fetchreqcount()
+    },[])
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
@@ -40,6 +46,15 @@ function ClubNav() {
           }));
        navigate('/')
     }
+    const fetchreqcount=async()=>{
+        const count=await axiosInstance.get('/fetch-reqcount',{
+            params:{clubName}
+        })
+        console.log("7777777777777777777777777777",count);
+        console.log(count.data.newMemberCount);
+        setReqCount(count.data.newMemberCount)
+        // console.log(count.newMemberCount);
+    }
 
 
 
@@ -47,7 +62,7 @@ function ClubNav() {
     const Name = user?.email;
 
     return (
-        <div>
+        <div>   
             <nav className="border-gray-200 dark:bg-gray-900 dark:border-gray-700">
                 <div className=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a className="flex items-center">
@@ -98,6 +113,7 @@ function ClubNav() {
                                     >
 
                                         Clubs
+                                        
                                         <svg
                                             className={`w-2.5 h-2.5 ml-2.5 transition-transform ${clubdropdown ? 'rotate-180' : 'rotate-0'}`}
                                             aria-hidden="true"
@@ -127,7 +143,13 @@ function ClubNav() {
                                                 </li>
                                                 <li>
                                                     <NavLink to='/members' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"exact>
-                                                        Member
+                                                        {/* Members  <span className='text-md font-mono'>{reqcount}</span> */}
+                                                        members
+                                                        {reqcount > 0 && (
+                                                       <span className="bg-primary text-white px-2 py-1 ml-1 rounded-full text-xs">
+                                                       {reqcount}
+                                                        </span>
+                                                        )}
                                                     </NavLink>
                                                 </li>
                                                 <li>

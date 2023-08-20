@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate,NavLink } from 'react-router-dom'
 import { logoutUser } from '../../../redux/UserSlice/UserSlice';
+import { axiosInstance } from '../../../../Api/config';
 
 const HomeNav = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const [showNavbar, setShowNavbar] = useState(false);
-
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-   
- 
- const {username}=useSelector((state)=>state.user)
+  const {username}=useSelector((state)=>state.user)
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -30,17 +29,14 @@ const HomeNav = () => {
  
     const user = JSON.parse(localStorage.getItem("user"))?.user || null;
     const Name = user?.email 
-//     let Name
-//  if(user.email==undefined) {
-//   Name =user[0].email 
-// }
-//   else{
-//     Name = user.email
-//   }
    
    
   return (
     <nav className=" border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+       {/* <h1>{filteredClubs?.clubName}</h1> */}
+       {/* <h1>{filteredClubs?.length > 0 ? filteredClubs[0].clubName : ''}</h1>
+       <h1>{filteredClubs?.length > 0 ? filteredClubs[0].about: ''}</h1>
+       <h1>{filteredClubs?.length > 0 ? filteredClubs[0].address : ''}</h1> */}
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a className="flex items-center">
           <span className="self-center text-2xl font-mono font-bold whitespace-nowrap pl-16 text-yellow-600 ">I-club</span>
@@ -59,7 +55,7 @@ const HomeNav = () => {
           </svg>
         </button>
         <div className={`${showNavbar ? 'block' : 'hidden'} w-full md:block md:w-auto`} id="navbar-dropdown">
-          <ul className="z-10 flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900  dark:border-gray-700">
+          <ul className="z-10 flex flex-col font-medium p-4 md:pr-16 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900  dark:border-gray-700">
             {/* <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"> */}
 
               <li>
@@ -69,16 +65,6 @@ const HomeNav = () => {
               </li>
               <li>
                 <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
-              </li>
-              <li>
-                <div className="nav-link fw-medium" aria-current="page">
-                  <input
-                    className="form-control mr-sm-2 rounded-lg shadow-md  p-1.5 text-sm font-normal border-current border outline-slate-300 hover: transition ease-out duration-500"
-                    type="text"
-                    placeholder="Search For Clubs..."
-                    aria-label="Search"
-                  />
-                </div>
               </li>
               {user ? (<li>
                 <div className="relative ">

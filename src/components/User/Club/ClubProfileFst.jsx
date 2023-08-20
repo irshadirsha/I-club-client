@@ -3,7 +3,6 @@ import React,{useState,useEffect} from 'react'
 import { axiosInstance } from '../../../../Api/config';
 import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 function ClubProfileFst() {
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
@@ -60,10 +59,7 @@ function ClubProfileFst() {
           const doce =await axiosInstance.post('/add-clubprofile',{clubName,imageUrl})
           console.log(doce)
           if (doce.data.message) {
-            toast.success(doce.data.message, {
-              autoClose: 2000,
-              position: toast.POSITION.TOP_RIGHT
-            })
+            toast.success(doce.data.message)
             fetchdata() 
         }
           console.log(doce.data)
@@ -90,10 +86,7 @@ function ClubProfileFst() {
           console.log(res,"----------------------------------------------------");
           console.log(res.data.message);
           if (res.data.message) {
-            toast.success(res.data.message, {
-              autoClose: 2000,
-              position: toast.POSITION.TOP_RIGHT
-            })
+            toast.success(res.data.message)
             fetchdata()
           }
         } catch (error) {
@@ -234,7 +227,7 @@ function ClubProfileFst() {
             <div className="relative top-0 right-0 bottom-0 left-0 rounded-lg overflow-hidden">
                 <img
                     className="pt-7 rounded-xl md:pt-0 w-full h-auto md:w-120 md:h-96 lg:w-120 lg:h-120 xl:w-160 xl:h-160 mx-auto object-contain"
-                    src={profiledata?.clubimg || "https://cdn.w600.comps.canstockphoto.com/no-image-available-picture_csp11465811.jpg"}
+                    src={profiledata?.clubimg || "https://static3.depositphotos.com/1006009/206/i/450/depositphotos_2061693-stock-photo-no-image-available-text-on.jpg"}
                     alt="Club image"
                 />
             </div>

@@ -1,15 +1,121 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { axiosInstance } from '../../../../Api/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../../redux/UserSlice/UserSlice';
+
+  
 function Home() {
+  const dispatch=useDispatch()
+  const user=useSelector(state=>state.user)
+  const [query, setQuery] = useState('');
+  const [filteredClubs, setFilteredClubs] = useState([]);
   const navigate=useNavigate()
+  const handleSearch = async () => {
+    try {
+      const response = await axiosInstance.get(`/serch-clubs?q=${query}`);
+      console.log(response);
+      setFilteredClubs(response.data)
+      console.log("after search",filteredClubs);
+    } catch (error) {
+      console.error('Error fetching clubs:', error);
+    }
+  };
+  useEffect(() => {
+    if (query.trim() !== '') {
+      handleSearch();
+    } else {
+      setFilteredClubs([]);
+    }
+  }, [query]);
+
+
+ 
   const NavToJoinclub=(e)=>{
     e.preventDefault()
     navigate('/joinclub')
   }
+ 
+  const handleRequest = async (e, id) => {
+    e.preventDefault();
+    const {data} = await axiosInstance.post('/make-request', { clubId: id });
+    console.log("request",data);
+    
+  };
   return (
     <>
    <div className='body bg-primary'>
+    <div className='flex justify-end'>
+    <div className="nav-link fw-medium p-3"  aria-current="page">
+                  <input
+                    className="form-control mr-sm-2 rounded-lg shadow-md  p-1.5 text-sm font-normal border-current border outline-slate-300 hover: transition ease-out duration-500"
+                    type="text"
+                    placeholder="Search For Clubs..."
+                    aria-label="Search"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}   
+                  />
+                </div>
+    </div>
+    {filteredClubs.length > 0 ? (
+       <div className="flex justify-center p-8 space-x-4 flex-wrap">
+      {filteredClubs?.map((club, index) => (
+         <div className="w-full md:w-1/4 p-6 overflow-hidden" key={index}>
+         <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md ">
+         <div className="relative mx-4 mt-4 h-44 overflow-hidden rounded-xl  bg-clip-border text-gray-700 shadow-lg">
+                <div className="rounded-3xl overflow-hidden">
+                  <img
+                    src={club.clubimg || "https://static3.depositphotos.com/1006009/206/i/450/depositphotos_2061693-stock-photo-no-image-available-text-on.jpg"}
+                    alt="club-image"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              <div className="p-6 text-center">
+                <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug lowercase tracking-normal text-blue-gray-900 antialiased">
+                  {club.clubName}
+                </h4>
+                <p className="block font-sans text-base p-2 font-medium leading-relaxed text-gray-700 antialiased">
+                {club.address
+                .split(' ')
+                .slice(0, 2)
+               .join(' ')}
+                </p>
+            
+            { (club?.userRole==='president' || club?.userRole=== 'secretory' ||club?.userRole==='treasurer' ||club?.userRole==='member') ? (
+               <button
+          className="btn text-black font-mono rounded-lg  px-4   bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
+          exact
+            onClick={()=>{
+              const updatedUser = {
+                id: user.id, 
+                username: user.username,
+                email: user.email,
+                clubName: club.clubName,
+              };
+              dispatch(updateUser(updatedUser));
+              navigate('/club-profile')
+            }}
+        >
+          View Club
+          </button>) :(
+             <button
+             onClick={(e)=>handleRequest(e,club._id)}
+             className="btn text-black font-mono rounded-lg  px-4   bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
+             exact>
+             request for join
+             </button>
+          ) }
+              </div>
+         </div>
+     </div>
+     
+       ))}
+   </div>
+       
+        ) : (
+    <div>
   <div className='w-full md:flex justify-end'>
     <div className="md:w-1/2">
       <h1 className="my-5 ml-10  text-5xl pt-28 font-bold tracking-tight  hero-title text-hsl(0, 0%, 0%)">
@@ -36,6 +142,7 @@ function Home() {
       </div>
     </div>
     <div className=' w-full md:w-1/2'>
+   
       <div id="carouselExampleControls" className=" carousel slide p-12" data-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
@@ -64,6 +171,8 @@ function Home() {
     Unites integrity, compassion, shared values; making a positive impact on the community with unity and purposeful actions.
   </p>
 </div>
+  </div>
+        )}
 <br></br>
 <br></br>
 </div>
@@ -252,3 +361,41 @@ export default Home
   //     </a>
   //   </div>
   // </div>
+
+
+     // Display search results if filteredClubs exist
+        //   <div className=" bg-green-200 h-screen">
+        //     <div className="sm:justify-center items-center  justify-evenly py-4 px-8 flex flex-col md:flex-row space-y-4 md:mx-32 md:space-x-4">
+        //   {filteredClubs.map((club, index) => (
+        //     <div key={index} className="relative flex w-96 mt-4 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+              // <div className="relative mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+              //   <div className="rounded-3xl overflow-hidden">
+              //     <img
+              //       src={club.clubimg || "https://static3.depositphotos.com/1006009/206/i/450/depositphotos_2061693-stock-photo-no-image-available-text-on.jpg"}
+              //       alt="club-image"
+              //       className="w-full h-full object-cover"
+              //     />
+              //   </div>
+              // </div>
+        //       <div className="p-6 text-center">
+        //         <h3>Club Details</h3>
+        //         <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug lowercase tracking-normal text-blue-gray-900 antialiased">
+        //           {club.clubName}
+        //         </h4>
+        //         <p className="block bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-text font-sans text-base font-medium leading-relaxed text-transparent antialiased">
+        //           {club.about}
+        //         </p>
+        //         <p className="block font-sans text-base p-2 font-medium leading-relaxed text-gray-700 antialiased">
+        //           Address: {club.address}
+        //         </p>
+        //       <NavLink
+        //   className="btn text-black font-mono rounded-lg  px-4   bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
+        //   exact
+        // >
+        //   View Club
+        // </NavLink>
+        //       </div>
+        //     </div>
+        //   ))}
+        //   </div>
+        // </div>

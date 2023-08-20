@@ -3,7 +3,6 @@ import { axiosInstance } from '../../../../Api/config'
 import { useSelector } from 'react-redux'
 import ClubAuthority from './ClubAuthority'
 import { ToastContainer,toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 
 function Members() {
     const [adduser,SetAddUser]=useState('')
@@ -11,6 +10,7 @@ function Members() {
    const [memberlist,setMemberList]=useState([])
    const [userRole, setUserRole] = useState('');
    const [currentPage, setCurrentPage] = useState(1);
+   const [request,setrequest]=useState('')
    const itemsPerPage = 5; 
  
   useEffect(()=>{
@@ -21,8 +21,10 @@ function Members() {
            params: { clubName }
            })
            console.log("getting .....",doce);
+           console.log(doce.data.clubExist.newmember);
            console.log(doce.data.clubExist.members);
            console.log(doce.data.userRole);
+           setrequest(doce.data.clubExist.newmember)
            setMemberList(doce.data.clubExist.members)
            setUserRole(doce.data.userRole)
     }
@@ -38,40 +40,51 @@ function Members() {
         console.log("resAddmem",data)
         SetAddUser('')
         if (data.message) {
-            toast.success(data.message, {
-              autoClose: 2000,
-              position: toast.POSITION.TOP_RIGHT
-            })
+            toast.success(data.message)
             getmember()
             
           }
           
         if (data.errors) {
-             toast.error(data.errors, {
-             autoClose: 2000,
-             position: toast.POSITION.TOP_RIGHT
-            })} 
-            
+             toast.error(data.errors)
+          }       
             console.log(data.members.username)
            
     }
+
+    const handleApprove = async (e, email) => {
+      e.preventDefault();
+      console.log("+++++++++",email);
+      const requestData = {
+        clubName: clubName,
+        adduser: email
+      };
+      try {
+        const {data}=await axiosInstance.post('/add-member',requestData)
+        console.log(data);
+        if (data.message) {
+          toast.success(data.message)
+        }
+        getmember()
+        // Handle success or error response
+      } catch (error) {
+        console.error("Error approving membership:", error);
+      }
+    };
+    
+
       const handleDltMember=async (e,id) => {
         e.preventDefault()
         console.log(id,clubName)
         const {data}=await axiosInstance.post('/delete-member',{clubName,id})
          console.log(data)
          if (data.message) {
-          toast.success(data.message, {
-            autoClose: 2000,
-            position: toast.POSITION.TOP_RIGHT
-          })
+          toast.success(data.message)
           getmember()  
         }
         if (data.errors) {
-          toast.error(data.errors, {
-          autoClose: 2000,
-          position: toast.POSITION.TOP_RIGHT
-         })} 
+          toast.error(data.errors)
+        } 
       }
      
       const startIndex = (currentPage - 1) * itemsPerPage;
@@ -87,7 +100,7 @@ function Members() {
       <div className=" border max-w-md w-full space-y-4">
         <div>
           <h2 className="mt-2 text-center text-2xl font-mono font-bold text-gray-900">
-            Add Member
+            Add New Member
           </h2>
         </div>
         <form className="mt-2 space-y-6" onSubmit={handleSubmit} >
@@ -118,7 +131,32 @@ function Members() {
             </button>
           </div>
         </form>
+        {request.length > 0 && (
+    <div className="py-4 px-4 m-4 bg-white border-t border-gray-200">
+      <h1 className="text-lg font-bold text-gray-800">
+        Membership Requests
+      </h1>
+      <ul className="mt-2 space-y-2">
+        {request.map((email, index) => (
+          <li key={index} className="text-gray-600">
+          
+            <div className='flex justify-between'>
+            {email}
+            <button
+              onClick={(e) => handleApprove(e,email)}
+              className=" px-2 py-1  bg-green-600 hover:bg-green-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            >
+              Approve
+            </button>
+            </div>
+            
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
       </div>
+     
     </div>)}
     {/* /////////////////////////// */}
 
@@ -153,10 +191,11 @@ function Members() {
         <td className="px-6 py-4 whitespace-nowrap text-md text-black">
         <div className=''>
         <img
-            className="w-16 h-16 rounded-full object-cover"
-            src={item?.image || 'https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg'}
-            //  alt={`Club Member ${index + 1}`}
-           />
+    className="w-10 h-16 rounded  object-cover"
+    src={item?.image || 'https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg'}
+    // alt={`Club Member ${index + 1}`}
+/>
+
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-md text-black">
@@ -370,3 +409,28 @@ export default Members
 // }
 
 // export default Members
+
+
+
+
+// {request.length > 0 && (
+//   <div className="py-4 px-4 m-4 bg-white border-t border-gray-200">
+//     <h1 className="text-lg font-bold text-gray-800">
+//       Membership Requests
+//     </h1>
+//     <ul className="mt-2 space-y-2">
+//       {request.map((email, index) => (
+//         <li key={index} className="text-gray-600">
+//           {email}
+//         </li>
+//       ))}
+//     </ul>
+//     {/* Approve All Button */}
+//     <button
+//       onClick={() => handleApproveAll()}
+//       className="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+//     >
+//       Approve All
+//     </button>
+//   </div>
+// )}

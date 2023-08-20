@@ -76,22 +76,12 @@ function CreateClub() {
       console.log("response", response.data);
 
       if (response.data.message) {
-        console.log("Success message:", response.data.message); 
-        toast.success(response.data.message, {
-          autoClose: 2000,
-          position: toast.POSITION.TOP_RIGHT
-        });
+        toast.success(response.data.message);
       }
       if (response.data.created === true) {
         const userRole = "president";
         const club = response.data.newclubs.clubName;
 
-        // const updatedUser = {
-        //   id:user.id,
-        //   username:user.username,
-        //   email:user.email,
-        //   clubName: club 
-        // };
         dispatch(updateUser({
           id:user.id,
           username:user.username,
@@ -103,13 +93,10 @@ function CreateClub() {
       }
 
       if (response.data.errors) {
-        toast.error(response.data.errors, {
-          autoClose: 2000,
-          position: toast.POSITION.TOP_RIGHT
-        });
+        toast.error(response.data.errors);
       }
     } catch (error) {
-
+     console.log("error");
     }
   }
   const generateError = (err) => toast.error(err, {
@@ -230,9 +217,6 @@ function CreateClub() {
                       <button onClick={handleClubSubmit}>Register</button>
                     </div>
                   </div>
-
-
-
                   <div className="pb-3 text-center">
                     <hr className="my-3"></hr>
                     <a className="text-rgb(0, 0, 0) no-underline">

@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { axiosInstance } from '../../../../Api/config';
+import { ToastContainer,toast } from 'react-toastify'
 function FinanceTreasur({state}) {
   const clubName=state
 console.log("tresurer",clubName);
@@ -19,6 +20,10 @@ const handleExpense = async (e) => {
       clubName,
       ...expenseData,
     });
+    console.log(response);
+    if (response.data.message) {
+      toast.success(response.data.message);
+    }
 
     console.log('Expense added successfully:', response.data);
     // Clear the expense form after successful submission
@@ -114,7 +119,8 @@ const handleExpense = async (e) => {
   </div> */}
   {/* ///////////////////////////// */}
 </div>
-      <br></br>   
+      <br></br>  
+      <ToastContainer/> 
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../../Api/config';
 import ClubNav from './ClubNav';
 import { useSelector } from 'react-redux';
-useSelector
+import { ToastContainer,toast } from 'react-toastify'
 function ClubHome() {
        const {clubName}=useSelector((state)=>state.user)
     const location = useLocation();
@@ -48,7 +48,10 @@ const handleEventSubmit=async(e)=>{
     try {
         console.log("eventss",messages,clubData?._id,);
         const {data} =await axiosInstance.post('/add-events',{messages,club:clubData?._id})
-        console.log(data);  
+        console.log("eventss---",data);
+        if (data.message) {
+            toast.success(data.message)
+        }
         setMessages({
             message:"",
             time:"",
@@ -67,6 +70,9 @@ const deleteEvent=async( id)=>{
        const {data}=await axiosInstance.post('/delete-event',{id:id})
        console.log(data)
        fetchevent()
+       if (data.message) {
+        toast.success(data.message)
+    }
     } catch (error) {
         
     }
@@ -85,8 +91,8 @@ return (
                     "Unites integrity, compassion, shared values; making a positive impact on the community with unity and purposeful actions."
                 </h2>
                 <h1 className="text-4xl font-mono md:pl-8 md:text-start font-semibold mb-4">{clubData ? clubData.clubName : clubName}</h1>
-                <p className="font-medium m-4">
-                    Club description goes here.
+                <p className="font-medium text m-4">
+                {clubData?.clubData?.about}
                 </p>
                 <div className="mt-4 flex justify-start items-start">
                     <button 
@@ -101,11 +107,11 @@ return (
 
         <div className=" md:w-6/12 md:order-0 order-1 md:text-center mt-5 md:mt-0">
     <div className="rounded-lg p-4 overflow-hidden event-style">
-        <div className="relative w-full h-full">
+    <div className="relative w-full h-full">
             <div className="relative top-0 right-0 bottom-0 left-0 rounded-lg overflow-hidden">
                 <img
-                    className="pt-7 rounded-xl md:pt-0 w-full h-auto md:w-120 md:h-96 lg:w-120 lg:h-120 xl:w-160 xl:h-160 mx-auto object-cover"
-                    src={clubData?.clubimg || "https://images.squarespace-cdn.com/content/v1/6192d0ae6818523e63640e70/ea3bb75a-2729-4887-bee4-3eef6a9e40a6/unnamed+%2819%29.jpg"}
+                    className="pt-7 rounded-xl md:pt-0 w-full h-auto md:w-120 md:h-96 lg:w-120 lg:h-120 xl:w-160 xl:h-160 mx-auto object-contain"
+                    src={clubData?.clubimg || "https://static3.depositphotos.com/1006009/206/i/450/depositphotos_2061693-stock-photo-no-image-available-text-on.jpg"}
                     alt="Club image"
                 />
             </div>
@@ -212,6 +218,7 @@ return (
 <br />
 <br />
 </section>
+<ToastContainer/>
 </div>
 );
 }

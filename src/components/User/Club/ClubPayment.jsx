@@ -3,7 +3,7 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { axiosInstance } from '../../../../Api/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ClubNav from './ClubNav';
-
+import { ToastContainer,toast } from 'react-toastify'
 function ClubPayment() {
   const navigate=useNavigate()
     const location=useLocation();
@@ -131,11 +131,15 @@ const clubName=location.state?.club;
                             // Payment capture successful logic
                             const order = await actions.order.capture();
                             const paypalId = order.id; // PayPal transaction ID
-                        const {data}=await axiosInstance.post('/create-payment',{
+                        const response=await axiosInstance.post('/create-payment',{
                             ...paymentdata,clubName,paypalId: paypalId,})
-                           console.log(data);
+                           console.log(response);
+                           console.log(response.data.message);
+                           if (response.data.message) {
+                            toast.success(response.data.message);
+                          }
                            console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-                           console.log(data.added);
+                           console.log(response);
                              navigate('/clubHome')
                           })
                           .catch(function (error) {
@@ -144,6 +148,7 @@ const clubName=location.state?.club;
                           });
                       }}
                     />
+                   
                   </PayPalScriptProvider>
                   
                 ) : null}
@@ -158,6 +163,7 @@ const clubName=location.state?.club;
             </div>
           )}
         </div>
+      <ToastContainer/>
       </div>
     </div>
   );
