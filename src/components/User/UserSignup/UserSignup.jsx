@@ -40,6 +40,7 @@ const navigate=useNavigate()
       console.log("befoor",user)
       const {data} =await axiosInstance.post('/signup',{...user},{withCredentials:true}, )
       console.log(data,"//////////////////////////")
+      console.log(data.data._id);
       console.log(data.data[0],"//////////////////////////")
       if(data){
         console.log("downnnn");     
@@ -53,7 +54,7 @@ const navigate=useNavigate()
         }else{
           localStorage.setItem('user',JSON.stringify({token,user:data.data}))
           // localStorage.setItem('user',JSON.stringify({token,user:data.data[0]}))
-          dispatch(updateUser({username:data.data.username,email:data.data.email,id:data.data.id}));
+          dispatch(updateUser({username:data.data.username,email:data.data.email,id:data.data._id}));
           navigate('/')
 
         }
@@ -175,11 +176,12 @@ const navigate=useNavigate()
                       const  {data} = await axiosInstance.post('/signup',{...UserObject,isGoogleSignup: true },{withCredentials:true})
                     console.log("ReturnDataaaa",data);
                     console.log(data.user);
+                    console.log(data.user._id);
                     if(data){
                       const {token}=data
 
                      localStorage.setItem('user',JSON.stringify({token,user:data.user}))
-                     dispatch(updateUser({username:data.user.username,email:data.user.email,id:data.user.id}));
+                     dispatch(updateUser({username:data.user.username,email:data.user.email,id:data.user._id}));
                       navigate('/')                      
                     }   
                     }}

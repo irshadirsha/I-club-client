@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../../../Api/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../redux/UserSlice/UserSlice';
-
+import { ToastContainer,toast } from 'react-toastify'
   
 function Home() {
   const dispatch=useDispatch()
@@ -41,22 +41,24 @@ function Home() {
     e.preventDefault();
     const {data} = await axiosInstance.post('/make-request', { clubId: id });
     console.log("request",data);
-    
+    if (data.message) {
+      toast.success(data.message)
+    }
   };
   return (
     <>
    <div className='body bg-primary'>
     <div className='flex justify-end'>
     <div className="nav-link fw-medium p-3"  aria-current="page">
-                  <input
-                    className="form-control mr-sm-2 rounded-lg shadow-md  p-1.5 text-sm font-normal border-current border outline-slate-300 hover: transition ease-out duration-500"
-                    type="text"
-                    placeholder="Search For Clubs..."
-                    aria-label="Search"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}   
-                  />
-                </div>
+        <input
+          className="form-control mr-sm-2 rounded-lg shadow-md  p-1.5 text-sm font-normal border-current border outline-slate-300 hover: transition ease-out duration-500"
+          type="text"
+          placeholder="Search For Clubs..."
+          aria-label="Search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}   
+        />
+      </div>
     </div>
     {filteredClubs.length > 0 ? (
        <div className="flex justify-center p-8 space-x-4 flex-wrap">
@@ -72,11 +74,15 @@ function Home() {
                   />
                 </div>
               </div>
-              <div className="p-6 text-center">
+              <div className="p-4 text-center">
                 <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug lowercase tracking-normal text-blue-gray-900 antialiased">
                   {club.clubName}
                 </h4>
-                <p className="block font-sans text-base p-2 font-medium leading-relaxed text-gray-700 antialiased">
+                <p className="block font-sans text-base p-1 font-medium leading-relaxed text-gray-700 antialiased">
+                {club.category}
+                </p>
+               
+                <p className="block font-sans text-base p-1 font-medium leading-relaxed text-gray-700 antialiased">
                 {club.address
                 .split(' ')
                 .slice(0, 2)
@@ -95,7 +101,7 @@ function Home() {
                 clubName: club.clubName,
               };
               dispatch(updateUser(updatedUser));
-              navigate('/club-profile')
+              navigate('/clubhome')
             }}
         >
           View Club
@@ -175,6 +181,7 @@ function Home() {
         )}
 <br></br>
 <br></br>
+<ToastContainer/>
 </div>
 
 

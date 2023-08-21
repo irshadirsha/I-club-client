@@ -33,10 +33,6 @@ const HomeNav = () => {
    
   return (
     <nav className=" border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-       {/* <h1>{filteredClubs?.clubName}</h1> */}
-       {/* <h1>{filteredClubs?.length > 0 ? filteredClubs[0].clubName : ''}</h1>
-       <h1>{filteredClubs?.length > 0 ? filteredClubs[0].about: ''}</h1>
-       <h1>{filteredClubs?.length > 0 ? filteredClubs[0].address : ''}</h1> */}
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a className="flex items-center">
           <span className="self-center text-2xl font-mono font-bold whitespace-nowrap pl-16 text-yellow-600 ">I-club</span>

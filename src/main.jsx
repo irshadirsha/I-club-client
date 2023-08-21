@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         style={{ width: '220px' }} 
         fontSize= '10px'  
         position="top-right"
-        autoClose={2000}
+        autoClose={1000}
       />
     </PersistGate>
     </Provider>

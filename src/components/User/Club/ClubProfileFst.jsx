@@ -239,7 +239,8 @@ function ClubProfileFst() {
     <h1 className=' pl-16 font-extrabold text-2xl font-mono text-yellow-600 ' >POSTS</h1>
  </div>
  <div className="flex justify-center p-8 space-x-4 flex-wrap">
-    {postdata?.map((post, index) => (
+ {postdata?.length > 0 ? (
+    postdata?.map((post, index) => (
       <div className="w-full md:w-1/4 p-6 overflow-hidden" key={index}>
       <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
           <img
@@ -253,27 +254,29 @@ function ClubProfileFst() {
       </div>
   </div>
   
-    ))}
+    ))):(
+      <div className="w-full md:w-1/4 p-6 overflow-hidden" >
+      <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+          <img
+              className="w-full h-56 object-contain"
+              src="https://img.republicworld.com/republic-prod/stories/promolarge/hdpi/1kutzil5lj0nvfsf_1596544016.jpeg"
+              alt="Post"
+          />
+          <div className="p-4">
+              <p className="text-gray-700 text-lg font-semibold">Images</p>
+          </div>
+      </div>
+  </div>
+    )}
 </div>
-
-
-
-
     </div>
-    </section>
-    
-    
+    </section> 
     <ToastContainer/>
     </div>
   )
 }
 
 export default ClubProfileFst
-
-
-
-
-
 
 
 

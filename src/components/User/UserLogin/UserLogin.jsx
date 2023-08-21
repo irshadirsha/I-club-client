@@ -49,6 +49,7 @@ function UserLogin() {
       const { data } = await axiosInstance.post('/login', { ...userlogin }, { withCredentials: true })
       console.log("ssssssssssssssssssssss");
       console.log(data);
+      console.log(data.userData._id);
       const { token } = data
       if (data.errors) {
         const { email, password } = data.errors
@@ -57,7 +58,7 @@ function UserLogin() {
       } else {
         console.log("nav to home", data);
         localStorage.setItem('user', JSON.stringify({ token, user: data.userData }))
-        dispatch(updateUser({username:data.userData.username,email:data.userData.email,id:data.userData.id}));
+        dispatch(updateUser({username:data.userData.username,email:data.userData.email,id:data.userData._id}));
         navigate('/')
       }
     } catch (error) {
