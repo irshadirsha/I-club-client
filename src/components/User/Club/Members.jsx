@@ -185,18 +185,17 @@ function Members() {
       </tr>
     </thead>
     <tbody className="bg-white divide-y divide-gray-200">
-    {/* {memberlist?.map((item, index) => ( */}
       {memberlist?.slice(startIndex, endIndex).map((item, index) => (
       <tr key={item._id}>
         <td className="px-6 py-4 whitespace-nowrap text-md text-black">
-        <div className=''>
-        <img
-    className="w-10 h-16 rounded  object-cover"
-    src={item?.image || 'https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg'}
-    // alt={`Club Member ${index + 1}`}
-/>
+          <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <img
+                            src={item?.image || "https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg"}
+                            // alt="avatar 1"
+                            // className="w-full h-full object-cover"
+                        />
+                    </div >
 
-          </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-md text-black">
           {item.username}

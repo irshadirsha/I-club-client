@@ -145,10 +145,110 @@ return (
     </div>
 
     <div className="flex flex-col pt-12 md:flex-row items-center">
-        <div className=" md:w-6/12 md:text-left text-center  py-6 md:mt-3">
-            <div className="text-center md:text-start md:pl-6 pl-4 pr-8  md:ml-8 md:mt-5">
+{/* ITS CHAT MESSAGES */}
+     <div className=" md:w-6/12 md:text-left text-center p-8 py-2 md:mt-3">
+<div className="col-sm-6">
+  <h1 className=" text-4xl text-center px-2 font-semibold font-mono">Chat</h1>
+  <section className="  rounded-lg shadow-md overflow-hidden">
+    <div className="card">
+      <div className="bg-blue-200 card-header  flex justify-between items-center p-3 border-t-4 border-blue-700 ">
+        <h5 className="text-md font-semibold">Chat messages</h5>
+        <h5 className="text-lg font-bold">{clubName}</h5>
+        <div className="flex flex-row items-center space-x-3">
+          <div className="nav-item dropdown relative">
+            {/* <button className="d-inline-block py-2 px-3 text-black text-sm font-medium dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Active members
+            </button> */}
+            <ul className="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-md bg-white" aria-labelledby="navbarDropdown">
+              {/* <li><a className="dropdown-item">User 1</a></li> */}
+              {/* Add more active users here */}
+            </ul>
+          </div>
+          <i className="fas fa-minus text-gray-500 text-xs"></i>
+          <i className="fas fa-comments text-gray-500 text-xs"></i>
+          <i className="fas fa-times text-gray-500 text-xs"></i>
+        </div>
+      </div>
+      <div className="bg-gray-300 card-body  border overflow-y-auto relative" style={{ height: '400px' }}>
+    {showmessage?.map((message, index) => (
+        (message?.user?._id !== currentuser) ? (
+            <div key={index}>   
+                {/* <div className="flex justify-between">
+                    <p className="small mb-0">{message?.user?.username}</p>
+                </div> */}
+                <div className="flex flex-row items-center mx-2 pt-4 space-x-2">
+                    <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <img
+                            src={message?.user?.image || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"}
+                            alt="avatar 1"
+                            // className="w-full h-full object-cover"
+                        />
+                    </div >
+                    <div className='w-auto max-w-[70%]'>
+                    <p className="text-xs text-start text-gray-500">{message?.user?.username}</p>
+                        <p className="p-1  text-start break-words bg-gray-100  text-gray-800 rounded-lg">{message?.message}</p>
+                        <p className="text-xs text-start text-gray-500 mt-0">
+                         {new Date(message?.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                       </p>
+
+                    </div>
+                </div>
+            </div>
+        ) : (
+            <div key={index} className="flex justify-end">
+                <div className="flex flex-row-reverse items-center mx-2 pt-4 space-x-2">
+                    <div className="w-12 h-12 rounded-full mx-2 overflow-hidden">
+                        <img
+                            src={message?.user?.image || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"}
+                            alt="avatar 1"
+                            // className="w-12 h-12 object-cover"
+                        />
+                    </div>
+                    
+                    <div className='w-auto max-w-[70%]'>
+                        <p className="text-xs text-end text-gray-500">{message?.user?.username}</p>
+                        <p className="p-1  text-start break-words bg-gray-400 text-white rounded-lg">{message?.message}</p>
+                        <p className="text-xs text-end text-gray-500 mt-0">
+                         {new Date(message?.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                       </p>
+
+                    </div>
+                </div>
+            </div>
+        )
+    ))}
+</div>
+
+      <div className="bg-blue-200 border card-footer text-muted flex justify-start items-center p-3">
+        <div className="flex justify-between w-full input-group">
+          <input
+            type="text"
+            className="form-control w-full  border-2 px-1 py-1 rounded-md"
+            placeholder='enter message...'
+            value={chatMessage}
+          onChange={(e) => setChatMessage(e.target.value)}
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+          />
+          <button
+            className="bg-primary mx-2 text-white py-1 px-6 rounded-md"
+            type="button"
+            id="button-addon2"
+            onClick={handleSendMessage}
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+    {/* EVENT HANDLING */}
+        <div className="  md:w-6/12 md:text-left text-center  py-6 md:mt-3">
+            <div className="  text-center md:text-start md:pl-4  md:pr-8  md:ml-8 md:mt-5">
                 <h1 className="text-4xl font-mono md:pl-8 md:text-center font-semibold mb-4">Events</h1>
-                <div className="p-1 mb-2 responsive-form">
+                <div className=" p-1  mb-2 responsive-form">
                     {/* i need to show input div only if user secretiry or presidenrt */}  
                         { (role === 'president' || role === 'secretory') && (   
                     <div className="p-3 mb-2 bg-gray-300 rounded-3xl  border-current border">
@@ -228,111 +328,23 @@ return (
        </div>
        ))
     ) : (
-        <p className="text-center text-black">No events available</p>
+        <div className='flex justify-center items-center'>
+        <div className="w-full h-full flex flex-col justify-center items-center rounded overflow-hidden">
+            <img
+                src="https://www.iimnagpur.ac.in/CoE/CCDA/wp-content/themes/iimnagpur_ccda/images/no-event.jpg"
+                alt="avatar 1"
+                className="mx-auto rounded-md"
+            />
+            <p className="text-center text-black">No events available</p>
+        </div>
+    </div>
+    
     )}
 
    </div>
         </div>
 {/* ///////////////////////////// */}
-<div className=" md:w-6/12 md:text-left text-center p-8 py-6 md:mt-3">
-<div className="col-sm-6">
-  <h1 className=" text-3xl text-center  font-bold">Chat</h1>
-  <section className="bg-red-400  rounded-lg shadow-md overflow-hidden">
-    <div className="card">
-      <div className="bg-blue-200 card-header flex justify-between items-center p-3 border-t-4 border-blue-700 ">
-        <h5 className="text-lg font-semibold">Chat messages</h5>
-        <div className="flex flex-row items-center space-x-3">
-          <div className="nav-item dropdown relative">
-            {/* <button className="d-inline-block py-2 px-3 text-black text-sm font-medium dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Active members
-            </button> */}
-            <ul className="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-md bg-white" aria-labelledby="navbarDropdown">
-              {/* <li><a className="dropdown-item">User 1</a></li> */}
-              {/* Add more active users here */}
-            </ul>
-          </div>
-          <i className="fas fa-minus text-gray-500 text-xs"></i>
-          <i className="fas fa-comments text-gray-500 text-xs"></i>
-          <i className="fas fa-times text-gray-500 text-xs"></i>
-        </div>
-      </div>
-      <div className="bg-green-200 card-body overflow-y-auto relative" style={{ height: '400px' }}>
-    {showmessage?.map((message, index) => (
-        (message?.user?._id !== currentuser) ? (
-            <div key={index}>   
-                {/* <div className="flex justify-between">
-                    <p className="small mb-0">{message?.user?.username}</p>
-                </div> */}
-                <div className="flex flex-row items-center mx-2 pt-4 space-x-2">
-                    <div className="w-12 h-12 rounded-full overflow-hidden">
-                        <img
-                            src={message?.user?.image || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"}
-                            alt="avatar 1"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    <div>
-                    <p className="text-xs text-start text-gray-500">{message?.user?.username}</p>
-                        <p className="p-1 w-75% bg-gray-100  text-gray-800 rounded-lg">{message?.message}</p>
-                        <p className="text-xs text-gray-500 mt-0">
-                         {new Date(message?.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                       </p>
 
-                    </div>
-                </div>
-            </div>
-        ) : (
-            <div key={index} className="flex justify-end">
-                <div className="flex flex-row-reverse items-center mx-2 pt-4 space-x-2">
-                    <div className="w-12 h-12 rounded-full mx-2 overflow-hidden">
-                        <img
-                            src={message?.user?.image || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"}
-                            alt="avatar 1"
-                            className="w-12 h-12 object-cover"
-                        />
-                    </div>
-                    <div>
-                        <p className="text-xs text-end text-gray-500">{message?.user?.username}</p>
-                        <p className="p-1  w-75%  bg-gray-400 text-white rounded-lg">{message?.message}</p>
-                        <p className="text-xs text-gray-500 mt-0">
-                         {new Date(message?.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                       </p>
-
-                    </div>
-                </div>
-            </div>
-        )
-    ))}
-</div>
-
-      <div className="bg-blue-200 card-footer text-muted flex justify-start items-center p-3">
-        <div className="flex justify-between w-full input-group">
-          <input
-            type="text"
-            className="form-control w-full  border-2 px-3 py-2 rounded-md"
-            placeholder='enter message...'
-            value={chatMessage}
-          onChange={(e) => setChatMessage(e.target.value)}
-            aria-label="Recipient's username"
-            aria-describedby="button-addon2"
-          />
-          <button
-            className="bg-blue-500 mx-3 text-white py-2 px-6 rounded-md"
-            type="button"
-            id="button-addon2"
-            onClick={handleSendMessage}
-          >
-            Send
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </section>
-</div>
-
-
-</div>
 {/* ///////////////////////////// */}
        
     </div>
