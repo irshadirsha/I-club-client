@@ -88,8 +88,10 @@ function Home() {
                 .slice(0, 2)
                .join(' ')}
                 </p>
-            
-            { (club?.userRole==='president' || club?.userRole=== 'secretory' ||club?.userRole==='treasurer' ||club?.userRole==='member') ? (
+            {/* {(club?.isblacklisted==true ) && ( <h1>this club is blackliste</h1>)} */}
+            {club?.isblacklisted === true ? (
+                  <h1 className='text-red-600'>This club is blacklisted</h1>
+                ) : (club?.userRole==='president' || club?.userRole=== 'secretory' ||club?.userRole==='treasurer' ||club?.userRole==='member') ? (
                <button
           className="btn text-black font-mono rounded-lg  px-4   bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
           exact
@@ -112,7 +114,7 @@ function Home() {
              exact>
              request for join
              </button>
-          ) }
+          ) } 
               </div>
          </div>
      </div>

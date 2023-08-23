@@ -29,7 +29,8 @@ function AdminSidebar() {
         <h6><a onClick={adminlogout} className="text-white "><i>Logout</i></a></h6>
       </div>
     </div>
-  </div>
+    </div>
+
   )
 }
 

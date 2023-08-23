@@ -49,12 +49,12 @@ function UserLogin() {
       const { data } = await axiosInstance.post('/login', { ...userlogin }, { withCredentials: true })
       console.log("ssssssssssssssssssssss");
       console.log(data);
-      console.log(data.userData._id);
       const { token } = data
       if (data.errors) {
-        const { email, password } = data.errors
+        const { email, password,Block } = data.errors
         if (email) generateError(email)
         else if (password) generateError(password)
+        else if (Block) generateError(Block)
       } else {
         console.log("nav to home", data);
         localStorage.setItem('user', JSON.stringify({ token, user: data.userData }))

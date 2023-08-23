@@ -33,15 +33,21 @@ const navigate=useNavigate()
   const handleSubmit = async(e)=>{
     e.preventDefault()
     try {
+      if (user.username == '') {
+        generateError("please Enter Username");
+        return;
+      }
+      if (user.email == '') {
+        generateError("please Enter Email");
+        return;
+      }
       if (user.password !== user.confirmpassword) {
         generateError("Passwords do not match");
         return;
       }
       console.log("befoor",user)
       const {data} =await axiosInstance.post('/signup',{...user},{withCredentials:true}, )
-      console.log(data,"//////////////////////////")
-      console.log(data.data._id);
-      console.log(data.data[0],"//////////////////////////")
+      console.log('singupdata',data)
       if(data){
         console.log("downnnn");     
         const { token } = data;
@@ -53,7 +59,6 @@ const navigate=useNavigate()
           else if(confirmpassword) generateError(confirmpassword)
         }else{
           localStorage.setItem('user',JSON.stringify({token,user:data.data}))
-          // localStorage.setItem('user',JSON.stringify({token,user:data.data[0]}))
           dispatch(updateUser({username:data.data.username,email:data.data.email,id:data.data._id}));
           navigate('/')
 
@@ -65,7 +70,7 @@ const navigate=useNavigate()
   }
   const generateError=(err)=>toast.error(err,{
     autoClose:2000,
-    position: toast.POSITION.TOP_RIGHT
+    position: toast.POSITION.TOP_RIGHT,
   })
    
    

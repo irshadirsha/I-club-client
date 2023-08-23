@@ -160,8 +160,8 @@ function Members() {
     </div>)}
     {/* /////////////////////////// */}
 
-  <div className=" overflow-x-auto p-6">
-  <table className="min-w-full border border-gray-200 divide-y divide-gray-200">
+  <div className=" overflow-x-auto px-6">
+  <table className="min-w-full border border-gray-200 divide-y  divide-gray-200">
     <thead className="bg-gray-50">
       <tr>
         <th className="px-6 py-3 text-left text-md font-bold font-mono text-black uppercase tracking-wider">

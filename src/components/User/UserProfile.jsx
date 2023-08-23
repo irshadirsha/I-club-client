@@ -23,10 +23,11 @@ function UserProfile() {
   const [fetched, setFetched] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [clubdata,setClubData]=useState([])
   useEffect(() => {
     fetchUserData();
   }, []);
-   
+   console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",profile);
   const openImageModal = () => {
     setIsImageModalOpen(true);
   };
@@ -70,8 +71,9 @@ function UserProfile() {
       console.log("getuserprofil", email)
       const { data } = await axiosInstance.post('/getuser-profile');
       console.log(data.userdata);
-      console.log("============",data.clubs)
-      console.log("fetching");
+      console.log("============",data)
+      console.log("fetching",data.userdata.clubs);
+      setClubData(data.userdata.clubs)
       setProfile(data.userdata);
       setFetched(true);
     } catch (error) {
@@ -275,18 +277,22 @@ function UserProfile() {
           {profile?.clubs.map((club) => (
             <div className="bg-primary m-6 grid grid-cols-1 rounded-md gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {/* Other grid items */}
-              <div key={club._id} className='bg-slate-400 m-2  rounded-md col-span-1 sm:col-span-2 lg:col-span-1 mx-auto flex items-center'>
+            
+              <div  className='bg-slate-400 m-2 w-20 h-20 rounded-md col-span-1 sm:col-span-2 lg:col-span-1 mx-auto flex items-center'>
                 <img
-                  src={club?.clubimg || "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="}
+                  src={club?.club?.clubimg || "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="}
                   alt="Profile"
-                  className="w-20 h-20 rounded-md object-cover mx-auto"
+                  className=" rounded-md object-cover p-2"
                 />
               </div>
               <div className='text-center md:py-6 flex-grow'>
                 <h1 className='text-lg font-mono font-bold'>{club.clubName}<br></br>{club.role}</h1>
                 
               </div>
-              <div className="md:py-6 ">
+              {club?.club?.isblacklisted === true ? (
+                  <h1 className='text-red-600 flex items-center'>This club is blacklisted</h1>
+                ) :(
+              <div className="md:py-6 flex items-center ">
                 <button
                 onClick={()=>{
                   const updatedUser = {
@@ -297,15 +303,15 @@ function UserProfile() {
                   };
                   dispatch(updateUser(updatedUser));
                   navigate('/clubhome',)}}
-                  // {state:{userRole:club.role,id:profile._id,club:club.clubName}})}}
                 type="submit" className="btn text-black font-mono rounded-lg px-4 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
                   View {club.clubName}
                 </button>
-              </div>
+              </div>)}
 
             </div>
           ))}
-
+          
+          
         </div>
       </div>
       <ToastContainer />
@@ -360,7 +366,7 @@ export default UserProfile
 
 
 
-
+  // {state:{userRole:club.role,id:profile._id,club:club.clubName}})}}
 // import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 // import { ToastContainer, toast } from 'react-toastify'

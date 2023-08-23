@@ -5,6 +5,10 @@ import { axiosInstance } from '../../../Api/config';
 
 function Adminusermanage() {
   const [getuser, setGetUser] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 6; // Set the desired number of items per page
+const [searchQuery, setSearchQuery] = useState('');
+
   const handleUserUnBlock = async (e, id) => {
     e.preventDefault();
     const Unblock = await axiosInstance.post('/admin/unblock-user', { Unblockid: id });
@@ -32,7 +36,26 @@ function Adminusermanage() {
   useEffect(() => {
     fetchdata();
   }, [fetchdata]);
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1); // Reset page to 1 when search query changes
+  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
+  const filteredItems = getuser.filter(item =>
+    item.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.email.toLowerCase().includes(searchQuery.toLowerCase()) 
+  );
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+  
   return (
     <div>
       <div className="flex flex-col md:flex-row">
@@ -41,8 +64,17 @@ function Adminusermanage() {
 
         {/* Table */}
         <div className="md:w-3/3 sm:w-full p-4">
-          <div>
+          <div className=' flex justify-around'>
             <p className="px-3 py-3 text-2xl font-bold font-serif text-center">USERS</p>
+            <div className='search'>
+            <input
+              type="text"
+              placeholder="Search by name, email....."
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+              className="px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-gray-500"
+            />
+            </div>
           </div>
           <div className="w-full overflow-x-auto">
             <table className="w-full table-auto rounded-lg shadow-lg bg-white">
@@ -58,22 +90,26 @@ function Adminusermanage() {
                 </tr>
               </thead>
               <tbody className="text-gray-600">
-                {getuser.map((item, index) => (
+                {currentItems.map((item, index) => (
                   <tr className="border-b border-gray-300 hover:bg-gray-100" key={index}>
-                    <td className="px-4 text-center py-3">{index + 1}</td>
+                    <td className="px-4 text-center py-3">{indexOfFirstItem + index + 1}</td>
                     <td className="px-4 text-center  py-3">
                     {item.image ? (
+                      <div className="w-12 h-12 rounded-full overflow-hidden"> 
                         <img
-                          className="m-2 w-16 h-16 rounded-full"
+                          className=""
                           src={item.image}
                           alt="Generic placeholder image"
                         />
+                      </div>
                       ) : (
+                        <div className="w-12 h-12 rounded-full overflow-hidden"> 
                         <img
-                          className="m-2 w-16 h-16 rounded-full"
-                          src="https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg"
+                          className=""
+                          src='https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg'
                           alt="Generic placeholder image"
                         />
+                      </div>
                       )}
                     </td>
                     <td className="px-4 text-center  py-3">{item.username}</td>
@@ -99,6 +135,23 @@ function Adminusermanage() {
                 ))}
               </tbody>
             </table>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded mr-2"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
+              >
+                Next
+              </button>
+            </div>
+
           </div>
         </div>
       </div>

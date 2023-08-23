@@ -6,11 +6,13 @@ import { useNavigate } from 'react-router-dom';
 function AdminClubManage() {
   const navigate=useNavigate()
   const [getclub, setGetClub] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // State to keep track of the current page
+  const itemsPerPage = 5; // Number of items displayed per page
 
   useEffect(() => {
     fetchdata()
   }, [])
-
+  console.log('////////////////////////////////',getclub);
   const fetchdata = async () => {
     try {
       const { data } = await axiosInstance.post('/admin/get-clubdata');
@@ -21,12 +23,19 @@ function AdminClubManage() {
       console.error('Error fetching data:', error);
     }
   }
+  console.log('currentPage:', currentPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = getclub.slice(indexOfFirstItem, indexOfLastItem); // Subset of items for the current page
+  console.log(currentItems);
+
 const handleBlacklist = async (e,id) => {
   try {
     e.preventDefault()
-    console.log(id)
+    console.log("blacklisting iddd",id)
     const {data} = await axiosInstance.post('/admin/set-blacklist',{id:id})
     console.log(data)
+    fetchdata()
   } catch (error) {
     console.log("blacklisting error")
   }
@@ -61,25 +70,20 @@ const navToClubView = (id) => {
                 </tr>
               </thead>
               <tbody className="text-gray-600">
-                {getclub.map((club, index) => (
+                {currentItems .map((club, index) => (
 
 
                   <tr key={index} className="border-b border-gray-300 hover:bg-gray-100">
-                    <td className="px-4 text-center py-3">{index + 1}</td>
+                    <td className="px-4 text-center py-3">{indexOfFirstItem + index + 1}</td>
                     <td className="px-4 text-center  py-3">
-                      {club.image ? (
-                        <img
-                          className="m-2 w-16 h-16 rounded-full"
-                          src={club.image}
-                          alt="Generic placeholder image"
-                        />
-                      ) : (
-                        <img
-                          className="m-2 w-16 h-16 rounded-full"
-                          src="https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg"
-                          alt="Generic placeholder image"
-                        />
-                      )}
+                    <div className="w-16 h-16   flex items-center overflow-hidden">
+                    <img
+                        className="rounded-md"
+                        src={club.clubimg || 'https://www.shutterstock.com/image-vector/no-user-profile-picture-hand-260nw-99335579.jpg'}
+                        alt="President"
+                    />
+                    </div>
+                     
 
                     </td>
                     <td className="px-4 text-center  py-3">{club.clubName}</td>
@@ -87,11 +91,12 @@ const navToClubView = (id) => {
                     <td className="px-4 text-center   py-3">{club.registerNo}</td>
                     <td className="px-4 text-center   py-3">
                     { club.isblacklisted ? (<a
-                     onClick={(e)=>handleBlacklist(e,club._id)}
+                    
                       className="text-lg text-red-500 font-semibold px-4 py-1 ">
                         BlackListed
                       </a>) : (
-                      <button                    
+                      <button   
+                      onClick={(e)=>handleBlacklist(e,club._id)}                 
                       className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded">
                        Add To BlackList
                       </button>  )}
@@ -108,6 +113,22 @@ const navToClubView = (id) => {
               </tbody>
             </table>
           </div>
+          <div className="flex justify-center mt-4">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
+            onClick={() => setCurrentPage(currentPage - 1)} // Go to previous page
+            disabled={currentPage === 1} // Disable when on the first page
+          >
+            Previous
+          </button>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            onClick={() => setCurrentPage(currentPage + 1)} // Go to next page
+            disabled={indexOfLastItem >= getclub.length} // Disable when on the last page
+          >
+            Next
+          </button>
+        </div>
         </div>
       </div>
     </div>

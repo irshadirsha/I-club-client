@@ -21,6 +21,8 @@ import MembersPage from './pages/Club/MembersPage';
 import './App.css'
 import ClubProfilePage from './pages/Club/ClubProfilePage';
 import ClubSettingPage from './pages/Club/ClubSettingPage';
+import AboutPage from './pages/user/AboutPage';
+import NewsPage from './pages/Club/NewsPage';
 
 function App() {
   
@@ -44,6 +46,7 @@ function App() {
           <Route path='/signup' element={<UserSignupPage/>}></Route>
           <Route path='/login' element={<UserLoginPage/>}></Route>
           {/* <Route path='/sendmail' element={<EmailSendPage/>}></Route> */}
+          <Route path='/about' element={<AboutPage/>}></Route>
           <Route path='/reset-password' element={<ChangePasswordPage/>}></Route>
           <Route path='/new-password' element={<SetnewPassPage/>}></Route>
           <Route path='/user-profileupdate' element={<ProtectedRoute><UserProfilePage/></ProtectedRoute>}></Route>
@@ -58,6 +61,7 @@ function App() {
           <Route path='/members' element={<MembersPage/>}></Route>
           <Route path='/club-profile' element={<ClubProfilePage/>}></Route>
           <Route path='/club-setting' element={<ClubSettingPage/>}></Route>
+          <Route path='/news' element={<NewsPage/>}></Route>
 
 
   
