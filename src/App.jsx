@@ -23,6 +23,7 @@ import ClubProfilePage from './pages/Club/ClubProfilePage';
 import ClubSettingPage from './pages/Club/ClubSettingPage';
 import AboutPage from './pages/user/AboutPage';
 import NewsPage from './pages/Club/NewsPage';
+import MeetingPage from './pages/Club/MeetingPage';
 
 function App() {
   
@@ -62,6 +63,7 @@ function App() {
           <Route path='/club-profile' element={<ClubProfilePage/>}></Route>
           <Route path='/club-setting' element={<ClubSettingPage/>}></Route>
           <Route path='/news' element={<NewsPage/>}></Route>
+          <Route path='/meeting' element={<MeetingPage/>}></Route>
 
 
   

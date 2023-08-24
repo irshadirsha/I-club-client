@@ -39,9 +39,9 @@ function ClubNav() {
     };
     const naveToHome=()=>{
         dispatch(updateUser({
-            id:user.id,
-            username:user.username,
-            email:user.email,
+            id:users.id,
+            username:users.username,
+            email:users.email,
             clubName:"",
           }));
        navigate('/')
@@ -155,9 +155,10 @@ function ClubNav() {
                                                     </NavLink>
                                                 </li>
                                                 <li>
-                                                    <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                    <NavLink to='/meeting'
+                                                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"exact>
                                                         Meeting
-                                                    </a>
+                                                    </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink to='/news'

@@ -9,6 +9,7 @@ import { ToastContainer,toast } from 'react-toastify'
 function Home() {
   const dispatch=useDispatch()
   const user=useSelector(state=>state.user)
+  console.log("redux users",user);
   const [query, setQuery] = useState('');
   const [filteredClubs, setFilteredClubs] = useState([]);
   const navigate=useNavigate()
