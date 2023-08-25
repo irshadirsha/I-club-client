@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import AdminSidebar from './AdminSidebar';
 import axios from 'axios';
-import { axiosInstance } from '../../../Api/config';
+import { adminaxios } from '../../../Api/config';
 
 function Adminusermanage() {
   const [getuser, setGetUser] = useState([]);
@@ -11,21 +11,21 @@ const [searchQuery, setSearchQuery] = useState('');
 
   const handleUserUnBlock = async (e, id) => {
     e.preventDefault();
-    const Unblock = await axiosInstance.post('/admin/unblock-user', { Unblockid: id });
+    const Unblock = await adminaxios.post('/unblock-user', { Unblockid: id });
     fetchdata()
     console.log(Unblock.data);
   }
 
   const handleUserBlock = async (e, id) => {
     e.preventDefault();
-    const block = await axiosInstance.post('/admin/block-user', { blockid: id });
+    const block = await adminaxios.post('/block-user', { blockid: id });
     fetchdata()
     console.log("blokinggg", block.data);
   };
 
   const fetchdata = useCallback(async () => {
     try {
-      const data = await axiosInstance.get('/admin/admin-usermanage');
+      const data = await adminaxios.get('/admin-usermanage');
       console.log(data);
       setGetUser(data.data.userdata);
     } catch (error) {

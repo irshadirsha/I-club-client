@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { axiosInstance } from '../../../Api/config';
+import { adminaxios, axiosInstance } from '../../../Api/config';
 
 function AdminLogin() {
     const navigate=useNavigate()
@@ -23,17 +23,22 @@ function AdminLogin() {
         e.preventDefault();
         try {
              console.log("before",admin);
-           const {data} = await axiosInstance.post(`/admin/adminLogin`,{...admin},{withCredentials:true})
+           const data= await adminaxios.post('/adminLogin',{...admin},{withCredentials:true})
            console.log(data,"----------------");
+           const { token } = data.data
+           console.log(token);
+           console.log(data.data.admin);
+           console.log(data.data.admin);
+           console.log(data.data);
             if(data){
-                if(data.errors){
+                if(data.data.errors){
                     const {username,password}=data.errors;
                     if(username)generateError(username)
                     else if(password)generateError(password)
 
                 }else{
-                    if(data.token){
-                        localStorage.setItem('admin',(data))
+                    if(data){
+                      localStorage.setItem('admin', JSON.stringify({ token, admin: data.data.admin }))
                         navigate('/admin')
                     }
                 }

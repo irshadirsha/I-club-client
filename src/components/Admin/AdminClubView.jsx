@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AdminSidebar from './AdminSidebar';
 import { useLocation } from 'react-router-dom';
-import { axiosInstance } from '../../../Api/config';
+import { adminaxios } from '../../../Api/config';
+// import { axiosInstance } from '../../../Api/config';
 function AdminClubView() {
 const location = useLocation();
 const id = location.state?.id;
@@ -13,7 +14,7 @@ const [post,setPost]=useState([])
    }, [])
 const fetchdata = async () => {
 console.log("view", id);
-const response = await axiosInstance.get(`/admin/club-details?id=${id}`);
+const response = await adminaxios.get(`/club-details?id=${id}`);
 console.log(response.data.post);
 const fetchedData = response.data.data;
 setAllData(fetchedData);

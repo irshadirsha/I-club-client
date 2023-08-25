@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import AdminSidebar from './AdminSidebar'
-import { axiosInstance } from '../../../Api/config';
+// import { axiosInstance } from '../../../Api/config';
 import { useNavigate } from 'react-router-dom';
+import { adminaxios } from '../../../Api/config';
 
 function AdminClubManage() {
   const navigate=useNavigate()
@@ -15,7 +16,7 @@ function AdminClubManage() {
   console.log('////////////////////////////////',getclub);
   const fetchdata = async () => {
     try {
-      const { data } = await axiosInstance.post('/admin/get-clubdata');
+      const { data } = await adminaxios.post('/get-clubdata');
       console.log(data);
       console.log(data.club);
       setGetClub(data.club);
@@ -33,7 +34,7 @@ const handleBlacklist = async (e,id) => {
   try {
     e.preventDefault()
     console.log("blacklisting iddd",id)
-    const {data} = await axiosInstance.post('/admin/set-blacklist',{id:id})
+    const {data} = await adminaxios.post('/set-blacklist',{id:id})
     console.log(data)
     fetchdata()
   } catch (error) {

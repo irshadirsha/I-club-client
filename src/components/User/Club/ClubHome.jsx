@@ -37,12 +37,12 @@ useEffect(()=>{
      fetchdata()
      fetchevent()
      fetchmessage()
-     socket.on('chatMessage', (newMessage) => {
-        setShowMessage((prevMessages) => [...prevMessages, newMessage]);
-      });
-      return () => {
-        socket.disconnect();
-      };
+    //  socket.on('chatMessage', (newMessage) => {
+    //     setShowMessage((prevMessages) => [...prevMessages, newMessage]);
+    //   });
+    //   return () => {
+    //     socket.disconnect();
+    //   };
 },[])
 const fetchevent=async()=>{
     const {data}= await axiosInstance.post('/get-event',{clubName})

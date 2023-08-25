@@ -4,7 +4,13 @@ import Meeting from '../../components/User/Club/Meeting'
 
 function MeetingPage() {
   return (
-    <div>
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       <ClubNav/>
       <Meeting/>
     </div>
