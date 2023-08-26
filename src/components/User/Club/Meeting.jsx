@@ -16,8 +16,9 @@ const fetchdata=async()=>{
     params:{clubName}
   })
   console.log("meeting response",data);
-  setuserRole(data)
+  setuserRole(data.data)
 }
+console.log("rolee",userRole);
 
   return (
     <div>

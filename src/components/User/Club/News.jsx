@@ -31,8 +31,9 @@ function News() {
       <ClubNav/>
       <div className="bg-primary container my-4 mx-auto md:px-6">
         <h1 className='text-4xl text-center pb-4 font-mono font-bold'>News</h1>
-        <section className="mb-32 text-center">
-          {news.map((article, index) => (
+        {news.length > 0 ? (
+            <section className="mb-32 text-center">
+           {news?.map((article, index) => (
             <div key={index} className="mb-12 flex flex-wrap justify-center">
               <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-10/12">
                 <div className="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20" data-te-ripple-init data-te-ripple-color="light">
@@ -59,7 +60,11 @@ function News() {
               </div>
             </div>
           ))}
-        </section>
+        </section>):(
+        <div className='flex justify-center items-center'>
+        <img
+          src= "https://media.istockphoto.com/id/1264074047/vector/breaking-news-background.jpg?s=612x612&w=0&k=20&c=C5BryvaM-X1IiQtdyswR3HskyIZCqvNRojrCRLoTN0Q="/>
+        </div>)}
       </div>
     </div>
   )

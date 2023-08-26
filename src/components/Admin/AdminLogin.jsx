@@ -54,7 +54,7 @@ function AdminLogin() {
   return (
     <div>
       
-      <section className="bg-gray-300  overflow-y-hidden">
+      <section className="bg-gray-500  overflow-y-hidden">
 <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-20">
   <div className="md:flex md:gap-x-6 md:items-center mb-10">
     <div className="md:w-1/2 ml-10 mb-5  md:mb-0 z-10">
@@ -71,7 +71,7 @@ function AdminLogin() {
       <div id="radius-shape-2" className="absolute shadow-5-strong"></div>
       {/* /////////////////////// */}
 
-       <div className="bg-white rounded-lg  ">
+       <div className="bg-glass rounded-lg  ">
 
          <div className='hero-title text-hsl(217, 93%, 28%) text-center pt-5 '>
            <h1>Admin Login</h1>
@@ -105,7 +105,7 @@ function AdminLogin() {
              <label className="form-label" htmlFor="form3Example4">Password</label>
            </div>
            <div className='text-center  flex justify-center items-center'>
-             <div className='text-center border-current borde bg-gray-300 p-2 w-32  rounded-lg text-black'>
+             <div className='text-center border-current borde bg-gray-500 p-2 w-32  rounded-lg text-black'>
                <button onClick={handleLogin}>Login</button>
              </div>
            </div>

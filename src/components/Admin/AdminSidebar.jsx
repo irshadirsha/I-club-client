@@ -23,7 +23,7 @@ function AdminSidebar() {
         <h6><a className="text-white "><i>Banner</i></a></h6>
       </div>
       <div className="bg-gray-500 w-90 h-10 mt-6 text-center rounded-lg py-2">
-        <h6><a  className="text-white "><i>Blacklist</i></a></h6>
+        <h6><a onClick={()=>navigate('/blacklisted')}  className="text-white "><i>Blacklist</i></a></h6>
       </div>
       <div className="bg-gray-500 w-90 h-10 mt-6 text-center rounded-lg py-2">
         <h6><a onClick={adminlogout} className="text-white "><i>Logout</i></a></h6>
