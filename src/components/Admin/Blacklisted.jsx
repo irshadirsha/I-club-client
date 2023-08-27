@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import AdminSidebar from './AdminSidebar'
 import { adminaxios } from '../../../Api/config'
 import { useNavigate } from 'react-router-dom'
-
+import Swal from 'sweetalert2'
 function Blacklisted() {
     const navigate=useNavigate()
     const [blacklisted,setBlacklisted]=useState([])
@@ -20,10 +20,24 @@ function Blacklisted() {
   }
   const removeFromBlackList =async (e,id)=>{
     e.preventDefault()
-    console.log(id)
-    const res=await adminaxios.post('/removeblacklist',{id:id})
-    console.log(res)
-    fetchdata()
+    Swal.fire({
+      title: 'Remove from Blacklist Confirmation',
+      text: 'Are you sure you want to remove from the Blacklist?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Remove!',
+      cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res=await adminaxios.post('/removeblacklist',{id:id})
+        fetchdata()
+        if (res.data.message) {
+          Swal.fire('Success', res.data.message, 'success');
+        }
+        console.log(res);
+      }
+    });
+   
 
   }
   return (
@@ -89,3 +103,14 @@ function Blacklisted() {
 }
 
 export default Blacklisted
+
+
+
+
+
+
+
+// console.log(id)
+// const res=await adminaxios.post('/removeblacklist',{id:id})
+// console.log(res)
+// fetchdata()

@@ -3,7 +3,7 @@ import { axiosInstance } from '../../../../Api/config'
 import { useSelector } from 'react-redux'
 import ClubAuthority from './ClubAuthority'
 import { ToastContainer,toast } from 'react-toastify'
-
+import Swal from 'sweetalert2'
 function Members() {
     const [adduser,SetAddUser]=useState('')
    const {clubName}=useSelector((state)=>state.user)
@@ -75,16 +75,23 @@ function Members() {
 
       const handleDltMember=async (e,id) => {
         e.preventDefault()
-        console.log(id,clubName)
-        const {data}=await axiosInstance.post('/delete-member',{clubName,id})
-         console.log(data)
-         if (data.message) {
-          toast.success(data.message)
-          getmember()  
-        }
-        if (data.errors) {
-          toast.error(data.errors)
-        } 
+        Swal.fire({
+          title: 'Remove Member Confirmation',
+          text: 'Are you sure you want to remove member from the club?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes,Remove!',
+          cancelButtonText: 'Cancel',
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            console.log('leave', clubName);
+            const {data}=await axiosInstance.post('/delete-member',{clubName,id})
+            if (data.message) {
+              Swal.fire('Success', data.message, 'success');
+            }
+            getmember()
+          }
+        });
       }
      
       const startIndex = (currentPage - 1) * itemsPerPage;
@@ -254,7 +261,15 @@ export default Members
 
 
 
-
+// const {data}=await axiosInstance.post('/delete-member',{clubName,id})
+// console.log(data)
+// if (data.message) {
+//  toast.success(data.message)
+//  getmember()  
+// }
+// if (data.errors) {
+//  toast.error(data.errors)
+// } 
 
 
 

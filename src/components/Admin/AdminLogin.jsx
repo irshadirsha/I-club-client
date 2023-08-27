@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { adminaxios, axiosInstance } from '../../../Api/config';
+import { adminaxios } from '../../../Api/config';
 
 function AdminLogin() {
     const navigate=useNavigate()
@@ -23,16 +23,23 @@ function AdminLogin() {
         e.preventDefault();
         try {
              console.log("before",admin);
+             if (admin.username == '') {
+              generateError("please Enter Username");
+              return;
+            }
+            if (admin.password == '') {
+              generateError("please Enter Password");
+              return;
+            }
            const data= await adminaxios.post('/adminLogin',{...admin},{withCredentials:true})
            console.log(data,"----------------");
            const { token } = data.data
            console.log(token);
            console.log(data.data.admin);
-           console.log(data.data.admin);
            console.log(data.data);
             if(data){
                 if(data.data.errors){
-                    const {username,password}=data.errors;
+                    const {username,password}=data.data.errors;
                     if(username)generateError(username)
                     else if(password)generateError(password)
 
@@ -49,12 +56,12 @@ function AdminLogin() {
     }
     const generateError=(err)=> toast.error(err,{
       autoClose:1000,
-      position: toast.POSITION.TOP_CENTER
+      position: toast.POSITION.TOP_RIGHT
     })
   return (
     <div>
       
-      <section className="bg-gray-500  overflow-y-hidden">
+      <section className="bg-gray-400  overflow-y-hidden">
 <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-20">
   <div className="md:flex md:gap-x-6 md:items-center mb-10">
     <div className="md:w-1/2 ml-10 mb-5  md:mb-0 z-10">
@@ -105,7 +112,7 @@ function AdminLogin() {
              <label className="form-label" htmlFor="form3Example4">Password</label>
            </div>
            <div className='text-center  flex justify-center items-center'>
-             <div className='text-center border-current borde bg-gray-500 p-2 w-32  rounded-lg text-black'>
+             <div className='text-center border-current borde bg-gray-400 p-2 w-32  rounded-lg text-black'>
                <button onClick={handleLogin}>Login</button>
              </div>
            </div>

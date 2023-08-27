@@ -5,10 +5,12 @@ import { axiosInstance } from '../../../../Api/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../redux/UserSlice/UserSlice';
 import { ToastContainer,toast } from 'react-toastify'
-  
+import Swal from 'sweetalert2';
+
 function Home() {
   const dispatch=useDispatch()
   const user=useSelector(state=>state.user)
+  const currentuser=user.email
   console.log("redux users",user);
   const [query, setQuery] = useState('');
   const [filteredClubs, setFilteredClubs] = useState([]);
@@ -39,12 +41,24 @@ function Home() {
   }
  
   const handleRequest = async (e, id) => {
-    e.preventDefault();
-    const {data} = await axiosInstance.post('/make-request', { clubId: id });
-    console.log("request",data);
-    if (data.message) {
-      toast.success(data.message)
-    }
+    /////////////
+    Swal.fire({
+      title: 'Request For Join Club Confirmation',
+      text: 'Are you sure you want to Join the club?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Join!',
+      cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const {data} = await axiosInstance.post('/make-request', { clubId: id });
+        if (data.message) {
+          Swal.fire('Success',data.message, 'success');
+        }
+        console.log(response);
+      }
+    });
+    
   };
   return (
     <>
@@ -109,12 +123,16 @@ function Home() {
         >
           View Club
           </button>) :(
-             <button
+              club.newmember.includes(currentuser) ? (
+                <button className="btn text-black font-mono rounded-lg px-4 bg-gray-300  border-gray-300 border-2">
+                  Requested
+                </button>
+              ) : ( <button
              onClick={(e)=>handleRequest(e,club._id)}
              className="btn text-black font-mono rounded-lg  px-4   bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
              exact>
-             request for join
-             </button>
+             request for join 
+             </button>) 
           ) } 
               </div>
          </div>

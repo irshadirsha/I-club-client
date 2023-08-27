@@ -4,6 +4,11 @@ import { axiosInstance } from '../../../../Api/config';
 import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+// import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from 'sweetalert2';
+
+
+
 function ClubProfileFst() {
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const navigate=useNavigate()
@@ -94,14 +99,49 @@ function ClubProfileFst() {
         }
       }
       const handleDeletePost = async (postId) => {
-        console.log("post delitijon",postId)
-        const {data}= await axiosInstance.post('/delete-post',{postId})
-        console.log("postttt",data.message);
-        if (data.message) {
-          toast.success(data.message)
-          fetchdata()
-        }
+        Swal.fire({
+          title: 'Delete ClubPost Confirmation',
+          text: 'Are you sure you want to delete post?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes,Delete!',
+          cancelButtonText: 'Cancel',
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const {data}= await axiosInstance.post('/delete-post',{postId})
+            if (data.message) {
+              Swal.fire('Success',data.message, 'success');
+            }
+            fetchdata()
+          }
+        });
       }
+    
+
+      const leaveclub = async () => {
+        // e.preventDefault()
+        Swal.fire({
+          title: 'Leave Club Confirmation',
+          text: 'Are you sure you want to leave the club?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, leave!',
+          cancelButtonText: 'Cancel',
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            console.log('leave', clubName);
+            const response = await axiosInstance.post('/leave-club', { clubName });
+      
+            if (response.data.message) {
+              Swal.fire('Success', response.data.message, 'success');
+            }
+            console.log(response);
+            navigate('/');
+          }
+        });
+      };
+      
+      
   return (
     <div>
       <section className="pt-16 bg-primary">
@@ -254,10 +294,12 @@ function ClubProfileFst() {
 
       <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md ">
         {(userRole ==='president' || userRole === 'secretory') && (
-       ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-2 w-6 h-6">
+         ( <div  onClick={() => handleDeletePost(post._id)}  className=' p-1 w-12'>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-2 w-6 h-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-   onClick={() => handleDeletePost(post._id)}  />
-</svg>))}
+   />
+</svg>
+      </div>))}
           <img
               className="w-full h-56 object-contain"
               src={post.postimg}
@@ -284,6 +326,13 @@ function ClubProfileFst() {
   </div>
     )}
 </div>
+ {(userRole == 'member') && (<div className='flex justify-center  pb-4'>
+      <button 
+          onClick={leaveclub}
+          className="btn text-black font-mono rounded-lg px-2 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+            Leave club
+          </button>
+        </div>)}
     </div>
     </section> 
     <ToastContainer/>
@@ -294,6 +343,31 @@ function ClubProfileFst() {
 export default ClubProfileFst
 
 
+
+
+
+  // const handleDeletePost = async (postId) => {
+      //   console.log("post delitijon",postId)
+      //   const {data}= await axiosInstance.post('/delete-post',{postId})
+      //   console.log("postttt",data.message);
+      //   if (data.message) {
+      //     toast.success(data.message)
+      //     fetchdata()
+      //   }
+      // }
+
+
+  // const leaveclub=async ()=>{
+      //   console.log("leave",clubName)
+      //   const response=await axiosInstance.post('/leave-club',{clubName})
+      //   if (response.data.message) {
+      //     toast.success(response.data.message)
+      //   }
+      //   console.log(response);
+      //   console.log(response.data);
+      //   console.log(response.data.message);
+      //   navigate('/')
+      // }
 
 
 // <div className="flex justify-center p-8 space-x-4 flex-wrap">

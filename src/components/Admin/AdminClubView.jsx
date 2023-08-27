@@ -136,7 +136,7 @@ return (
                                             </div>
                                         </td>
                                         <td className="py-2">{alldata?.president?.username}</td>
-                                        <td className="py-2">President</td>
+                                        <td className="py-2 font-bold">President</td>
                                     </tr>
                                     <tr className="bg-gray-200">
                                         <td className="py-2">
@@ -152,7 +152,7 @@ return (
                                             </div>
                                         </td>
                                         <td className="py-2">{alldata?.secretory?.username}</td>
-                                        <td className="py-2">Secretary</td>
+                                        <td className="py-2 font-bold">Secretary</td>
                                     </tr>
                                     <tr className="bg-gray-100">
                                         <td className="py-2">
@@ -167,7 +167,7 @@ return (
                                             </div>
                                         </td>
                                         <td className="py-2">{alldata?.treasurer?.username}</td>
-                                        <td className="py-2">Treasurer</td>
+                                        <td className="py-2 font-bold">Treasurer</td>
                                     </tr>
                                     {alldata?.members?.map((member, index) => (
                                         <tr key={index} className={index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-100'}>

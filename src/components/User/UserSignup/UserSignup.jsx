@@ -41,6 +41,11 @@ const navigate=useNavigate()
         generateError("please Enter Email");
         return;
       }
+      if (user.confirmpassword == '') {
+        generateError("please Enter ConfirmPassword");
+        return;
+      }
+
       if (user.password !== user.confirmpassword) {
         generateError("Passwords do not match");
         return;

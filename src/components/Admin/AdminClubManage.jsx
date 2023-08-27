@@ -3,6 +3,7 @@ import AdminSidebar from './AdminSidebar'
 // import { axiosInstance } from '../../../Api/config';
 import { useNavigate } from 'react-router-dom';
 import { adminaxios } from '../../../Api/config';
+import Swal from 'sweetalert2';
 
 function AdminClubManage() {
   const navigate=useNavigate()
@@ -33,10 +34,24 @@ function AdminClubManage() {
 const handleBlacklist = async (e,id) => {
   try {
     e.preventDefault()
-    console.log("blacklisting iddd",id)
-    const {data} = await adminaxios.post('/set-blacklist',{id:id})
-    console.log(data)
-    fetchdata()
+    Swal.fire({
+      title: 'Blacklist Confirmation',
+      text: 'Are you sure you want to blacklist the club?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes !',
+      cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const {data} = await adminaxios.post('/set-blacklist',{id:id})
+        fetchdata()
+        if (data.message) {
+          Swal.fire('Success',data.message, 'success');
+        }
+        console.log(response);
+      }
+    });
+   
   } catch (error) {
     console.log("blacklisting error")
   }
@@ -137,3 +152,12 @@ const navToClubView = (id) => {
 }
 
 export default AdminClubManage
+
+
+
+
+
+// console.log("blacklisting iddd",id)
+// const {data} = await adminaxios.post('/set-blacklist',{id:id})
+// console.log(data)
+// fetchdata()

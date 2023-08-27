@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../../Api/config';
@@ -7,7 +7,9 @@ import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify'
 import io from 'socket.io-client'
 import {ServerPort } from '../../../../Api/Serverport'
+import Swal from 'sweetalert2';
 function ClubHome() {
+    const scrollableRef = useRef(null);
     const socket = io(ServerPort);
     console.log("sssss",socket);
        const user=useSelector((state)=>state.user)
@@ -29,20 +31,26 @@ function ClubHome() {
 
      const [chatMessage, setChatMessage] = useState('');
      const [showmessage,setShowMessage]=useState([])
+
      
      console.log(showmessage);
 
-
+     useEffect(() => {
+        if (scrollableRef.current) {
+          scrollableRef.current.scrollTop = scrollableRef.current.scrollHeight;
+        }
+      }, [showmessage]);
+      
 useEffect(()=>{
      fetchdata()
      fetchevent()
      fetchmessage()
-    //  socket.on('chatMessage', (newMessage) => {
-    //     setShowMessage((prevMessages) => [...prevMessages, newMessage]);
-    //   });
-    //   return () => {
-    //     socket.disconnect();
-    //   };
+     socket.on('chatMessage', (newMessage) => {
+        setShowMessage((prevMessages) => [...prevMessages, newMessage]);
+      });
+      return () => {
+        socket.disconnect();
+      };
 },[])
 const fetchevent=async()=>{
     const {data}= await axiosInstance.post('/get-event',{clubName})
@@ -84,17 +92,28 @@ const handleEventSubmit=async(e)=>{
 
 const deleteEvent=async( id)=>{
     try {
-        console.log("delete id",id)
-       const {data}=await axiosInstance.post('/delete-event',{id:id})
-       console.log(data)
-       fetchevent()
-       if (data.message) {
-        toast.success(data.message)
-    }
+        // e.preventDefault()
+        Swal.fire({
+            title: 'Delete Event Confirmation',
+            text: 'Are you sure you want to remove the Event?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Delete!',
+            cancelButtonText: 'Cancel',
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              console.log('leave', clubName);
+              const {data}=await axiosInstance.post('/delete-event',{id:id})
+              fetchevent()
+              if (response.data.message) {
+                Swal.fire('Success', response.data.message, 'success');
+              }
+             
+            }
+          });
     } catch (error) {
-        
-    }
-   
+        console.log("error in event deletion");
+    }  
 }
 
 const handleSendMessage = async () => {
@@ -189,7 +208,8 @@ return (
           <i className="fas fa-times text-gray-500 text-xs"></i>
         </div>
       </div>
-      <div className="bg-gray-300 card-body  border overflow-y-auto relative" style={{ height: '400px' }}>
+      {/* <div className="bg-gray-300 card-body  border overflow-y-auto relative" style={{ height: '400px' }}> */}
+      <div className="bg-gray-300 card-body border overflow-y-auto relative" style={{ height: '400px' }} ref={scrollableRef}>
     {showmessage?.map((message, index) => (
         (message?.user?._id !== currentuser) ? (
             <div key={index}>   

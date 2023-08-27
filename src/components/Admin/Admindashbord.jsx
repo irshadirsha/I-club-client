@@ -1,12 +1,17 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import AdminSidebar from './AdminSidebar';
 import { adminaxios } from '../../../Api/config';
 
 function Admindashbord() {
-  // useEffect(async()=>{
-  //   const {data}=await adminaxios.get('/get-dashboad')
-  //   console.log(data);
-  // },[])
+  const [dashboad,setDashBord]=useState([])
+  useEffect(()=>{
+   fethdata()
+  },[])
+     const fethdata=async()=>{
+      const {data}=await adminaxios.get('/get-dashboad')
+      console.log(data);
+      setDashBord(data)
+     }
   return (
     <div>
       <div className="flex flex-col md:flex-row">
@@ -21,25 +26,25 @@ function Admindashbord() {
             {/* Total Clubs Card */}
             <div className="bg-white rounded-lg shadow-lg p-4 border border-gray-300">
               <p className="text-gray-600 font-mono font-bold text-xl text-center">Total Clubs:</p>
-              <p className="text-4xl font-bold text-center">20</p>
+              <p className="text-4xl font-bold text-center">{dashboad?.clubs}</p>
             </div>
 
             {/* Total Users Card */}
             <div className="bg-white rounded-lg shadow-lg p-4 border border-gray-300">
               <p className="text-gray-600 font-mono font-bold text-xl  text-center">Total Users:</p>
-              <p className="text-4xl font-bold text-center">150</p>
+              <p className="text-4xl font-bold text-center">{dashboad?.activeUserCount}</p>
             </div>
 
             {/* Blocked Users Card */}
             <div className="bg-white rounded-lg shadow-lg p-4 border border-gray-300">
               <p className="text-gray-600 font-mono font-bold text-xl  text-center">Blocked Users:</p>
-              <p className="text-4xl font-bold text-center">5</p>
+              <p className="text-4xl font-bold text-center">{dashboad?.blockedUserCount}</p>
             </div>
 
             {/* Blacklisted Clubs Card */}
             <div className="bg-white rounded-lg shadow-lg p-4 border border-gray-300">
               <p className="text-gray-600 font-mono font-bold text-xl  text-center">Blacklisted Clubs:</p>
-              <p className="text-4xl font-bold text-center">3</p>
+              <p className="text-4xl font-bold text-center">{dashboad?.blacklisted}</p>
             </div>
           </div>
         </div>

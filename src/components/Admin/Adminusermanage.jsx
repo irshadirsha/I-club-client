@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import AdminSidebar from './AdminSidebar';
 import axios from 'axios';
 import { adminaxios } from '../../../Api/config';
-
+import Swal from 'sweetalert2';
 function Adminusermanage() {
   const [getuser, setGetUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,16 +11,45 @@ const [searchQuery, setSearchQuery] = useState('');
 
   const handleUserUnBlock = async (e, id) => {
     e.preventDefault();
-    const Unblock = await adminaxios.post('/unblock-user', { Unblockid: id });
-    fetchdata()
-    console.log(Unblock.data);
+    Swal.fire({
+      title: 'UnBlock User Confirmation',
+      text: 'Are you sure you want to Unblock user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, UnBlock!',
+      cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const {data} = await adminaxios.post('/unblock-user', { Unblockid: id });
+        fetchdata()
+        console.log(data);
+        if (data.message) {
+          Swal.fire('Success',data.message, 'success');
+        }
+        console.log(response);     
+      }
+    });  
   }
 
   const handleUserBlock = async (e, id) => {
     e.preventDefault();
-    const block = await adminaxios.post('/block-user', { blockid: id });
-    fetchdata()
-    console.log("blokinggg", block.data);
+    Swal.fire({
+      title: 'Block User Confirmation',
+      text: 'Are you sure you want to Block the User?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Block!',
+      cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const {data} = await adminaxios.post('/block-user', { blockid: id });
+        fetchdata()
+        if (data.message) {
+          Swal.fire('Success',data.message, 'success');
+        }
+        console.log(data);
+      }
+    });
   };
 
   const fetchdata = useCallback(async () => {
@@ -162,9 +191,13 @@ const [searchQuery, setSearchQuery] = useState('');
 export default Adminusermanage;
 
 
+// const Unblock = await adminaxios.post('/unblock-user', { Unblockid: id });
+//     fetchdata()
+//     console.log(Unblock.data);
 
-
-
+// const block = await adminaxios.post('/block-user', { blockid: id });
+// fetchdata()
+// console.log("blokinggg", block.data);
 
 // import React,{useState,useEffect} from 'react'
 // import AdminSidebar from './AdminSidebar'
