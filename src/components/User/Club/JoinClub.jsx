@@ -9,6 +9,8 @@ function JoinClub() {
  
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
+  console.log("current user",user);
+  console.log("current user",user.id);
   const navigate=useNavigate()
   const [joinclub,setJoinclub]=useState({
     clubName:"",
@@ -19,19 +21,17 @@ function JoinClub() {
   const handleSubmit=async(e)=>{
     e.preventDefault()
     console.log(joinclub)
-    const user = JSON.parse(localStorage.getItem("user"))?.user || null;
-    const email = user?.email 
   const {data}=await axiosInstance.post('/joinclub',{...joinclub})
   console.log(data)
   console.log("responseeeeeeeeeeeee",data.updatedClubData.clubName)
   if(data.auth==true){
-    dispatch(updateUser({
-      id:user.id,
-      username:user.username,
-      email:user.email,
-      clubName: data.updatedClubData.clubName,
-    }));
-    navigate('/clubhome',{state:{userRole:data.userRole,id:data.id,club:data.updatedClubData.clubName}})
+    const updatedUser = {
+      ...user, 
+      clubName: data.updatedClubData.clubName, 
+    };
+    console.log("8888888888",user)
+    dispatch(updateUser(updatedUser));
+    navigate('/clubhome')
   }
   
   }
@@ -117,8 +117,10 @@ function JoinClub() {
 
 export default JoinClub
 
-
-
+// navigate('/clubhome',{state:{userRole:data.userRole,id:data.id,club:data.updatedClubData.clubName}})
+// const user = JSON.parse(localStorage.getItem("user"))?.user || null;
+    // const email = user?.email 
+    
 
 
 

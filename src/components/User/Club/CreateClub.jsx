@@ -10,6 +10,9 @@ import { updateUser } from '../../../redux/UserSlice/UserSlice';
 function CreateClub() {
   const dispatch=useDispatch()
   const user=useSelector(state=>state.user)
+  console.log("current user===....",user);
+  console.log("user....",user.id);
+  
   const navigate = useNavigate()
   const [createClub, setCreateClub] = useState({
     clubName: "",
@@ -25,8 +28,6 @@ function CreateClub() {
   const handleClubSubmit = async (e) => {
     e.preventDefault()
     try {
-      const user = JSON.parse(localStorage.getItem("user"))?.user || null;
-      const email = user?.email
       if (createClub.securityCode !== createClub.confirmSecurityCode) {
         generateError("securityCode do not match");
         return;
@@ -71,7 +72,6 @@ function CreateClub() {
       }
 
       console.log(createClub)
-      console.log(email)
       const response = await axiosInstance.post('/createclub', { ...createClub }, { withCredentials: true });
       console.log("response", response.data);
 
@@ -81,7 +81,7 @@ function CreateClub() {
       if (response.data.created === true) {
         const userRole = "president";
         const club = response.data.newclubs.clubName;
-
+        
         dispatch(updateUser({
           id:user.id,
           username:user.username,

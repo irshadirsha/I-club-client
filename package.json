@@ -28,9 +28,10 @@
     "react-toastify": "^5.2.1",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.7.2",
     "sweetalert": "^1.0.0",
-    "sweetalert2": "^11.7.27"
+    "sweetalert2": "^11.6.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",

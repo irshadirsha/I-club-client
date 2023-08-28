@@ -213,8 +213,8 @@ return (
     {showmessage?.map((message, index) => (
         (message?.user?._id !== currentuser) ? (
             <div key={index}>   
-            {/* <h1>....{currentuser}</h1>
-            <h1>{message?.user?._id }</h1> */}
+            <h1>....{currentuser}</h1>
+            <h1>{message?.user?._id }</h1>
                 {/* <div className="flex justify-between">
                     <p className="small mb-0">{message?.user?.username}</p>
                 </div> */}

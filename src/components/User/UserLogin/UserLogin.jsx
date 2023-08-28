@@ -166,7 +166,7 @@ function UserLogin() {
               </div>
                  {/* //////////////////////// */}
                 <form>
-                  <div className="form-outline  mb-4 text-center pt-4">
+                  <div className="form-outline  mb-2 text-center pt-4">
                     <input
                       type="email"
                       id="form3Example3"
@@ -179,7 +179,7 @@ function UserLogin() {
                     <label className="form-label " htmlFor="form3Example3" >Email address</label>
                   </div>
 
-                  <div className="form-outline mb-4 text-center pt-4">
+                  <div className="form-outline mb-4 text-center pt-2">
                     <input
                       type="password"
                       id="form3Example4"

@@ -6,14 +6,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../redux/UserSlice/UserSlice';
 import { ToastContainer,toast } from 'react-toastify'
 import Swal from 'sweetalert2';
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import Slider from "react-slick";
 
 function Home() {
+  const settings = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,    
+    autoplaySpeed: 3000
+  };
+
   const dispatch=useDispatch()
   const user=useSelector(state=>state.user)
   const currentuser=user.email
   console.log("redux users",user);
   const [query, setQuery] = useState('');
   const [filteredClubs, setFilteredClubs] = useState([]);
+  const [carosal, setCarosal] = useState();
   const navigate=useNavigate()
   const handleSearch = async () => {
     try {
@@ -26,13 +41,20 @@ function Home() {
     }
   };
   useEffect(() => {
+    fetchBannerData()
     if (query.trim() !== '') {
       handleSearch();
     } else {
       setFilteredClubs([]);
     }
   }, [query]);
-
+ 
+  const fetchBannerData = async ()=>{
+      const {data}=await axiosInstance.get('/get-bannerhome')
+      console.log(data);
+      console.log(data.data);
+      setCarosal(data.data)
+  }
 
  
   const NavToJoinclub=(e)=>{
@@ -143,7 +165,7 @@ function Home() {
        
         ) : (
     <div>
-  <div className='w-full md:flex justify-end'>
+  <div className=' w-full md:flex justify-end'>
     <div className="md:w-1/2">
       <h1 className="my-5 ml-10  text-5xl pt-28 font-bold tracking-tight  hero-title text-hsl(0, 0%, 0%)">
         I-Club <br />
@@ -168,31 +190,37 @@ function Home() {
         </a>
       </div>
     </div>
-    <div className=' w-full md:w-1/2'>
-   
-      <div id="carouselExampleControls" className=" carousel slide p-12" data-ride="carousel">
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img
-              className="w-50 h-50 mx-auto rounded-full"
-              src="https://img.freepik.com/premium-vector/humans-hugging-together-team-club-unity-community-charity-foundation-logo-design-vector_493994-1512.jpg"
-              alt="Third slide"
-            />
-            <p className='font-mono text-center text-black '><i>I-club connects</i></p>
-          </div>
-          
-        </div>
-        <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="sr-only"></span>
-        </a>
-        <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="sr-only"></span>
-        </a>
+    
+    <div className=' w-full md:pt-28 md:w-1/2 '>
+          <Slider {...settings}>
+          {carosal?.length > 0 ? (
+         carosal?.map((banner,index)=>(
+    <div key={index} className="slider-item">
+      <img className="d-block w-50 h-50 mx-auto  rounded-full" 
+        src={banner?.bannerimage}
+        alt="first slide"
+      />
+      <p className="text-center  text-md font-mono font-bold"><i>{banner?.about}</i></p>
+    </div>))
+    ):(
+      <div className="slider-item">
+        <img
+          className="d-block w-50 h-50 mx-auto rounded-full"
+          src="https://res.cloudinary.com/de8nd9vxi/image/upload/v1687895808/images_3_vlam4p.jpg"
+          alt="Default Banner"
+        />
+        <p className="text-center text-lg font-mono font-bold">
+          <i>I-club we Connects</i>
+        </p>
       </div>
-    </div>
+    )}
+         </Slider>
+         </div>
+
+
   </div>
+  <br></br>
+ 
   <div className="rounded-xl text-center mx-8  bg-gray-800">
   <p className="p-1.5   text-gray-100">
     Unites integrity, compassion, shared values; making a positive impact on the community with unity and purposeful actions.
@@ -202,6 +230,8 @@ function Home() {
         )}
 <br></br>
 <br></br>
+<br></br>
+
 <ToastContainer/>
 </div>
 
@@ -214,9 +244,41 @@ function Home() {
 
 export default Home
 
+ // src="https://res.cloudinary.com/de8nd9vxi/image/upload/v1687895808/images_3_vlam4p.jpg"
 
 
-
+// <div className='bg-red-400 w-full md:w-1/2'>
+// <div className="flex">
+//   <div className="flex w-1/2 items-center justify-center bg-white h-screen">
+//     <div className="bg-white w-[35rem] h-[33rem]">
+//       <div className="justify-center items-center">
+//         <Slider {...settings}>
+//           <div>
+//             <img
+//               src="https://rukminim2.flixcart.com/image/850/1000/jcc9ci80/poster/s/e/h/medium-pl-anime-awesome-club-naruto-cools-title-photos-clubs-original-imaet3gegqddjhay.jpeg?q=90"
+//               alt=""
+//               className="w-full h-96 mt-12 rounded-lg"
+//             />
+//           </div>
+//           <div>
+//             <img
+//               src="https://cdn.myanimelist.net/images/anime/5/9052l.jpg"
+//               alt=""
+//               className="w-full h-96 mt-12 rounded-lg"
+//             />
+//           </div>
+//           <div>
+//             <img
+//               src="https://i.pinimg.com/736x/ff/cc/21/ffcc211d554d21b5ca4e795a8400d982.jpg"
+//               className="w-full h-96 mt-12 rounded-lg"
+//             />
+//           </div>
+//         </Slider>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// </div>
 
 
 

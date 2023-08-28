@@ -25,6 +25,7 @@ import AboutPage from './pages/user/AboutPage';
 import NewsPage from './pages/Club/NewsPage';
 import MeetingPage from './pages/Club/MeetingPage';
 import BlackListedPage from './pages/admin/BlackListedPage';
+import BannerPage from './pages/admin/BannerPage';
 
 function App() {
   
@@ -41,6 +42,7 @@ function App() {
           <Route path='/club-manage' element={<ClubManagePage/>}></Route>
           <Route path='/club-details' element={<AdminClubViewPage/>}></Route>
           <Route path='/blacklisted' element={<BlackListedPage/>}></Route>
+          <Route path='/banner' element={<BannerPage/>}></Route>
           {/* <Route path='/admin-dashboard' element={<AdminDashBordPage/>}></Route> */}
 
 
