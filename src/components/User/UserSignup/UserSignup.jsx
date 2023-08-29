@@ -149,7 +149,7 @@ function UserSignup() {
       <section className="bg-primary overflow-y-hidden md:pr-8">
         <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-10">
           <div className=" md:flex md:gap-x-6 md:items-center mb-10">
-            <div className=" md:w-1/2 ml-10 pl-6 pt-2  mb-5 md:mb-0 z-10">
+            <div className=" pr-12 md:w-1/2 ml-10  pt-2  mb-5 md:mb-0 z-10">
               <h1 className="my-2 text-5xl font-bold tracking-tight hero-title text-hsl(0, 0%, 0%)">
                 I-Club <br />
                 <span className="text-hsl(27, 36%, 21%)">We Connects People</span>
@@ -158,12 +158,12 @@ function UserSignup() {
                 Empowering Hearts, Building Bridges - The Power of Togetherness.
               </p>
             </div>
-            <div className="md:w-1/2 relative">
+            <div className="  px-10  md:w-1/2 relative">
               <div id="radius-shape-1" className="absolute rounded-circle shadow-5-strong"></div>
               <div id="radius-shape-2" className="absolute shadow-5-strong"></div>
               {/* /////////////////////// */}
 
-              <div className="bg-glass rounded-lg  ">
+              <div className="bg-white rounded-lg  ">
 
                 <div className='hero-title text-hsl(217, 93%, 28%) text-center pt-5 '>
                   <h1>SignUp</h1>

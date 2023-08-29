@@ -27,6 +27,11 @@ function ClubHome() {
      time:"",
      location:""
 })
+const [errors, setErrors] = useState({
+  message:"",
+  time:"",
+  location:""
+});
      const [events,SetEvents]=useState([])
 
      const [chatMessage, setChatMessage] = useState('');
@@ -72,6 +77,15 @@ const fetchdata=async()=>{
 const handleEventSubmit=async(e)=>{
     e.preventDefault()
     try {
+      if (messages.message.trim() === "" && messages.time.trim() === "" && messages.location.trim() === "" ) {
+        setErrors({
+          ...errors,
+          message: "Enter Your Events",
+          time: "Enter Your Event Time",
+          location: "Enter Your Event Location",
+        });
+        return;
+      }
         console.log("eventss",messages,clubData?._id,);
         const {data} =await axiosInstance.post('/add-events',{messages,club:clubData?._id})
         console.log("eventss---",data);
@@ -147,7 +161,7 @@ return (
 <section className="pt-16 bg-primary">
 <div className="container mx-auto">
     <div className="flex flex-col md:flex-row items-center">
-        <div className="md:w-6/12 md:text-left text-center py-6 md:mt-3">
+        <div className=" md:w-6/12 md:text-left text-center py-6 md:mt-3">
             <div className="text-center md:text-start md:pl-6 pl-4 pr-8 md:ml-8 md:mt-5">
                 <h2 className="font-normal text-2xl text-black-600 mb-3">
                     "Unites integrity, compassion, shared values; making a positive impact on the community with unity and purposeful actions."
@@ -168,7 +182,7 @@ return (
         </div>
 
         <div className=" md:w-6/12 md:order-0 order-1 md:text-center mt-5 md:mt-0">
-    <div className="rounded-lg p-4 overflow-hidden event-style">
+    <div className=" rounded-lg p-4 overflow-hidden event-style">
     <div className="relative w-full h-full">
             <div className="relative top-0 right-0 bottom-0 left-0 rounded-lg overflow-hidden">
                 <img
@@ -183,12 +197,12 @@ return (
 
     </div>
 
-    <div className="flex flex-col pt-12 md:flex-row items-center">
+    <div className=" flex flex-col pt-12 md:flex-row items-center">
 {/* ITS CHAT MESSAGES */}
-     <div className=" md:w-6/12 md:text-left text-center p-8 py-2 md:mt-3">
+     <div className=" md:w-6/12 md:text-left text-center p-4 py-2 md:mt-3">
 <div className="col-sm-6">
   <h1 className=" text-4xl text-center px-2 font-semibold font-mono">Chat</h1>
-  <section className="  rounded-lg shadow-md overflow-hidden">
+  <section className=" md:px-8 overflow-hidden">
     <div className="card">
       <div className="bg-blue-200 card-header  flex justify-between items-center p-3 border-t-4 border-blue-700 ">
         <h5 className="text-md font-semibold">Chat messages</h5>
@@ -213,8 +227,8 @@ return (
     {showmessage?.map((message, index) => (
         (message?.user?._id !== currentuser) ? (
             <div key={index}>   
-            <h1>....{currentuser}</h1>
-            <h1>{message?.user?._id }</h1>
+            {/* <h1>....{currentuser}</h1>
+            <h1>{message?.user?._id }</h1> */}
                 {/* <div className="flex justify-between">
                     <p className="small mb-0">{message?.user?.username}</p>
                 </div> */}
@@ -290,50 +304,75 @@ return (
 </div>
 </div>
     {/* EVENT HANDLING */}
-        <div className="  md:w-6/12 md:text-left text-center  py-6 md:mt-3">
+        <div className=" w-full p-4 block md:w-6/12 md:text-left text-center  py-6 md:mt-3">
             <div className="  text-center md:text-start md:pl-4  md:pr-8  md:ml-8 md:mt-5">
                 <h1 className="text-4xl font-mono md:pl-8 md:text-center font-semibold mb-4">Events</h1>
-                <div className=" p-1  mb-2 responsive-form">
+                <div className=" p-1   mb-2 responsive-form">
                     {/* i need to show input div only if user secretiry or presidenrt */}  
                         { (role === 'president' || role === 'secretory') && (   
                     <div className="p-3 mb-2 bg-gray-300 rounded-3xl  border-current border">
                         <form >
-                        <div className="form-outline mb-4 text-center pt-4">
-                        <input
-                    type="text"
-                    id="form3Example4"
-                    name="message"
-                    value={messages.message}
-                    onChange={(e) => setMessages({...messages,[e.target.name]: e.target.value})}        
-                    className="form-control p-2  w-4/6 drop-shadow-md rounded-lg  border-current border outline-slate-300 "
-                       />
-                    <br></br>
-                    <label className="form-label" htmlFor="form3Example4">Enter Events</label>
-                      </div>
-                      <div className="form-outline mb-4 text-center pt-4">
-                        <input
-                    type="text"
-                    id="form3Example5"
-                    name="location"
-                    value={messages.location}
-                    onChange={(e) => setMessages({...messages,[e.target.name]: e.target.value})}        
-                    className="form-control p-2  w-4/6 drop-shadow-md rounded-lg  border-current border outline-slate-300 "
-                       />
-                    <br></br>
-                    <label className="form-label" htmlFor="form3Example4">Enter Events Location</label>
-                      </div>
-                      <div className="form-outline mb-4 text-center pt-4">
-                        <input
-                    type="text"
-                    id="form3Example7"
-                    name="time"
-                    value={messages.time}
-                    onChange={(e) => setMessages({...messages,[e.target.name]: e.target.value})}        
-                    className="form-control p-2  w-4/6 drop-shadow-md rounded-lg  border-current border outline-slate-300 "
-                       />
-                    <br></br>
-                    <label className="form-label" htmlFor="form3Example4">Enter Events Time</label>
-                      </div>
+
+                        <div className="form-outline mb-2 text-center pt-1">
+                <label htmlFor="form3Example1" className="block text-gray-800  text-md mb-1">
+                 Events
+                </label>
+                <input
+                  type="text"
+                  id="form3Example1"
+                  name="message"
+                  value={messages.message}
+                  onChange={(e) => {
+                    setMessages({...messages,[e.target.name]: e.target.value})
+                    setErrors({});
+                  }}
+                  className={`form-control p-2 w-4/6 drop-shadow-md rounded-lg border-current border outline-slate-300 ${
+                    errors.message && "border-red-500"
+                  }`}
+                />
+                {errors.message && <p className="text-red-500">{errors.message}</p>}
+              </div>
+
+              <div className="form-outline mb-2 text-center pt-1">
+                <label htmlFor="form3Example1" className="block text-gray-800  text-md mb-1">
+                Enter Events Location
+                </label>
+                <input
+                  type="text"
+                  id="form3Example2"
+                  name="location"
+                  value={messages.location}
+                  onChange={(e) => {
+                    setMessages({...messages,[e.target.name]: e.target.value})
+                    setErrors({});
+                  }}
+                  className={`form-control p-2 w-4/6 drop-shadow-md rounded-lg border-current border outline-slate-300 ${
+                    errors.location && "border-red-500"
+                  }`}
+                />
+                {errors.location && <p className="text-red-500">{errors.location}</p>}
+              </div>
+            
+              <div className="form-outline mb-2 text-center pt-1">
+                <label htmlFor="form3Example1" className="block text-gray-800  text-md mb-1">
+                Enter Events Time
+                </label>
+                <input
+                  type="text"
+                  id="form3Example3"
+                  name="time"
+                  value={messages.time}
+                  onChange={(e) => {
+                    setMessages({...messages,[e.target.name]: e.target.value})
+                    setErrors({});
+                  }}
+                  className={`form-control p-2 w-4/6 drop-shadow-md rounded-lg border-current border outline-slate-300 ${
+                    errors.time && "border-red-500"
+                  }`}
+                />
+                {errors.time && <p className="text-red-500">{errors.time}</p>}
+              </div>    
+                      
                             <div className='bg-primary text-center rounded-2xl p-3'>
                             <button onClick={handleEventSubmit} type="submit">Submit</button>
                             </div>

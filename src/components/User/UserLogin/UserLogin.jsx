@@ -117,7 +117,7 @@ function UserLogin() {
       <section className="bg-primary overflow-y-hidden">
         <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-20">
           <div className="md:flex md:gap-x-6 md:items-center mb-10">
-            <div className="md:w-1/2 ml-10 mb-5  md:mb-0 z-10">
+            <div className=" pr-10 md:w-1/2 ml-10 mb-5  md:mb-0 z-10">
               <h1 className="my-5 text-5xl font-bold tracking-tight hero-title text-hsl(0, 0%, 0%)">
                 I-Club <br />
                 <span className="text-hsl(27, 36%, 21%)">We Connects People</span>
@@ -129,7 +129,7 @@ function UserLogin() {
             <div className=" px-10 md:w-1/2 relative">
               <div id="radius-shape-1" className="absolute rounded-circle shadow-5-strong"></div>
               <div id="radius-shape-2" className="absolute shadow-5-strong"></div>
-              <div className="bg-glass rounded-lg    ">
+              <div className="bg-white rounded-lg    ">
 
                 <div className='hero-title text-hsl(217, 93%, 28%) text-center pt-2 '>
                   <h1>Login</h1>
@@ -242,7 +242,7 @@ function UserLogin() {
                 {errors.password && <p className="text-red-500">{errors.password}</p>}
               </div>
 
-                  <div className='text-center  flex justify-center items-center'>
+                  <div className='text-center pt-4 flex justify-center items-center'>
                     <div className='text-center border-current borde bg-primary w-32 p-2 rounded-lg text-white'>
                       <button onClick={handlelogin}>Login</button>
                     </div>

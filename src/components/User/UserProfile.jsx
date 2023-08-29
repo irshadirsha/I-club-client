@@ -278,7 +278,7 @@ function UserProfile() {
             <div className="bg-primary m-6 grid grid-cols-1 rounded-md gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {/* Other grid items */}
             
-              <div  className='bg-slate-400 m-2 w-20 h-20 rounded-md col-span-1 sm:col-span-2 lg:col-span-1 mx-auto flex items-center'>
+              <div  className='bg-slate-400  m-2 w-20 h-20 rounded-md col-span-1 sm:col-span-2 lg:col-span-1 mx-auto flex items-center'>
                 <img
                   src={club?.club?.clubimg || "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="}
                   alt="Profile"
@@ -292,7 +292,7 @@ function UserProfile() {
               {club?.club?.isblacklisted === true ? (
                   <h1 className='text-red-600 flex items-center'>This club is blacklisted</h1>
                 ) :(
-              <div className="md:py-6 flex items-center ">
+              <div className="sm:flex justify-center pb-1 md:py-6 flex items-center ">
                 <button
                 onClick={()=>{
                   const updatedUser = {
