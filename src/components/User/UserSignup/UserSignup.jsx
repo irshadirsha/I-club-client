@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './UserSignup.css'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
@@ -44,6 +43,9 @@ function UserSignup() {
       general: "",
     });
     try {
+      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (
         user.username.trim() === "" &&
         user.email.trim() === "" &&
@@ -66,11 +68,39 @@ function UserSignup() {
         });  
         return;
       }
+      if (!usernameRegex.test(user.username)) {
+        setErrors({
+          ...errors,
+          username:"Enter a valid username" || "", // General error message
+        });  
+        return;
+      }
       if (user.email == '') {
         setErrors({
           ...errors,
           email:"Email is Empty" || "", // General error message
         });    
+        return;
+      }
+      if (!emailRegex.test(user.email)) {
+        setErrors({
+          ...errors,
+          email:"Enter a valid email" || "", // General error message
+        });    
+        return;
+      }
+      if (user.password == '') {
+        setErrors({
+          ...errors,
+          password:" Password is Empty" || "", // General error message
+        });        
+        return;
+      }
+      if (!passwordRegex.test(user.password)) {
+        setErrors({
+          ...errors,
+          password:" Enter 1 capital,1 special char,1 digit minimum 8 letter " || "", // General error message
+        });        
         return;
       }
       if (user.confirmpassword == '') {
@@ -80,6 +110,7 @@ function UserSignup() {
         });        
         return;
       }
+
 
       if (user.password !== user.confirmpassword) {
         setErrors({
@@ -99,26 +130,17 @@ function UserSignup() {
             ...data.errors,
             general: data.errors.general || "", // General error message
           });
-          const { username, email, password, confirmpassword } = data.errors
-          if (username) generateError(username)
-          else if (password) generateError(password)
-          else if (email) generateError(email)
-          else if (confirmpassword) generateError(confirmpassword)
         } else {
           localStorage.setItem('user', JSON.stringify({ token, user: data.data }))
           dispatch(updateUser({ username: data.data.username, email: data.data.email, id: data.data._id }));
           navigate('/')
-
         }
       }
     } catch (error) {
       console.log(error)
     }
   }
-  const generateError = (err) => toast.error(err, {
-    autoClose: 2000,
-    position: toast.POSITION.TOP_RIGHT,
-  })
+ 
 
 
   const navToHome = (e) => {
@@ -156,23 +178,30 @@ function UserSignup() {
 
 
                 <form onSubmit={handleSubmit}>
-                <div className="form-outline mb-4 text-center pt-3">
+                <div className="form-outline mb-4 text-center pt-1">
+                <label htmlFor="form3Example1" className="block text-gray-600  text-sm mb-1">
+                 Username
+                </label>
                 <input
-                type="text"
-                id="form3Example1"
-                name="username"
-                placeholder="Enter your username"
-                onChange={(e) =>{
-                   setUser({ ...user, [e.target.name]: e.target.value }),
-                   setErrors({});
-                   }}
-                  
-                className={`form-control p-2 w-4/6 drop-shadow-md rounded-lg border-current border outline-slate-300 ${errors.username && "border-red-500"}`}
+                  type="text"
+                  id="form3Example1"
+                  name="username"
+                  placeholder="Enter your username"
+                  onChange={(e) => {
+                    setUser({ ...user, [e.target.name]: e.target.value });
+                    setErrors({});
+                  }}
+                  className={`form-control p-2 w-4/6 drop-shadow-md rounded-lg border-current border outline-slate-300 ${
+                    errors.username && "border-red-500"
+                  }`}
                 />
                 {errors.username && <p className="text-red-500">{errors.username}</p>}
-                 </div>
+              </div>
 
-                  <div className="form-outline mb-4 text-center pt-3">
+                  <div className="form-outline mb-4 text-center pt-0">
+                  <label htmlFor="form3Example1" className="block text-gray-600  text-sm mb-1">
+                 Email
+                </label>
                   <input
                    type="email"
                   id="form3Example2"
@@ -185,9 +214,12 @@ function UserSignup() {
                   className={`form-control p-2 w-4/6 drop-shadow-md rounded-lg border-current border outline-slate-300 ${errors.email && "border-red-500"}`}
                   />
                   {errors.email && <p className="text-red-500">{errors.email}</p>}
-
                   </div>
-                  <div className="form-outline mb-4 text-center pt-3">
+
+                  <div className="form-outline mb-4 text-center pt-0">
+                  <label htmlFor="form3Example1" className="block text-gray-600  text-sm mb-1">
+                 Password
+                </label>
                   <input
                     type="password"
                     id="form3Example3"
@@ -201,7 +233,11 @@ function UserSignup() {
                   />
                   {errors.password && <p className="text-red-500">{errors.password}</p>}
                   </div>
-                  <div className="bg-green-200 form-outline mb-4 text-center pt-3">
+
+                  <div className=" form-outline mb-4 text-center pt-0">
+                  <label htmlFor="form3Example1" className="block text-gray-600  text-sm mb-1">
+                 Confirm Password
+                </label>
                   <input
                     type="password"
                     id="form3Example4"
