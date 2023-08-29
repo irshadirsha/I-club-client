@@ -35,13 +35,6 @@ function UserSignup() {
   }, [])
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setErrors({
-      username: "",
-      email: "",
-      password: "",
-      confirmpassword: "",
-      general: "",
-    });
     try {
       const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
