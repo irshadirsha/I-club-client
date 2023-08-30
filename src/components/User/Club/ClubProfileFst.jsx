@@ -4,8 +4,8 @@ import { axiosInstance } from '../../../../Api/config';
 import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
-// import Swal from 'sweetalert2/dist/sweetalert2.js';
 import Swal from 'sweetalert2';
+import Loader from '../../Loader/Loader'
 
 
 
@@ -13,6 +13,7 @@ function ClubProfileFst() {
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const navigate=useNavigate()
     const {clubName}=useSelector((state)=>state.user)
+    const [loading, setLoading] = useState(true);
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
     const [postmodalOpen, setPostModalOpen]=useState(false)
     const [profileimage,setProfileImage]=useState(null)
@@ -34,6 +35,7 @@ function ClubProfileFst() {
         setProfileData(datas.data.clubExist)
         setUserRole(datas.data.userRole)
         setPostData(datas.data.postdata)
+        setLoading(false)
         console.log(datas.data.postdata)
     }
 
@@ -144,7 +146,9 @@ function ClubProfileFst() {
       
   return (
     <div>
-      <section className="pt-16 bg-primary">
+      {loading?(
+      <Loader/>):
+      ( <section className="pt-16 bg-primary">
 <div className="container mx-auto">
     <div className=" flex flex-col md:flex-row ">
         <div className=" md:w-6/12 md:text-left text-center py-2 ">
@@ -335,6 +339,7 @@ function ClubProfileFst() {
         </div>)}
     </div>
     </section> 
+      )}
     <ToastContainer/>
     </div>
   )

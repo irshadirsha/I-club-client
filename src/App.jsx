@@ -26,6 +26,7 @@ import NewsPage from './pages/Club/NewsPage';
 import MeetingPage from './pages/Club/MeetingPage';
 import BlackListedPage from './pages/admin/BlackListedPage';
 import BannerPage from './pages/admin/BannerPage';
+import Loader from './components/Loader/Loader';
 
 function App() {
   
@@ -34,7 +35,7 @@ function App() {
       <div>
           <BrowserRouter>
           <Routes>
-
+           <Route path='/loader' element={<Loader/>}></Route>
             {/* ADMIN */}
           <Route path="/adminlogin" element={<AdminLogin/>}> </Route>
           <Route path="/admin"  element={<AdminDashBordPage/>}></Route>

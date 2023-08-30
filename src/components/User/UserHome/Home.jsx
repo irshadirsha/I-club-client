@@ -29,6 +29,7 @@ function Home() {
   const [query, setQuery] = useState('');
   const [filteredClubs, setFilteredClubs] = useState([]);
   const [carosal, setCarosal] = useState();
+  const [request,setRequest]=useState('')
   const navigate=useNavigate()
   const handleSearch = async () => {
     try {
@@ -76,6 +77,7 @@ function Home() {
         const {data} = await axiosInstance.post('/make-request', { clubId: id });
         if (data.message) {
           Swal.fire('Success',data.message, 'success');
+          setRequest('requested')
         }
         console.log(response);
       }
@@ -153,7 +155,7 @@ function Home() {
              onClick={(e)=>handleRequest(e,club._id)}
              className="btn text-black font-mono rounded-lg  px-4   bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
              exact>
-             request for join 
+             {request === 'requested' ? 'Requested' : 'Request to join'}
              </button>) 
           ) } 
               </div>

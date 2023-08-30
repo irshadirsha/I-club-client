@@ -45,7 +45,7 @@ function Finance() {
       <div className="bg-primary min-h-screen py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl text-center font-semibold mb-4">Finance</h1>
         {userRole === 'treasurer' && <FinanceTreasur state={clubName} />}
-        <div className="mb-4">
+        <div className=" mb-4">
           <button
             className={`px-4 py-2 text-sm font-medium rounded ${
               showIncome ? 'bg-gray-900 text-white' : 'bg-gray-300 text-gray-900'

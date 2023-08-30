@@ -6,7 +6,7 @@ import { axiosInstance } from '../../../../Api/config';
 import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../redux/UserSlice/UserSlice';
-
+import Loader from '../../Loader/Loader';
 function CreateClub() {
   const dispatch=useDispatch()
   const user=useSelector(state=>state.user)
@@ -14,6 +14,7 @@ function CreateClub() {
   console.log("user....",user.id);
   
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
   const [createClub, setCreateClub] = useState({
     clubName: "",
     registerNo: "",
@@ -93,6 +94,7 @@ function CreateClub() {
       }
 
       console.log(createClub)
+      setLoading(true)
       const response = await axiosInstance.post('/createclub', { ...createClub }, { withCredentials: true });
       console.log("response", response.data);
 
@@ -109,11 +111,12 @@ function CreateClub() {
           email:user.email,
           clubName:club 
         }));
-
+        setLoading(false)
         navigate('/clubhome', { state: { userRole, club } });
       }
 
       if (response.data.errors) {
+        setLoading(false)
         toast.error(response.data.errors);
       }
     } catch (error) {
@@ -127,6 +130,7 @@ function CreateClub() {
 
   return (
     <div>
+      {loading? (<Loader/>):(
       <section className="bg-primary overflow-y-hidden">
         <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-6">
           <div className=" md:flex md:gap-x-6 md:items-center mb-10">
@@ -312,6 +316,7 @@ function CreateClub() {
         </div>
 
       </section>
+      )}
       <ToastContainer />
     </div>
   )

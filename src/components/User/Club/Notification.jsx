@@ -8,7 +8,9 @@ function Notification() {
   const [note, setNote] = useState('')
   const [notificationdata, setNotificationData] = useState([]);
   const [userRole, setUserRole] = useState('');
-
+  const [errors, setErrors] = useState({
+    note: "",
+  });
   useEffect(() => {
     fetchnote()
   }, [])
@@ -25,7 +27,13 @@ function Notification() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(note);
+    console.log("iiiiiii",note);
+    if (note == "") {
+      setErrors({
+        note: "Please Enter Your Notification",
+      });
+      return;
+    }
     const { data } = await axiosInstance.post('/send-note', { note, clubName })
     console.log(data);
     if (data.message) {
@@ -76,13 +84,26 @@ function Notification() {
                   name="message"
                   rows="3"
                   value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  onChange={(e) =>{ setNote(e.target.value)
+                    setErrors({})
+                  }}
+                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border text-gray-700 placeholder-gray-400 focus:outline-none  focus:z-10 sm:text-sm
+                  ${ errors.note && "border-red-500"}`}
                   placeholder="Enter your message"
                 />
               </div>
+              {errors.note && <p className="text-red-500 text-center">{errors.note}</p>}
             </div>
+
+
+          
+               
+              
+
+
+
+
+
 
             <div>
               <button

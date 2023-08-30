@@ -8,6 +8,7 @@ import { ToastContainer,toast } from 'react-toastify'
 import io from 'socket.io-client'
 import {ServerPort } from '../../../../Api/Serverport'
 import Swal from 'sweetalert2';
+import loader from '../../Loader/Loader'
 function ClubHome() {
     const scrollableRef = useRef(null);
     const socket = io(ServerPort);
@@ -20,6 +21,7 @@ function ClubHome() {
 
         console.log(clubName);
        const navigate=useNavigate()       
+       const [loading, setLoading] = useState(true);
        const [role,setRole]=useState('')
        const [clubData,setClubData]=useState(null)
        const [messages,setMessages]=useState({
@@ -72,6 +74,7 @@ const fetchdata=async()=>{
     setClubData(data.data)
     console.log(data.userRole);
     setRole(data.userRole)
+    setLoading(false)
 }
 
 const handleEventSubmit=async(e)=>{
@@ -158,6 +161,7 @@ const fetchmessage = async () =>{
 return (
 <div>
 <ClubNav state={clubName}/>
+{loading ? (<loader/>):(
 <section className="pt-16 bg-primary">
 <div className="container mx-auto">
     <div className="flex flex-col md:flex-row items-center">
@@ -167,8 +171,8 @@ return (
                     "Unites integrity, compassion, shared values; making a positive impact on the community with unity and purposeful actions."
                 </h2>
                 <h1 className="text-4xl font-mono md:pl-8 md:text-start font-semibold mb-4">{clubData ? clubData.clubName : clubName}</h1>
-                <p className="font-medium text m-4">
-                {clubData?.clubData?.about}
+                <p className="font-medium text-lg m-4">
+                {clubData?.category}
                 </p>
                 <div className="mt-4 flex justify-start items-start">
                     <button 
@@ -436,6 +440,7 @@ return (
 <br />
 <br />
 </section>
+)}
 <ToastContainer/>
 </div>
 )
