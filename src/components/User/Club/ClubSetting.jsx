@@ -19,6 +19,16 @@ function ClubSetting() {
   })
   const [Committe,setCommitte]=useState({})
   const [club,setClub]=useState([])
+  const [errors, setErrors] = useState({
+    clubName:"",
+    registerNo:"",
+    address:"",
+    category:"",
+    about:"",
+    president:"",
+    treasurer:"",
+    secretory:""
+  });
    useEffect(()=>{
         fetchdata()
    },[])
@@ -31,28 +41,38 @@ function ClubSetting() {
    }
   const handleSubmitClub= async (e) => {
     e.preventDefault()
+    if (updateclub.clubName.trim() === "" &&updateclub.registerNo.trim() === "" &&
+    updateclub.address.trim() === "" &&updateclub.category.trim() === "" &&updateclub.about.trim() === "" ) {
+  setErrors({
+    ...errors,
+    clubName:"Enter ClubName",
+    registerNo:"Enter Register Number",
+    address:"Enter Club Location",
+    category:"Enter Club Category",
+    about:"Enter The Description"
+  });
+  return;
+}
     const regex = {
         registerNo: /^\d{6}$/gm,
       }
-      if (updateclub.clubName === "") {
-        generateError("Name is required")
-        return;
-      } else if (updateclub.registerNo === "") {
-        generateError("registerNo is required")
+      if (updateclub.registerNo === "") {
+        generateError("Please Enter Your registerNo ")
         return;
       } else if (!regex.registerNo.test(updateclub.registerNo)) {
         generateError("registerNo: Only contain six digit")
         return;
       } else if (updateclub.address === "") {
-        generateError("address is required")
+        generateError("Please Enter Your  Address")
         return;
       } else if (updateclub.category === "") {
-        generateError("category is required")
+        generateError("Please Enter Your  Club category ")
         return;
       } else if (updateclub.about === "") {
         generateError("description is required")
         return;
       }
+     
 
     console.log(updateclub)
     const {data}= await axiosInstance.post('/update-club',{...updateclub,club:clubName})
@@ -73,18 +93,30 @@ function ClubSetting() {
 
            const handlecommite= async (e) =>{
             e.preventDefault()
-            console.log("----------------------------",Committe)
-            const res=await axiosInstance.post('/change-committe',{...Committe,clubName})
-            console.log(res);
-            if (res.data.errors) {
-              toast.error(res.data.errors)}
-            if (res.data.message) {
-              toast.success(res.data.message)}
+            try {
+              console.log("----------------------------",Committe)
+        
+              if (Committe.president == "" &&Committe.secretory == "" &&Committe.treasurer.trim() === "" ) {
+                setErrors({
+                  ...errors,
+                  president: "Enter New President Email",
+                  secretory: "Enter New Secretory Email",
+                  treasurer: "Enter New Secretory Email",
+                });
+                return;
+              }
+              const res=await axiosInstance.post('/change-committe',{...Committe,clubName})
+              console.log(res);
+              if (res.data.errors) {
+                toast.error(res.data.errors)}
+              if (res.data.message) {
+                toast.success(res.data.message)}
+              
+            } catch (error) {
+              
+            }
            }
-  const generateError = (err) => toast.error(err, {
-    autoClose: 2000,
-    position: toast.POSITION.TOP_RIGHT
-  })
+  
   return (
     <div className="min-h-screen bg-primary p-12">
       <h1 className="p-4 text-3xl font-mono font-bold text-center">Club Setting</h1>
@@ -125,10 +157,21 @@ function ClubSetting() {
         name="clubName"
         // value={club?.clubName}
         placeholder={club?.clubName}
-        onChange={(e)=> setUpdateClub({...updateclub,[e.target.name]:e.target.value})}
-        className="border border-gray-300 rounded-md p-1 w-full"
+        onChange={(e) => {
+          setUpdateClub({...updateclub,[e.target.name]:e.target.value})
+          setErrors({});
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.clubName && "border-red-500"
+        }`}
       />
+      {errors.clubName && <p className="text-red-500">{errors.clubName}</p>}
     </div>
+
+  
+
+
+
     <div>
       <label htmlFor="registerNo" className="block font-medium">
         Register No
@@ -139,9 +182,15 @@ function ClubSetting() {
         name="registerNo"
         // value={club?.registerNo}
         placeholder={club?.registerNo}
-        onChange={(e)=> setUpdateClub({...updateclub,[e.target.name]:e.target.value})}
-        className="border border-gray-300 rounded-md p-1 w-full"
+        onChange={(e) => {
+          setUpdateClub({...updateclub,[e.target.name]:e.target.value})
+          setErrors({});
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.registerNo && "border-red-500"
+        }`}
       />
+      {errors.registerNo && <p className="text-red-500">{errors.registerNo}</p>}
     </div>
     <div>
       <label htmlFor="category" className="block font-medium">
@@ -153,10 +202,16 @@ function ClubSetting() {
         name="category"
         // value={club?.category}
         placeholder={club?.category}
-        onChange={(e)=> setUpdateClub({...updateclub,[e.target.name]:e.target.value})}
-        className="border border-gray-300 rounded-md p-1 w-full"
+        onChange={(e) => {
+          setUpdateClub({...updateclub,[e.target.name]:e.target.value})
+          setErrors({});
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.category && "border-red-500"
+        }`}
       />
-    </div>
+      {errors.category && <p className="text-red-500">{errors.category}</p>}
+      </div>
     <div>
       <label htmlFor="address" className="block font-medium">
         Location
@@ -167,9 +222,15 @@ function ClubSetting() {
         name="address"
         // value={club?.address}
         placeholder={club?.address}
-        onChange={(e)=> setUpdateClub({...updateclub,[e.target.name]:e.target.value})}
-        className="border border-gray-300 rounded-md p-1 w-full"
+        onChange={(e) => {
+          setUpdateClub({...updateclub,[e.target.name]:e.target.value})
+          setErrors({});
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.address && "border-red-500"
+        }`}
       />
+      {errors.address && <p className="text-red-500">{errors.address}</p>}
     </div>
     <div>
       <label htmlFor="about" className="block  font-medium ">
@@ -181,9 +242,15 @@ function ClubSetting() {
         name="about"
         // value={club?.about}
         placeholder={club?.about}
-        onChange={(e)=> setUpdateClub({...updateclub,[e.target.name]:e.target.value})}
-        className="border border-gray-200 rounded-md p-1 w-full"
+        onChange={(e) => {
+          setUpdateClub({...updateclub,[e.target.name]:e.target.value})
+          setErrors({});
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.about && "border-red-500"
+        }`}
       />
+      {errors.about && <p className="text-red-500">{errors.about}</p>}
     </div>
     <div className=' flex justify-center items-center'>
     <button
@@ -197,7 +264,7 @@ function ClubSetting() {
                 </form>
               </div>
             ) : (
-              // Render Change Committee form
+             
               <div>
                 <h2 className="text-2xl text-center font-semibold mb-4">Change Committee</h2>
                 <form className="space-y-2" onSubmit={handlecommite}>
@@ -211,9 +278,15 @@ function ClubSetting() {
         id="president"
         name="president"
         placeholder='President Email'
-        onChange={(e)=>{setCommitte({...Committe,[e.target.name]:e.target.value})}}
-        className="border border-gray-300 rounded-md p-1 w-full"
+        onChange={(e)=>{
+          setCommitte({...Committe,[e.target.name]:e.target.value})
+          setErrors({})
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.president && "border-red-500"
+        }`}
       />
+       {errors.president && <p className="text-red-500">{errors.president}</p>}
     </div>
     <div>
       <label htmlFor="secretory" className="block font-medium">
@@ -224,9 +297,15 @@ function ClubSetting() {
         id="secretory"
         name="secretory"
         placeholder='Secretory Email'
-        onChange={(e)=>{setCommitte({...Committe,[e.target.name]:e.target.value})}}
-        className="border border-gray-300 rounded-md p-1 w-full"
+        onChange={(e)=>{
+          setCommitte({...Committe,[e.target.name]:e.target.value})
+          setErrors({})
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.secretory && "border-red-500"
+        }`}
       />
+       {errors.secretory && <p className="text-red-500">{errors.secretory}</p>}
     </div>
     <div>
       <label htmlFor="treasurer" className="block font-medium">
@@ -237,9 +316,15 @@ function ClubSetting() {
         id="treasurer"
         name="treasurer"
         placeholder='Treasurer Email'
-        onChange={(e)=>{setCommitte({...Committe,[e.target.name]:e.target.value})}}
-        className="border border-gray-300 rounded-md p-1 w-full"
+        onChange={(e)=>{
+          setCommitte({...Committe,[e.target.name]:e.target.value})
+          setErrors({})
+        }}
+        className={`border border-gray-300 rounded-md p-1 w-full ${
+          errors.treasurer && "border-red-500"
+        }`}
       />
+       {errors.treasurer && <p className="text-red-500">{errors.treasurer}</p>}
     </div>
     <div className='flex justify-center items-center'>
       <button

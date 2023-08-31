@@ -19,7 +19,8 @@ function UserSignup() {
     password: "",
     confirmpassword: ""
   })
-
+  const [showModal, setShowModal] = useState(false);
+  const [otp,setOtp]=useState('')
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -116,21 +117,49 @@ function UserSignup() {
       const { data } = await axiosInstance.post('/signup', { ...user }, { withCredentials: true },)
       console.log('singupdata', data)
       if (data) {
-        console.log("downnnn");
-        const { token } = data;
+        console.log("downnnn"); 
         if (data.errors) {
           setErrors({
             ...data.errors,
             general: data.errors.general || "", // General error message
           });
         } else {
+          if (data.message) {
+            toast.success(data.message)
+          }
+          setShowModal(true)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleSubmitOtp =async (e)=>{
+    e.preventDefault()
+    try {
+      console.log(otp)
+      const {data}= await axiosInstance.post('/verify-otp',{otp,email:user.email})
+      const { token } = data;
+       console.log("res",data);
+       console.log(data.data);
+       console.log(data.data.email);
+
+       console.log(token);
+       if (data) {
+        console.log("downnnn"); 
+           
+        if (data.errors) {
+            toast.error(data.errors)
+        } else {
+          setShowModal(false)
           localStorage.setItem('user', JSON.stringify({ token, user: data.data }))
           dispatch(updateUser({ username: data.data.username, email: data.data.email, id: data.data._id }));
           navigate('/')
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log("error in otp verification");
     }
   }
  
@@ -163,12 +192,74 @@ function UserSignup() {
               <div id="radius-shape-2" className="absolute shadow-5-strong"></div>
               {/* /////////////////////// */}
 
-              <div className="bg-white rounded-lg  ">
-
+              <div className="bg-glass rounded-lg  ">
                 <div className='hero-title text-hsl(217, 93%, 28%) text-center pt-5 '>
                   <h1>SignUp</h1>
                 </div>
+        {/* ///////////////////////////////////// */}
+        {showModal && (
+                     <div>
+                     <div className="flex flex-col md:flex-row">
+                       <div className=" md:w-2/3 sm:w-full p-4">
+                      <div
+                      className=" fixed top-0 left-0 right-0 z-50 bg-opacity-50 flex items-center justify-center h-screen"
+                      >
+                        <div className=" absolute top-0 left-0 right-0 z-10 flex items-center justify-center h-screen">
+                          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                          <button
+                    // onClick={handleModalToggle}
+                    type="button"
+                    className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    <svg
+                      className="w-3 h-3"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 14 14"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                      />
+                    </svg>
+                    <span className="sr-only">Close modal</span>
+                  </button>
+                            {/* Modal content */}
+                            <div className="px-6 py-6 lg:px-10 ">
+                              <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                                Enter Your Email
+                              </h3>
+                              <form className="space-y-6" onSubmit={handleSubmitOtp} >
+                                <div>
+                                  <input type="text"
+                                    id="otp"
+                                    name="otp"
+                                    onChange={(e) => setOtp(e.target.value)}
+                                    placeholder='OTP'
+                                    className="mt-2 p-1.5 block w-full rounded-md  border-current border  border-gray-300 shadow-md   " required />
+                                </div>
 
+                                {/* Submit Button */}
+                                <div className="flex items-center justify-center">
+                                  <button type="submit" className="inline-flex items-center px-4 py-1 bg-primary border border-transparent rounded-md font-semibold text-white  focus:outline-none focus:ring focus:ring-indigo-200 active:bg-indigo-800 transition duration-150 ease-in-out">
+                                    Submit
+                                  </button>
+                                </div>
+                              </form>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                    )}
+        {/* ///////////////////////////////////// */}
 
                 <form onSubmit={handleSubmit}>
                 <div className="form-outline mb-4 text-center pt-1">

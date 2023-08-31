@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import { axiosInstance } from '../../../../Api/config';
 import { ToastContainer,toast } from 'react-toastify'
 
-function FinanceTreasur({state}) {
+function FinanceTreasur({state,callbackFunction}) {
   const clubName=state
 console.log("tresurer",clubName);
 const [account,setAccount]=useState([])
@@ -54,6 +54,7 @@ const handleExpense = async (e) => {
       clubName,
       ...expenseData,
     });
+    callbackFunction(response.data)
     console.log(response);
     fetchdata()
     if (response.data.message) {
@@ -173,14 +174,14 @@ const handleExpense = async (e) => {
           <p className=" text-center text-red-700 font-semibold">Total Expense</p>
           <p className="text-xl text-center">{account?.totalexpense}</p>
         </div>
-        <div className=''>
+        {/* <div className=''>
           <p className="text-center text-lg font-semibold">
             {account?.totalIncome > account?.totalExpense ? "Profit" : "Loss"}
           </p>
           <p className="text-xl text-center">
             {Math.abs(account?.totalIncome - account?.totalExpense)}
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
       </div>

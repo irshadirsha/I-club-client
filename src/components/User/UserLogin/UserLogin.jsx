@@ -129,7 +129,7 @@ function UserLogin() {
             <div className=" px-10 md:w-1/2 relative">
               <div id="radius-shape-1" className="absolute rounded-circle shadow-5-strong"></div>
               <div id="radius-shape-2" className="absolute shadow-5-strong"></div>
-              <div className="bg-white rounded-lg    ">
+              <div className="bg-glass rounded-lg    ">
 
                 <div className='hero-title text-hsl(217, 93%, 28%) text-center pt-2 '>
                   <h1>Login</h1>

@@ -53,22 +53,22 @@ function App() {
           <Route path='/login' element={<UserLoginPage/>}></Route>
           {/* <Route path='/sendmail' element={<EmailSendPage/>}></Route> */}
           <Route path='/about' element={<AboutPage/>}></Route>
-          <Route path='/reset-password' element={<ChangePasswordPage/>}></Route>
-          <Route path='/new-password' element={<SetnewPassPage/>}></Route>
+          <Route path='/reset-password' element={<ProtectedRoute><ChangePasswordPage/></ProtectedRoute>}></Route>
+          <Route path='/new-password' element={<ProtectedRoute><SetnewPassPage/></ProtectedRoute>}></Route>
           <Route path='/user-profileupdate' element={<ProtectedRoute><UserProfilePage/></ProtectedRoute>}></Route>
          
 
           <Route path='/createclub' element={<ProtectedRoute><CreateClubPage/></ProtectedRoute>}></Route>
           <Route path='/joinclub' element={<ProtectedRoute><JoinClubPage/></ProtectedRoute>}></Route>
           <Route path='/clubhome' element={<ProtectedRoute><ClubHomePage/></ProtectedRoute>}></Route>
-          <Route path='/payment' element={<ClubPaymentPage/>}></Route>
-          <Route path='/finance' element={<FinancePage/>}></Route>
-          <Route path='/notification' element={<NotificationPage/>}></Route>
-          <Route path='/members' element={<MembersPage/>}></Route>
-          <Route path='/club-profile' element={<ClubProfilePage/>}></Route>
-          <Route path='/club-setting' element={<ClubSettingPage/>}></Route>
-          <Route path='/news' element={<NewsPage/>}></Route>
-          <Route path='/meeting' element={<MeetingPage/>}></Route>
+          <Route path='/payment' element={<ProtectedRoute><ClubPaymentPage/></ProtectedRoute>}></Route>
+          <Route path='/finance' element={<ProtectedRoute><FinancePage/></ProtectedRoute>}></Route>
+          <Route path='/notification' element={<ProtectedRoute><NotificationPage/></ProtectedRoute>}></Route>
+          <Route path='/members' element={<ProtectedRoute><MembersPage/></ProtectedRoute>}></Route>
+          <Route path='/club-profile' element={<ProtectedRoute><ClubProfilePage/></ProtectedRoute>}></Route>
+          <Route path='/club-setting' element={<ProtectedRoute><ClubSettingPage/></ProtectedRoute>}></Route>
+          <Route path='/news' element={<ProtectedRoute><NewsPage/></ProtectedRoute>}></Route>
+          <Route path='/meeting' element={<ProtectedRoute><MeetingPage/></ProtectedRoute>}></Route>
 
 
   

@@ -13,6 +13,7 @@ function Finance() {
   const [financeExpData, setFinanceExpData] = useState([]);
   const [userRole, setUserRole] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [changeData, setChangeData] = useState(false)
   const itemsPerPage = 8;
 
   const toggleIncomeExpense = () => {
@@ -23,7 +24,7 @@ function Finance() {
 
   useEffect(() => {
     fetchdata();
-  }, []);
+  }, [changeData]);
 
   const fetchdata = async () => {
     const { data } = await axiosInstance.get('/get-financedata', {
@@ -33,6 +34,11 @@ function Finance() {
     setFinanceExpData(data.financeexpense);
     setUserRole(data.userRole);
   };
+
+  const callbackChange = (data) => {
+    console.log(data);
+    setChangeData(!changeData)
+  }
 
   const filteredData = showIncome ? financeData : financeExpData;
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
@@ -44,7 +50,7 @@ function Finance() {
     <div>
       <div className="bg-primary min-h-screen py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl text-center font-semibold mb-4">Finance</h1>
-        {userRole === 'treasurer' && <FinanceTreasur state={clubName} />}
+        {userRole === 'treasurer' && <FinanceTreasur callbackFunction={callbackChange} state={clubName} />}
         <div className=" mb-4">
           <button
             className={`px-4 py-2 text-sm font-medium rounded ${
