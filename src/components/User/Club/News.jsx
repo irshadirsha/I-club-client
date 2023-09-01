@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ClubNav from './ClubNav';
 import axios from 'axios';
+import Loader from '../../Loader/Loader';
 
 function News() {
+  const [loading, setLoading] = useState(true);
   const [news, setNews] = useState([]);
 
   useEffect(() => {
@@ -20,6 +22,7 @@ function News() {
       .then(response => {
         setNews(response.data.articles);
         console.log(response);
+        setLoading(false)
       })
       .catch(error => {
         console.error('Error fetching news:', error);
@@ -29,6 +32,7 @@ function News() {
   return (
     <div>
       <ClubNav/>
+      {loading && <Loader/>}
       <div className="bg-primary container my-4 mx-auto md:px-6">
         <h1 className='text-4xl text-center pb-4 font-mono font-bold'>News</h1>
         {news.length > 0 ? (

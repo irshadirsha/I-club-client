@@ -3,11 +3,13 @@ import { axiosInstance } from '../../../../Api/config';
 import { useLocation } from 'react-router-dom';
 import FinanceTreasur from './FinanceTreasur';
 import { useSelector } from 'react-redux';
+import Loader from '../../Loader/Loader';
 function Finance() {
 
   const {clubName}=useSelector((state)=>state.user)
   const location = useLocation();
   // const clubName = location.state?.club;
+  const [loading, setLoading] = useState(true);
   const [showIncome, setShowIncome] = useState(true);
   const [financeData, setFinanceData] = useState([]);
   const [financeExpData, setFinanceExpData] = useState([]);
@@ -33,6 +35,7 @@ function Finance() {
     setFinanceData(data.financedata);
     setFinanceExpData(data.financeexpense);
     setUserRole(data.userRole);
+    setLoading(false)
   };
 
   const callbackChange = (data) => {
@@ -48,6 +51,7 @@ function Finance() {
 
   return (
     <div>
+         {loading && <Loader/>}
       <div className="bg-primary min-h-screen py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl text-center font-semibold mb-4">Finance</h1>
         {userRole === 'treasurer' && <FinanceTreasur callbackFunction={callbackChange} state={clubName} />}

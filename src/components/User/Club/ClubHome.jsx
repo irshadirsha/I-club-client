@@ -8,7 +8,7 @@ import { ToastContainer,toast } from 'react-toastify'
 import io from 'socket.io-client'
 import {ServerPort } from '../../../../Api/Serverport'
 import Swal from 'sweetalert2';
-import loader from '../../Loader/Loader'
+import Loader from '../../Loader/Loader';
 function ClubHome() {
     const scrollableRef = useRef(null);
     const socket = io(ServerPort);
@@ -160,8 +160,8 @@ const fetchmessage = async () =>{
 }
 return (
 <div>
+{loading && <Loader/>}
 <ClubNav state={clubName}/>
-{loading ? (<loader/>):(
 <section className="pt-16 bg-primary">
 <div className="container mx-auto">
     <div className="flex flex-col md:flex-row items-center">
@@ -440,7 +440,6 @@ return (
 <br />
 <br />
 </section>
-)}
 <ToastContainer/>
 </div>
 )

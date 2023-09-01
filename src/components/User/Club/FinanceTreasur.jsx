@@ -1,10 +1,12 @@
 import React,{useEffect, useState} from 'react'
 import { axiosInstance } from '../../../../Api/config';
 import { ToastContainer,toast } from 'react-toastify'
+import Loader from '../../Loader/Loader';
 
 function FinanceTreasur({state,callbackFunction}) {
   const clubName=state
 console.log("tresurer",clubName);
+const [loading, setLoading] = useState(true);
 const [account,setAccount]=useState([])
 const [expenseData, setExpenseData] = useState({
   name: '',
@@ -28,8 +30,9 @@ const fetchdata=async ()=>{
     })
     console.log("acc",data);
     setAccount(data)
+    setLoading(false)
   } catch (error) {
-    
+    console.log("error in get counts");
   }
 }
 const handleExpense = async (e) => {
@@ -77,6 +80,7 @@ const handleExpense = async (e) => {
   return (
     <div>
       <div className="flex">
+         {loading && <Loader/>}
   {/* Existing table */}
   <div className=" border flex  rounded-xl p-2 w-full px-4">
     <div className="  w-1/2 mb-8">

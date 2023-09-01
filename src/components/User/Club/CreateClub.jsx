@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import { axiosInstance } from '../../../../Api/config';
 import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +31,6 @@ function CreateClub() {
     address: "",
     category: "",
     securityCode: "",
-    // confirmSecurityCode: "",
     secretory: "",
     treasurer: "",
     general: "",
@@ -45,7 +44,6 @@ function CreateClub() {
       createClub.address.trim() === "" &&
       createClub.category.trim() === "" &&
       createClub.securityCode.trim() === "" &&
-      // createClub.confirmSecurityCode.trim() === "" &&
       createClub.secretory.trim() === "" &&
       createClub.treasurer.trim() === ""   ) {
         setErrors({
@@ -55,7 +53,6 @@ function CreateClub() {
           address: "Address  is empty",
           category: "Category  is empty",
           securityCode: "Security Code  is empty",
-          // confirmSecurityCode: "Confirm SecurityCode  is empty",
           secretory: "Secretory  is empty",
           treasurer: "Treasurer  is empty",
         });
@@ -65,7 +62,8 @@ function CreateClub() {
       const regex = {
         registerNo: /^\d{6}$/gm,
         securityCode: /^\d{6}$/gm,
-        
+        email : /^[^\s@]+@[^\s@]+\.[^\s@]+$/gm,
+        tremail : /^[^\s@]+@[^\s@]+\.[^\s@]+$/gm
       }
       if (createClub.registerNo === "") {
         generateError("Enter Your register Number")
@@ -85,12 +83,19 @@ function CreateClub() {
       }else if (!regex.securityCode.test(createClub.securityCode)) {
         generateError("securityCode must contain six digit")
         return;
-      }else if (createClub.treasurer === "") {
+      }else if (createClub.secretory === "") {
         generateError("Please Enter Secretary Email")
         return; 
-      }else if (createClub.treasurer === "") {
+      } else if (!regex.email.test(createClub.secretory)) {
+        generateError("Enter a Valid Secretory Email")
+        return;
+        }else if (createClub.treasurer === "") {
         generateError("Please Enter Treasurer Email")
         return; 
+      } else if (!regex.tremail.test(createClub.treasurer)) {
+        console.log(createClub.treasurer);
+        generateError("Enter a Valid Treasurer Email")
+        return;
       }
 
       console.log(createClub)
@@ -130,8 +135,10 @@ function CreateClub() {
 
   return (
     <div>
-      {loading? (<Loader/>):(
-      <section className="bg-primary overflow-y-hidden">
+      {loading && <Loader/>}
+      {/* <section className={`bg-primary overflow-y-hidden ${loading && disabled:}`}> */}
+      <section className={`bg-primary overflow-y-hidden ${loading ? 'pointer-events-none' : ''}`}>
+
         <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-6">
           <div className=" md:flex md:gap-x-6 md:items-center mb-10">
             <div className=" mt-4 md:w-1/2 md:pl-8 mb-5  md:mb-0 z-10">
@@ -282,9 +289,9 @@ function CreateClub() {
                 </label> */}
                 <input
                   type="email"
-                  id="form3Example7"
+                  id="form3Example8"
                   name="treasurer"
-                  placeholder="Enter your reasurer Email "
+                  placeholder="Enter your treasurer Email "
                   onChange={(e) => {
                     setCreateClub({ ...createClub, [e.target.name]: e.target.value })
                     setErrors({});
@@ -316,7 +323,7 @@ function CreateClub() {
         </div>
 
       </section>
-      )}
+      
       <ToastContainer />
     </div>
   )

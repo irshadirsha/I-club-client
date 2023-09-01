@@ -17,7 +17,12 @@ function ClubSetting() {
     category:"",
     about:""
   })
-  const [Committe,setCommitte]=useState({})
+  //its made later if any error check in here make it ({}) empty obj
+  const [Committe,setCommitte]=useState({
+    president:"",
+    secretory:"",
+    treasurer:""
+  })
   const [club,setClub]=useState([])
   const [errors, setErrors] = useState({
     clubName:"",
@@ -232,26 +237,26 @@ function ClubSetting() {
       />
       {errors.address && <p className="text-red-500">{errors.address}</p>}
     </div>
-    <div>
-      <label htmlFor="about" className="block  font-medium ">
-        About
-      </label>
-      <input
-        type="text"
-        id="about"
-        name="about"
-        // value={club?.about}
-        placeholder={club?.about}
-        onChange={(e) => {
-          setUpdateClub({...updateclub,[e.target.name]:e.target.value})
-          setErrors({});
-        }}
-        className={`border border-gray-300 rounded-md p-1 w-full ${
-          errors.about && "border-red-500"
-        }`}
-      />
-      {errors.about && <p className="text-red-500">{errors.about}</p>}
-    </div>
+      <div>
+        <label htmlFor="about" className="block  font-medium ">
+          About
+        </label>
+        <input
+          type="text"
+          id="about"
+          name="about"
+          // value={club?.about}
+          placeholder={club?.about}
+          onChange={(e) => {
+            setUpdateClub({...updateclub,[e.target.name]:e.target.value})
+            setErrors({});
+          }}
+          className={`border border-gray-300 rounded-md p-1 w-full ${
+            errors.about && "border-red-500"
+          }`}
+        />
+        {errors.about && <p className="text-red-500">{errors.about}</p>}
+      </div>
     <div className=' flex justify-center items-center'>
     <button
       type="submit"

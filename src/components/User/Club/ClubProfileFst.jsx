@@ -13,6 +13,9 @@ function ClubProfileFst() {
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const navigate=useNavigate()
     const {clubName}=useSelector((state)=>state.user)
+    const {id}=useSelector((state)=>state.user)
+    const currentUser=id
+    console.log("currentUser",currentUser);
     const [loading, setLoading] = useState(true);
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
     const [postmodalOpen, setPostModalOpen]=useState(false)
@@ -59,6 +62,14 @@ function ClubProfileFst() {
       };
       const uploadProfileImage =async(e)=>{
           e.preventDefault()
+          console.log("+++++");
+          if( profileimage == null){
+            setErrors({
+              ...errors,
+              profilerr: "Please select Your Profile Image.",
+            });
+            return;
+          }
           const formData = new FormData();
           formData.append('file', profileimage);
           formData.append('upload_preset', 'I-club');
@@ -71,6 +82,7 @@ function ClubProfileFst() {
           setProfileImage(imageUrl)
           const doce =await axiosInstance.post('/add-clubprofile',{clubName,imageUrl})
           console.log(doce)
+          setProfileImage(null)
           if (doce.data.message) {
             toast.success(doce.data.message)
             fetchdata() 
@@ -80,12 +92,23 @@ function ClubProfileFst() {
 
       const handlePostImageUpload = async (e) => {
         e.preventDefault();
+        if( postimage.image == null){
+          setErrors({
+            ...errors,
+            posterr: "Please select Your Post Image.",
+          });
+          return;
+        }
         const formData = new FormData();
         formData.append('file', postimage.image);
         formData.append('upload_preset', 'I-club');
         try {
             const  response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
         console.log(response)
+        setPostImage({
+          image: null,
+          description: '',
+        })
         closePostModal()
         console.log(response.data.secure_url);
         const postimageUrl = response.data.secure_url;
@@ -149,12 +172,20 @@ function ClubProfileFst() {
         });
       };
       
-      
+      const handlelike =async (id) =>{
+        // e.preventDefault()
+        try {
+          const {data}= await axiosInstance.post('/post-like',{clubName,postId:id}) 
+          console.log(data);
+          fetchdata()
+        } catch (error) {
+          console.log("error in add like api");
+        }
+      }
   return (
     <div>
-      {loading?(
-      <Loader/>):
-      ( <section className="pt-16 bg-primary">
+      {loading && <Loader/>}
+       <section className="pt-16 bg-primary">
 <div className="container mx-auto">
     <div className=" flex flex-col md:flex-row ">
         <div className=" md:w-6/12 md:text-left text-center py-2 ">
@@ -225,7 +256,7 @@ function ClubProfileFst() {
         type="button"
         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition ease-in-out mr-2"
         onClick={uploadProfileImage}
-        disabled={!profileimage}
+        // disabled={!profileimage}
       >
         Upload
       </button>
@@ -326,7 +357,7 @@ function ClubProfileFst() {
       <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md ">
         {(userRole ==='president' || userRole === 'secretory') && (
          ( <div  onClick={() => handleDeletePost(post._id)}  className=' p-1 w-12'>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-2 w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-2 w-6 h-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
    />
 </svg>
@@ -336,8 +367,20 @@ function ClubProfileFst() {
               src={post.postimg}
               alt="Post"
           />
-          <div className="p-4">
-              <p className="text-gray-700 text-lg font-semibold">{post.desc}</p>
+           <div className="flex justify-between  pr-8 py-1">
+           <p className='px-6'>{new Date(post.date).toLocaleDateString()}</p>
+              <p onClick={()=>handlelike(post._id) }
+              className=" px-2  text-gray-700 text-lg text-center font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg"  fill={post.likes.includes(currentUser) ? '-2.733C5'  :'none' }  viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <p>{post?.likes.length}</p>
+              </p>
+             
+
+          </div>
+          <div className="p-1">
+              <p className="text-gray-700 text-lg text-center font-semibold">{post.desc}</p>
           </div>
       </div>
   </div>
@@ -351,7 +394,7 @@ function ClubProfileFst() {
               alt="Post"
           />
           <div className="p-4">
-              <p className="text-gray-700 text-lg font-semibold">Images</p>
+              <p className="text-gray-700 text-center text-lg font-semibold">Images</p>
           </div>
       </div>
   </div>
@@ -366,7 +409,6 @@ function ClubProfileFst() {
         </div>)}
     </div>
     </section> 
-      )}
     <ToastContainer/>
     </div>
   )

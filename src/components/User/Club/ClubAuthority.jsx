@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react';
 import { axiosInstance } from '../../../../Api/config';
 import { useSelector } from 'react-redux';
-
+import Loader from '../../Loader/Loader'
 function ClubAuthority() {
     const { clubName } = useSelector((state) => state.user)
+    const [loading, setLoading] = useState(true);
      const [authority,setAthority]=useState([])
     useEffect(()=>{
         fetchdata()
@@ -14,10 +15,11 @@ const fetchdata=async()=>{
     })
     console.log("authority",data);
     setAthority(data.data)
- 
+    setLoading(false) 
 }
   return (
     <div className=''>
+         {loading && <Loader/>}
       <div className="sm:justify-center items-center  justify-evenly py-4 px-8 flex flex-col md:flex-row space-y-4 md:mx-32 md:space-x-4">
         {/* President Card */}
         <div className="relative flex w-96 mt-4 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">

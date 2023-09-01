@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../../../Api/config'
 import { useSelector } from 'react-redux'
 import { ToastContainer,toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import Loader from '../../Loader/Loader'
+// import 'react-toastify/dist/ReactToastify.css';
+
 function Notification() {
   const { clubName } = useSelector((state) => state.user)
+  const [loading, setLoading] = useState(true);
   const [note, setNote] = useState('')
   const [notificationdata, setNotificationData] = useState([]);
   const [userRole, setUserRole] = useState('');
@@ -22,6 +25,7 @@ function Notification() {
     if (data.status === true) {
       setNotificationData(data.note)
       setUserRole(data.userRole)
+      setLoading(false)
       console.log(data.note);
     }
   }
@@ -65,6 +69,7 @@ function Notification() {
   }
   return (
     <div className="bg-primary min-h-screen">
+         {loading && <Loader/>}
       {(userRole === 'president' || userRole === 'secretory') && (<div className=" flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-4">
           <div>

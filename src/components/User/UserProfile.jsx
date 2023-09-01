@@ -24,6 +24,9 @@ function UserProfile() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [clubdata,setClubData]=useState([])
+  const [errors, setErrors] = useState({
+    profilerr: "",
+  });
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -33,16 +36,26 @@ function UserProfile() {
   };
   const closeImageModal = () => {
     setIsImageModalOpen(false);
+    setErrors({
+      ...errors,
+        profilerr: null
+    })
   };  
   const handleImageUpdate = async (e) => {
     e.preventDefault();
-    const file = e.target.files[0];
+    try {
+    if (selectedImage === null) {
+      setErrors({
+        ...errors,
+        profilerr: "Please select Your Profile Image.",
+      });
+      return;
+    }
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', selectedImage);
     formData.append('upload_preset', 'I-club')
     setIsImageModalOpen(false);
     console.log(formData)
-    try {
       const  data = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
       console.log(data.data.secure_url);
       if(data.data.secure_url){
@@ -53,13 +66,14 @@ function UserProfile() {
     console.log("getuserprofil", email)
       const response= await axiosInstance.post('/user-profileimgupdate',{imageUrl:imageUrl})
       console.log(response.data);
+      setSelectedImage(null)
       console.log(response.data.status);
       if (response.data.status == true) {
         fetchUserData();
       }
     }
     } catch (error) {
-      // Handle error if the API request fails
+      console.log("error in userprofile edit");
     }
   }
   
@@ -104,13 +118,6 @@ function UserProfile() {
     <div>
       <div className="container mx-auto p-4">
         <div className="bg-primary md:mx-20 text-white p-8 rounded-t-lg flex flex-col sm:flex-row items-center">
-          {/* <div className="bg-white rounded-md  mr-4 flex-shrink-0 " >
-            <img
-             src={fetched ? profile?.image ||'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' :'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='}
-             alt="Profile"
-              className="w-36 h-36 rounded-md object-cover"
-            />
-          </div> */}
          <div className="bg-white rounded-md mr-4 flex-shrink-0">
          <img
          src={fetched ? profile?.image || 'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' : 'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='}
@@ -118,8 +125,6 @@ function UserProfile() {
          className="w-36 h-36 rounded-md object-cover object-top"
          />
         </div>
-
-
 
           <div className="flex flex-col mt-4 sm:mt-0">
             <h5 className="text-xl text-black font-bold">{fetched ? profile?.username : "username"}</h5>
@@ -146,18 +151,32 @@ function UserProfile() {
         className="w-full border border-gray-300 py-2 px-3 rounded-lg bg-gray-100"
         accept="image/*"
         // onChange={(e) => setSelectedImage(e.target.files[0])}
-        onChange={handleImageUpdate}
-      />
+        // onChange={handleImageUpdate}
+       onChange={(e) => {
+              const selectedFile = e.target.files[0];
+              if (selectedFile && selectedFile.type.includes('image')) {
+                setSelectedImage(selectedFile);
+                setErrors({ ...errors, profilerr: null }); // Clear the error here
+              } else {
+                setErrors({
+                  ...errors,
+                  profilerr: "Please select a valid image file.",
+                });
+                return;
+              }
+            }}
+          />
+          {errors.profilerr && <p className="text-red-500 text-center">{errors.profilerr}</p>}
     </div>
     <div className="flex justify-end">
-      {/* <button
+      <button
         type="button"
         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition ease-in-out mr-2"
-        // onClick={handleImageUpdate }
+        onClick={handleImageUpdate }
         // disabled={!selectedFile}
       >
         Upload
-      </button> */}
+      </button>
       <button
         type="button"
         className="px-4 py-2 bg-gray-300 text-gray-900 rounded-lg hover:bg-gray-400 transition ease-in-out"
