@@ -6,6 +6,8 @@ import { axiosInstance } from '../../../Api/config';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../redux/UserSlice/UserSlice';
+import Loader from '../Loader/Loader';
+
 
 function UserProfile() {
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
@@ -13,6 +15,7 @@ function UserProfile() {
   const user = useSelector(state => state.user);
   console.log("redux",user);
   const navigate=useNavigate()
+  const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({
     username: "",
     gender: "",
@@ -90,6 +93,7 @@ function UserProfile() {
       setClubData(data.userdata.clubs)
       setProfile(data.userdata);
       setFetched(true);
+      setLoading(false)
     } catch (error) {
       // Handle error if the API request fails
     }
@@ -116,6 +120,7 @@ function UserProfile() {
   }
   return (
     <div>
+      {loading && <Loader/>}
       <div className="container mx-auto p-4">
         <div className="bg-primary md:mx-20 text-white p-8 rounded-t-lg flex flex-col sm:flex-row items-center">
          <div className="bg-white rounded-md mr-4 flex-shrink-0">

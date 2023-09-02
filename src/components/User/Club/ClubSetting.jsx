@@ -3,12 +3,14 @@ import { axiosInstance } from '../../../../Api/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../../redux/UserSlice/UserSlice';
 import { ToastContainer,toast } from 'react-toastify'
+import Loader from '../../Loader/Loader';
 
 
 function ClubSetting() {
     const dispatch=useDispatch()
     const user=useSelector(state=>state.user)
     const {clubName}=useSelector((state)=>state.user)
+    const [loading, setLoading] = useState(false);
   const [showClubDetails, setShowClubDetails] = useState(true); 
   const [updateclub,setUpdateClub]=useState({
     clubName:"",
@@ -77,9 +79,8 @@ function ClubSetting() {
         generateError("description is required")
         return;
       }
-     
-
     console.log(updateclub)
+    setLoading(true)
     const {data}= await axiosInstance.post('/update-club',{...updateclub,club:clubName})
     console.log(data);
     console.log("response of updation",data.getclub.clubName)
@@ -91,10 +92,12 @@ function ClubSetting() {
         email:user.email,
         clubName:club 
       }));
+      setLoading(false)
     if (data.message) {
         toast.success(data.message)}
         if (data.errors) {
-            toast.error(data.errors)}}
+            toast.error(data.errors)}
+          }
 
            const handlecommite= async (e) =>{
             e.preventDefault()
@@ -124,6 +127,7 @@ function ClubSetting() {
   
   return (
     <div className="min-h-screen bg-primary p-12">
+      {loading && <Loader/>}
       <h1 className="p-4 text-3xl font-mono font-bold text-center">Club Setting</h1>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-evenly">

@@ -141,7 +141,6 @@ const handleSendMessage = async () => {
         clubName: clubName,
       });
       socket.emit('chatMessage', { text: chatMessage, clubName: clubName });
-    
     setChatMessage('');
     fetchmessage();
     console.log(data);

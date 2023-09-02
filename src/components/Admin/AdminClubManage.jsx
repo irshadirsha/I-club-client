@@ -4,9 +4,11 @@ import AdminSidebar from './AdminSidebar'
 import { useNavigate } from 'react-router-dom';
 import { adminaxios } from '../../../Api/config';
 import Swal from 'sweetalert2';
+import Loader from '../Loader/Loader';
 
 function AdminClubManage() {
   const navigate=useNavigate()
+  const [loading, setLoading] = useState(true);
   const [getclub, setGetClub] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // State to keep track of the current page
   const itemsPerPage = 5; // Number of items displayed per page
@@ -21,6 +23,7 @@ function AdminClubManage() {
       console.log(data);
       console.log(data.club);
       setGetClub(data.club);
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -63,6 +66,7 @@ const navToClubView = (id) => {
   return (
     <div>
       <div className="flex flex-col md:flex-row">
+      {loading && <Loader/>}
         {/* Sidebar */}
         <AdminSidebar />
 

@@ -226,7 +226,7 @@ function UserSignup() {
                         d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                       />
                     </svg>
-                    <span className="sr-only">Close modal</span>
+                    <span onClick={()=>{setShowModal(false)}} className="sr-only">Close modal</span>
                   </button>
                             {/* Modal content */}
                             <div className="px-6 py-6 lg:px-10 ">

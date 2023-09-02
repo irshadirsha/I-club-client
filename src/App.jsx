@@ -27,7 +27,7 @@ import MeetingPage from './pages/Club/MeetingPage';
 import BlackListedPage from './pages/admin/BlackListedPage';
 import BannerPage from './pages/admin/BannerPage';
 import Loader from './components/Loader/Loader';
-
+import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
 function App() {
   
   return (
@@ -38,12 +38,12 @@ function App() {
            <Route path='/loader' element={<Loader/>}></Route>
             {/* ADMIN */}
           <Route path="/adminlogin" element={<AdminLogin/>}> </Route>
-          <Route path="/admin"  element={<AdminDashBordPage/>}></Route>
-          <Route path='/admin-usermanage' element={<AdminUserManagePage/>}></Route>
-          <Route path='/club-manage' element={<ClubManagePage/>}></Route>
-          <Route path='/club-details' element={<AdminClubViewPage/>}></Route>
-          <Route path='/blacklisted' element={<BlackListedPage/>}></Route>
-          <Route path='/banner' element={<BannerPage/>}></Route>
+          <Route path="/admin"  element={<AdminProtectedRoute><AdminDashBordPage/></AdminProtectedRoute>}></Route>
+          <Route path='/admin-usermanage' element={<AdminProtectedRoute><AdminUserManagePage/></AdminProtectedRoute>}></Route>
+          <Route path='/club-manage' element={<AdminProtectedRoute><ClubManagePage/></AdminProtectedRoute>}></Route>
+          <Route path='/club-details' element={<AdminProtectedRoute><AdminClubViewPage/></AdminProtectedRoute>}></Route>
+          <Route path='/blacklisted' element={<AdminProtectedRoute><BlackListedPage/></AdminProtectedRoute>}></Route>
+          <Route path='/banner' element={<AdminProtectedRoute><BannerPage/></AdminProtectedRoute>}></Route>
           {/* <Route path='/admin-dashboard' element={<AdminDashBordPage/>}></Route> */}
 
 
