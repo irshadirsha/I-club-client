@@ -18,7 +18,6 @@ import ClubPaymentPage from './pages/Club/ClubPaymentPage';
 import FinancePage from './pages/Club/FinancePage';
 import NotificationPage from './pages/Club/NotificationPage';
 import MembersPage from './pages/Club/MembersPage';
-import './App.css'
 import ClubProfilePage from './pages/Club/ClubProfilePage';
 import ClubSettingPage from './pages/Club/ClubSettingPage';
 import AboutPage from './pages/user/AboutPage';
@@ -29,6 +28,7 @@ import BannerPage from './pages/admin/BannerPage';
 import Loader from './components/Loader/Loader';
 import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
 import PageNot from './components/PageNot';
+import './App.css'
 function App() {
   
   return (
@@ -73,6 +73,7 @@ function App() {
 
 
          <Route path='*' element={<PageNot/>}></Route>
+         <Route path='/admin*' element={<PageNot/>}></Route>
           </Routes>
           </BrowserRouter>
           
