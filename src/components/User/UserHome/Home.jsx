@@ -30,6 +30,7 @@ function Home() {
   const [filteredClubs, setFilteredClubs] = useState([]);
   const [carosal, setCarosal] = useState();
   const [request,setRequest]=useState('')
+  const [reqMatch,setReqMatch]=useState('')
   const navigate=useNavigate()
   const handleSearch = async () => {
     try {
@@ -65,6 +66,7 @@ function Home() {
  
   const handleRequest = async (e, id) => {
     /////////////
+    setReqMatch(id)
     Swal.fire({
       title: 'Request For Join Club Confirmation',
       text: 'Are you sure you want to Join the club?',
@@ -79,7 +81,7 @@ function Home() {
           Swal.fire('Success',data.message, 'success');
           setRequest('requested')
         }
-        console.log(response);
+        console.log(data);
       }
     });
     
@@ -155,7 +157,7 @@ function Home() {
              onClick={(e)=>handleRequest(e,club._id)}
              className="btn text-black font-mono rounded-lg  px-4   bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
              exact>
-             {request === 'requested' ? 'Requested' : 'Request to join'}
+            {request === 'requested' && club._id === reqMatch ? 'Requested' : 'Request to join'}
              </button>) 
           ) } 
               </div>
@@ -163,8 +165,7 @@ function Home() {
      </div>
      
        ))}
-   </div>
-       
+   </div> 
         ) : (
     <div>
   <div className=' w-full md:flex justify-end'>

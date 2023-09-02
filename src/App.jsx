@@ -28,6 +28,7 @@ import BlackListedPage from './pages/admin/BlackListedPage';
 import BannerPage from './pages/admin/BannerPage';
 import Loader from './components/Loader/Loader';
 import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
+import PageNot from './components/PageNot';
 function App() {
   
   return (
@@ -71,7 +72,7 @@ function App() {
           <Route path='/meeting' element={<ProtectedRoute><MeetingPage/></ProtectedRoute>}></Route>
 
 
-  
+         <Route path='*' element={<PageNot/>}></Route>
           </Routes>
           </BrowserRouter>
           
