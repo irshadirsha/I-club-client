@@ -202,8 +202,8 @@ return (
 
     <div className=" flex flex-col pt-12 md:flex-row items-center">
 {/* ITS CHAT MESSAGES */}
-     <div className=" md:w-6/12 md:text-left text-center p-4 py-2 md:mt-3">
-<div className="col-sm-6">
+     <div className=" w-full  md:w-6/12 md:text-left text-center p-4 py-2 md:mt-3">
+<div className=" col-sm-6">
   <h1 className=" text-4xl text-center px-2 font-semibold font-mono">Chat</h1>
   <section className=" md:px-8 overflow-hidden">
     <div className="card">

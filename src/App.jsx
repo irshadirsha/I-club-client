@@ -56,7 +56,7 @@ function App() {
           <Route path='/about' element={<AboutPage/>}></Route>
           <Route path='/reset-password' element={<ProtectedRoute><ChangePasswordPage/></ProtectedRoute>}></Route>
           <Route path='/new-password' element={<ProtectedRoute><SetnewPassPage/></ProtectedRoute>}></Route>
-          <Route path='/user-profileupdate' element={<ProtectedRoute><UserProfilePage/></ProtectedRoute>}></Route>
+          <Route path='/user-profile' element={<ProtectedRoute><UserProfilePage/></ProtectedRoute>}></Route>
          
 
           <Route path='/createclub' element={<ProtectedRoute><CreateClubPage/></ProtectedRoute>}></Route>

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import ClubAuthority from './ClubAuthority'
 import { ToastContainer,toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+// import './Sweetalert.css'
 function Members() {
     const [adduser,SetAddUser]=useState('')
    const {clubName}=useSelector((state)=>state.user)
@@ -82,6 +83,9 @@ function Members() {
           showCancelButton: true,
           confirmButtonText: 'Yes,Remove!',
           cancelButtonText: 'Cancel',
+          customClass: {
+            popup: 'custom-sweetalert', // Apply your custom class here
+          },
         }).then(async (result) => {
           if (result.isConfirmed) {
             console.log('leave', clubName);
