@@ -38,7 +38,6 @@ const [errors, setErrors] = useState({
 
      const [chatMessage, setChatMessage] = useState('');
      const [showmessage,setShowMessage]=useState([])
-
      
      console.log(showmessage);
 
@@ -155,8 +154,14 @@ const fetchmessage = async () =>{
 
     setShowMessage(response.data.response)
     console.log(response);
-
 }
+
+const handleKeyDown = (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault(); // Prevent a newline in the input field
+    handleSendMessage();
+  }
+};
 return (
 <div>
 {loading && <Loader/>}
@@ -211,30 +216,22 @@ return (
         <h5 className="text-md font-semibold">Chat messages</h5>
         <h5 className="text-lg font-bold">{clubName}</h5>
         <div className="flex flex-row items-center space-x-3">
-          <div className="nav-item dropdown relative">
-            {/* <button className="d-inline-block py-2 px-3 text-black text-sm font-medium dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Active members
-            </button> */}
-            <ul className="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-md bg-white" aria-labelledby="navbarDropdown">
-              {/* <li><a className="dropdown-item">User 1</a></li> */}
-              {/* Add more active users here */}
-            </ul>
-          </div>
-          <i className="fas fa-minus text-gray-500 text-xs"></i>
-          <i className="fas fa-comments text-gray-500 text-xs"></i>
           <i className="fas fa-times text-gray-500 text-xs"></i>
         </div>
       </div>
-      {/* <div className="bg-gray-300 card-body  border overflow-y-auto relative" style={{ height: '400px' }}> */}
+      
       <div className="bg-gray-300 card-body border overflow-y-auto relative" style={{ height: '400px' }} ref={scrollableRef}>
     {showmessage?.map((message, index) => (
         (message?.user?._id !== currentuser) ? (
             <div key={index}>   
             {/* <h1>....{currentuser}</h1>
             <h1>{message?.user?._id }</h1> */}
-                {/* <div className="flex justify-between">
-                    <p className="small mb-0">{message?.user?.username}</p>
-                </div> */}
+             {/* {index === 0 || new Date(message.time).toLocaleDateString() !== new Date(showmessage[index - 1]?.time).toLocaleDateString() ? (
+                <p className="text-center text-xs text-gray-500">
+                  {new Date(message.time).toLocaleDateString()}
+                </p>
+              ) : null} */}
+
                 <div className="flex flex-row items-center mx-2 pt-4 space-x-2">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
                         <img
@@ -286,6 +283,7 @@ return (
             placeholder='enter message...'
             value={chatMessage}
           onChange={(e) => setChatMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
             aria-label="Recipient's username"
             aria-describedby="button-addon2"
           />

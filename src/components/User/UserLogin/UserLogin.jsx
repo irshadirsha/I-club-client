@@ -126,7 +126,7 @@ function UserLogin() {
                 Empowering Hearts, Building Bridges - The Power of Togetherness.
               </p>
             </div>
-            <div className=" px-10 md:w-1/2 relative">
+            <div className=" px-2 md:w-1/2 relative">
               <div id="radius-shape-1" className="absolute rounded-circle shadow-5-strong"></div>
               <div id="radius-shape-2" className="absolute shadow-5-strong"></div>
               <div className="bg-glass rounded-lg    ">
@@ -138,7 +138,7 @@ function UserLogin() {
                  {/* //////////////////////// */}
                  <div>
                 <div className="flex flex-col md:flex-row">
-                  <div className=" md:w-2/3 sm:w-full p-4">
+                  <div className="sm:w-full md:w-2/3  p-4">
                     {/* Main modal */}
                     {showModal && (
                       <div

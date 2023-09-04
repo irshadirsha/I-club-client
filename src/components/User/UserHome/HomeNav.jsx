@@ -32,7 +32,8 @@ const HomeNav = () => {
    
    
   return (
-    <nav className="  border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    // dark:bg-gray-900 dark:borde
+    <nav className="  border-gray-200 ">
       <div className=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a className="flex items-center">
           <span className="self-center text-2xl font-mono font-bold whitespace-nowrap pl-16 text-yellow-600 ">I-club</span>
