@@ -180,14 +180,14 @@ function Home() {
       <div className=' px-16 py-6 flex justify-center md:justify-start'>
         <NavLink
           to='/createclub'
-          className="btn text-black font-mono rounded-lg px-4 py-2  bg-primary border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
+          className="btn text-black font-mono rounded-lg px-4 py-2  bg-white border-2 border-black md:border-2 hover:bg-primary hover:text-white transition ease-out duration-500"
           exact
         >
           Create Club
         </NavLink>
         <a
           onClick={NavToJoinclub}
-          className="btn text-black font-mono rounded-lg px-4 py-2 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500"
+          className="btn text-black font-mono rounded-lg px-4 py-2 bg-white border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500"
         >
           Join Club
         </a>

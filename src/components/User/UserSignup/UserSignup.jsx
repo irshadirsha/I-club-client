@@ -11,6 +11,8 @@ import { updateUser } from '../../../redux/UserSlice/UserSlice'
 
 
 function UserSignup() {
+  // const CLIENT_ID=import.meta.env.VITE_CLIENT_ID
+  const CLIENTID=import.meta.env.VITE_CLIENT_ID
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [user, setUser] = useState({
@@ -345,8 +347,8 @@ function UserSignup() {
 
                   <div className='text-center p-3 flex justify-center items-center'>
                     <div className='text-center border-current border bg-white p-1 rounded-lg text-black'>
-                      <GoogleOAuthProvider clientId="806082535140-72smn8nvp4iekcdicjretlplp1nfdffq.apps.googleusercontent.com">
-                        <GoogleLogin
+                      <GoogleOAuthProvider clientId = {CLIENTID}>
+                        <GoogleLogin 
                           onSuccess={async (credentialResponse) => {
                             google.accounts.id.prompt()
                             let decoded = jwt_decode(credentialResponse.credential);
