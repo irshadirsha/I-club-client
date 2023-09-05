@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ClubNav from './ClubNav';
 import { ToastContainer,toast } from 'react-toastify'
 function ClubPayment() {
-  // const PAYPALID=import.meta.env.VITE_PAYPAL_ID
+  const PAYPALID=import.meta.env.VITE_PAYPAL_ID
   const navigate=useNavigate()
     const location=useLocation();
 const clubName=location.state?.club;
@@ -167,7 +167,7 @@ const clubName=location.state?.club;
                 {payment ? ( // Check if payment is true before rendering PayPalScriptProvider
                   <PayPalScriptProvider
                     options={{
-                      clientId:'AbkrVw5fysOoRdbvD7j3OTniOM5ZDqzahYz6ziSDLdhjfeNAdGnia13UsWFtploM_cGYJYAHUJaKqRO5',
+                      clientId:PAYPALID,
                     }}
                   >
                     <PayPalButtons

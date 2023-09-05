@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes,Route} from 'react-router-dom';
 import AdminLogin from './components/Admin/AdminLogin';
-import UserHomePage from './pages/User/UserHomePage';
+import UserHomePage from './pages/user/userHomePage';
 import UserSignupPage from './pages/user/userSignupPage';
 import UserLoginPage from './pages/user/UserLoginPage';
 import CreateClubPage from './pages/user/CreateClubPage';

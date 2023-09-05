@@ -158,7 +158,7 @@ const fetchmessage = async () =>{
 
 const handleKeyDown = (event) => {
   if (event.key === 'Enter' && !event.shiftKey) {
-    event.preventDefault(); // Prevent a newline in the input field
+    event.preventDefault(); 
     handleSendMessage();
   }
 };
