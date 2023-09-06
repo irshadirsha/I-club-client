@@ -8,7 +8,7 @@ export default {
     extend: {
       colors:{
         primary:{
-          DEFAULT:'rgba(3,190,252,.5)',
+          DEFAULT:'rgba(3, 157, 252,.5)',
         },
         secondary:{
           DEFAULT:'rgba(194, 252, 3,0.5)',
@@ -22,3 +22,4 @@ export default {
   plugins: [],
 }
 
+// 3,190,252,

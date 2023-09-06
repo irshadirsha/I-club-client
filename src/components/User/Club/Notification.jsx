@@ -101,14 +101,6 @@ function Notification() {
             </div>
 
 
-          
-               
-              
-
-
-
-
-
 
             <div>
               <button
@@ -140,11 +132,11 @@ function Notification() {
 
               </tr>
             </thead>
-            {notificationdata && (<tbody className="bg-white divide-y divide-gray-200">
-              {notificationdata.map((notification) => (
+          <tbody className="bg-white divide-y divide-gray-200">
+              {notificationdata.length>0 ? (
+              notificationdata.map((notification) => (
                 <tr key={notification._id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
-                    {/* {notification.date} */}
                     {new Date(notification.date).toLocaleDateString(undefined, {
                       day: 'numeric',
                       month: 'long',
@@ -160,9 +152,15 @@ function Notification() {
                     </button>
                   </td>)}
                 </tr>
-              ))}
-            </tbody>)}
-
+              ))
+           ):(
+            <tr>
+              <td colSpan="3" className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                No Notifications 
+              </td>
+            </tr>
+           )}
+              </tbody>
           </table>
         </div>
       </div>

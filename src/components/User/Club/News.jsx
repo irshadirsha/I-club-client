@@ -10,18 +10,11 @@ function News() {
   useEffect(() => {
     const apiKey=import.meta.env.VITE_NEWS_API_KEY
     const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
-    // const country = 'us'; // Replace with your desired country code
-    // const maxPages = 10; // Adjust this based on the number of available pages for the country
-
-    // Generate a random page number between 1 and maxPages
-    // const randomPage = Math.floor(Math.random() * maxPages) + 1;
-
-    // const apiUrl = `https://newsapi.org/v2/top-headlines?country=${country}&page=${randomPage}&apiKey=${apiKey}`;
 
     axios.get(apiUrl)
       .then(response => {
         setNews(response.data.articles);
-        console.log(response);
+        console.log("---------------------------------",response);
         setLoading(false)
       })
       .catch(error => {

@@ -63,7 +63,7 @@ function ClubNav() {
 
     return (
         <div>   
-            <nav className="border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+            <nav className="border-gray-200 ">
                 <div className=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a className="flex items-center">
                         <span

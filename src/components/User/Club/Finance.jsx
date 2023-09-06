@@ -98,7 +98,9 @@ function Finance() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {currentData?.map((item, index) => (
+            {currentData?.length > 0 ? (
+              currentData?.map((item, index) => (
+                
                 <tr key={item._id}>
                   <td className="px-6 py-4 whitespace-nowrap text-md text-black">
                     {startIndex + index + 1}
@@ -123,7 +125,14 @@ function Finance() {
                     {item.amount}
                   </td>
                 </tr>
-              ))}
+              ))):(
+                <tr>
+                <td colSpan="6" className="px-6 py-4 whitespace-nowrap text-md text-black">
+                  No Transaction Records
+                </td>
+              </tr>
+              )
+            }
             </tbody>
           </table>
         </div>

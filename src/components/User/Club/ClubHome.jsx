@@ -1,6 +1,5 @@
 import React,{useEffect, useRef, useState} from 'react';
-import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../../../Api/config';
 import ClubNav from './ClubNav';
 import { useSelector } from 'react-redux';
@@ -12,7 +11,7 @@ import Loader from '../../Loader/Loader';
 function ClubHome() {
     const scrollableRef = useRef(null);
     const socket = io(ServerPort);
-    console.log("sssss",socket);
+    console.log("socket-----------------------------------------------------",socket);
        const user=useSelector((state)=>state.user)
         const clubName=user.clubName
         const currentuser=user.id
@@ -48,15 +47,16 @@ const [errors, setErrors] = useState({
       }, [showmessage]);
       
 useEffect(()=>{
-     fetchdata()
-     fetchevent()
-     fetchmessage()
-     socket.on('chatMessage', (newMessage) => {
-        setShowMessage((prevMessages) => [...prevMessages, newMessage]);
-      });
-      return () => {
-        socket.disconnect();
-      };
+  fetchdata()
+  fetchevent()
+  fetchmessage()
+  socket.on('chatMessage', (newMessage) => {
+    console.log('Received chatMessage:', newMessage);
+    setShowMessage((prevMessages) => [...prevMessages, newMessage]);
+  });  
+  return () => {
+    socket.disconnect();
+  };
 },[])
 const fetchevent=async()=>{
     const {data}= await axiosInstance.post('/get-event',{clubName})
@@ -140,6 +140,7 @@ const handleSendMessage = async () => {
         clubName: clubName,
       });
       socket.emit('chatMessage', { text: chatMessage, clubName: clubName });
+      console.log('Sent chatMessage:', chatMessage);
     setChatMessage('');
     fetchmessage();
     console.log(data);
