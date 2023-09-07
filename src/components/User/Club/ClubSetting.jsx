@@ -176,13 +176,13 @@ function ClubSetting() {
           <div className="w-full md:w-1/4 h-40 bg-white flex justify-center items-center rounded-lg md:mt-32 shadow-md p-4 mr-4">
             <div className="mb-4">
               <button
-                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full mb-2"
+                className="bg-primary  text-white py-2 px-4 rounded w-full mb-2"
                 onClick={() => setShowClubDetails(true)} // Show Club Details form
               >
                 Club Details
               </button>
               <button
-                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full"
+                className="bg-primary  text-white py-2 px-4 rounded w-full"
                 onClick={() => setShowClubDetails(false)} // Show Change Committee form
               >
                 Change Committee
@@ -310,7 +310,7 @@ function ClubSetting() {
     <div className=' flex justify-center items-center'>
     <button
       type="submit"
-      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+      className="bg-primary text-white py-2 px-4 rounded"
     >
       Update Club Data
     </button>
@@ -387,7 +387,7 @@ function ClubSetting() {
     <div className='flex justify-center items-center'>
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        className="bg-primary text-white py-2 px-4 rounded"
       >
         Update Committee
       </button>

@@ -170,9 +170,10 @@ function Home() {
     <div>
   <div className=' w-full md:flex justify-end'>
     <div className="md:w-1/2">
-      <h1 className="my-5 ml-10  text-5xl pt-28 font-bold tracking-tight  hero-title text-hsl(0, 0%, 0%)">
+      <h1 className="my-5 ml-10  text-5xl pt-28 font-bold tracking-tight text-yellow-300  hero-title ">
         I-Club <br />
-        <span className="text-hsl(27, 36%, 21%)">We Connect People</span>
+        <span className="text-white">We Connect People</span>
+        {/* text-hsl(27, 36%, 21%)   text-hsl(0, 0%, 0%)*/}
       </h1>
       <p className="mb-4 ml-10 opacity-70 text-hsl(219, 43%, 21%)">
         Empowering Hearts, Building Bridges - The Power of Togetherness.
@@ -224,15 +225,15 @@ function Home() {
   </div>
   <br></br>
  
-  <div className="rounded-xl text-center mx-8  bg-gray-800">
+  <div className="rounded-xl text-center mx-8 mt-10  bg-gray-800">
   <p className="p-1.5   text-gray-100">
     Unites integrity, compassion, shared values; making a positive impact on the community with unity and purposeful actions.
   </p>
 </div>
   </div>
         )}
-<br></br>
-<br></br>
+
+
 <br></br>
 
 <ToastContainer/>

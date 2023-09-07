@@ -190,7 +190,7 @@ function ClubProfileFst() {
     <div className=" flex flex-col md:flex-row ">
         <div className=" md:w-6/12 md:text-left text-center py-2 ">
             <div className=" text-center md:text-start md:pl-6 pl-4 pr-8 md:ml-8 md:mt-5">
-                <h1 className="text-5xl font-mono text-yellow-700 text-center md:pl-8 md:text-start font-semibold mb-4">{profiledata?.clubName}</h1>
+                <h1 className="text-5xl font-mono text-yellow-400 text-center md:pl-8 md:text-start font-semibold mb-4">{profiledata?.clubName}</h1>
                 {/* <p className='font-bold text-2xl font-mono p-1 text-black '>place:{profiledata?.address}</p> */}
                 <p className='font-bold text-2xl font-mono p-1 text-black '>
                 place: {profiledata?.address?.split(' ').slice(0, 4).join(' ')}</p>
@@ -202,21 +202,21 @@ function ClubProfileFst() {
                 <div className="mt-4 ">
                     <button
                     onClick={openImageModal}
-                    className="btn text-black font-mono rounded-lg px-2 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+                    className="btn text-black font-mono rounded-lg px-2 py-1 bg-white border-2 border-black md:border-2 ml-4 ">
                         Edit profile
                     </button>
                 </div>
                 <div className="mt-4 ">
                     <button 
                     onClick={openPostModal}
-                    className="btn text-black font-mono rounded-lg px-2 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+                    className="btn text-black font-mono rounded-lg px-2 py-1 bg-white border-2 border-black md:border-2 ml-4">
                       Add Post
                     </button>
                 </div>
                 <div className="mt-4 ">
                     <button 
                     onClick={()=>{navigate('/club-setting')}}
-                    className="btn text-black font-mono rounded-lg px-2 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+                    className="btn text-black font-mono rounded-lg px-2 py-1 bg-white border-2 border-black md:border-2 ml-4 ">
                         Club Setting
                     </button>
                 </div>
@@ -347,7 +347,7 @@ function ClubProfileFst() {
 </div>
  </div>
  <div>
-    <h1 className=' pl-16 font-extrabold text-2xl font-mono text-yellow-600 ' >POSTS</h1>
+    <h1 className=' pl-16 font-extrabold text-2xl font-mono text-yellow-400 ' >POSTS</h1>
  </div>
  <div className=" flex justify-center p-8 space-x-4 flex-wrap">
  {postdata?.length > 0 ? (

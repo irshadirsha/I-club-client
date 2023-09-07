@@ -188,7 +188,7 @@ return (
                     <button 
                     onClick={()=>{navigate('/payment',{state:{club:clubName}})}}
                     // onClick={()=>{navigate('/payment',{state:{club:clubData.clubName}})}}
-                    className="btn text-black font-mono rounded-lg px-4 py-2 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+                    className="btn text-black font-mono rounded-lg px-4 py-2 bg-white border-2 border-black md:border-2 ml-4   ">
                         Donate to Club
                     </button>
                 </div>

@@ -71,20 +71,20 @@ function JoinClub() {
 <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-20">
   <div className=" md:flex md:gap-x-6 md:items-center mb-10">
     <div className=" mt-4 md:w-1/2 md:ml-8 mb-5  md:mb-0 z-10">
-      <h1 className="my-5 text-5xl font-bold tracking-tight hero-title text-hsl(0, 0%, 0%)">
+      <h1 className="my-5 text-5xl font-bold text-yellow-300 tracking-tight hero-title ">
         I-Club <br />
-        <span className="text-hsl(27, 36%, 21%)">We Connects People</span>
+        <span className="text-white">We Connects People</span>
       </h1>
       <p className="mb-4  opacity-70 text-hsl(219, 43%, 21%)">
       Empowering Hearts, Building Bridges - The Power of Togetherness.
       </p>
     </div>
-    <div className="px-10 md:w-1/2 relative">
+    <div className="px-2 md:w-1/2 relative">
       <div id="radius-shape-1" className="absolute rounded-circle shadow-5-strong"></div>
       <div id="radius-shape-2" className="absolute shadow-5-strong"></div>
       {/* /////////////////////// */}
 
-       <div className=" bg-glass rounded-lg   pt-6  ">
+       <div className=" bg-white rounded-lg   pt-6  ">
 
          <div className='text-center text-4xl font-semibold pt-5 '>
            <h1>Join Club</h1>

@@ -165,10 +165,10 @@ const handleExpense = async (e) => {
         </div>
       </form>
     </div>
-    <div className='  w-1/2 p-2'>
+    <div className='  md:w-1/2 p-2'>
       <div className=' p-6'>
       <div className="bg-white p-6 pt-4 rounded-md shadow-md">
-      <h2 className="text-xl text-center font-medium mb-2">Income & Expense Summary</h2>
+      <h2 className="text-xl text-center font-medium mb-2">Income & Expense </h2>
       <div className="">
         <div className=' p-2'>
           <p className=" text-center text-green-950 font-semibold">Total Income</p>

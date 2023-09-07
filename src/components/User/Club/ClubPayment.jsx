@@ -77,7 +77,7 @@ const clubName=location.state?.club;
     <div>
       <ClubNav/>
       <div className="bg-primary flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="bg-white rounded-lg p-6 shadow-md w-full max-w-md">
+        <div className="bg-white rounded-lg p-6 mx-4 shadow-md w-full max-w-md">
           <h2 className="text-xl text-center font-semibold mb-4">Paying  To {<span className='text-lx text-blue-600 font-mono'>{clubName}</span>}</h2>
           <form onSubmit={handlePayment}>
             {/* Form fields ... */}

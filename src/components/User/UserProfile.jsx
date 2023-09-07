@@ -327,7 +327,7 @@ function UserProfile() {
                   };
                   dispatch(updateUser(updatedUser));
                   navigate('/clubhome',)}}
-                type="submit" className="btn text-black font-mono rounded-lg px-4 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+                type="submit" className="btn text-black font-mono rounded-lg px-4 py-1 bg-white border-2 border-black ">
                   View {club.clubName}
                 </button>
               </div>)}
