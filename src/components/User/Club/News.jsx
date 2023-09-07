@@ -4,20 +4,26 @@ import axios from 'axios';
 import Loader from '../../Loader/Loader';
 
 function News() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    const apiKey="1c58477c8f25464b99f032ff79cfb601"
-    const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
 
+    const apiKey = '1c58477c8f25464b99f032ff79cfb601'
+    const apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=${apiKey}`
+
+    // // const apiKey="40e8bb805278062e42b667b66f2de862"
+    // // const apiUrl = `https://gnews.io/api/v4/top-headlines?country=in&category=sports&apikey=${apiKey}`
+
+ 
     axios.get(apiUrl)
       .then(response => {
         setNews(response.data.articles);
-        console.log("---------------------------------",response);
+        console.log("---------------------------------news response",response);
         setLoading(false)
       })
       .catch(error => {
+        console.log("error in news api ");
         console.error('Error fetching news:', error);
       });
   }, []);
@@ -69,6 +75,11 @@ function News() {
 
 export default News;
 
+   // const apiKey = "40e8bb805278062e42b667b66f2de862";
+    // // API URL for GNews
+    // const apiUrl = `https://gnews.io/api/v4/top-headlines?country=in&category=sports&apikey=${apiKey}`;
+
+    // Fetch news data
 
 // import React from 'react'
 // import ClubNav from './ClubNav'
