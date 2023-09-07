@@ -41,7 +41,7 @@ const HomeNav = () => {
         <button
           data-collapse-toggle="navbar-dropdown"
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm  rounded-lg md:hidden "
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden "
           aria-controls="navbar-dropdown"
           aria-expanded="false"
           onClick={handleToggleNavbar}

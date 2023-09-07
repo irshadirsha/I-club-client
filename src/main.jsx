@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <PersistGate loading={null} persistor={persistor}>
     <App />
     <ToastContainer
-        style={{ width: '220px' }} 
+        style={{ width: '150px' }} 
         fontSize= '10px'  
         position="top-right"
         autoClose={1000}

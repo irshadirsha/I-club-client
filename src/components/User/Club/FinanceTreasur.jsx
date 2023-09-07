@@ -82,7 +82,7 @@ const handleExpense = async (e) => {
       <div className="flex">
          {loading && <Loader/>}
   {/* Existing table */}
-  <div className=" border flex  rounded-xl p-2 w-full px-4">
+  <div className=" border flex   rounded-xl p-2 w-full px-4">
     <div className="  w-1/2 mb-8">
       <h2 className="text-xl text-center font-medium mb-2">Add Expense</h2>
       <form onSubmit={handleExpense}>
@@ -165,9 +165,9 @@ const handleExpense = async (e) => {
         </div>
       </form>
     </div>
-    <div className='  md:w-1/2 p-2'>
-      <div className=' p-6'>
-      <div className="bg-white p-6 pt-4 rounded-md shadow-md">
+    <div className='pt-10  w-1/2 md:p-2'>
+      <div className=' md:p-6'>
+      <div className="bg-white  w-auto p-6 pt-4 mt-6 ml-1 rounded-md shadow-md">
       <h2 className="text-xl text-center font-medium mb-2">Income & Expense </h2>
       <div className="">
         <div className=' p-2'>

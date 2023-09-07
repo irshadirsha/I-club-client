@@ -6,6 +6,7 @@ import Loader from '../../Loader/Loader';
 function News() {
   const [loading, setLoading] = useState(false);
   const [news, setNews] = useState([]);
+  
 
   useEffect(() => {
 
@@ -15,7 +16,6 @@ function News() {
     // // const apiKey="40e8bb805278062e42b667b66f2de862"
     // // const apiUrl = `https://gnews.io/api/v4/top-headlines?country=in&category=sports&apikey=${apiKey}`
 
- 
     axios.get(apiUrl)
       .then(response => {
         setNews(response.data.articles);
@@ -32,7 +32,7 @@ function News() {
     <div>
       <ClubNav/>
       {loading && <Loader/>}
-      <div className="bg-primary container my-4 mx-auto md:px-6">
+      <div className="bg-primary container mb-4 mx-auto md:px-6">
         <h1 className='text-4xl text-center pb-4 font-mono font-bold'>News</h1>
         {news.length > 0 ? (
             <section className="mb-32 text-center">
