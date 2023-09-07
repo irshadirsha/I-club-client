@@ -1,7 +1,6 @@
 import React from 'react'
 import Members from '../../components/User/Club/Members'
-import ClubNav from '../../components/User/Club/ClubNav'
-// import ClubAuthority from '../../components/User/Club/ClubAuthority'
+import ClubNav from '../../components/User/Club/ClubNav'  
 
 function MembersPage() {
   return (

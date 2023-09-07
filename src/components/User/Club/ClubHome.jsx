@@ -49,10 +49,11 @@ const [errors, setErrors] = useState({
       useEffect(()=>{
         fetchdata()
         fetchevent()
-        },[])
+       
+      },[])
       
-useEffect(()=>{
-  fetchmessage()
+      useEffect(()=>{
+        fetchmessage()
     socket.on("chatMessage", (newMessage) => {
       setMessages((prevMessages) => [
         ...(prevMessages?.length ? prevMessages : []),

@@ -8,7 +8,7 @@ function News() {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    const apiKey=import.meta.env.VITE_NEWS_API_KEY
+    const apiKey="1c58477c8f25464b99f032ff79cfb601"
     const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
 
     axios.get(apiUrl)
