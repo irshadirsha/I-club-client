@@ -177,13 +177,15 @@ function ClubProfileFst() {
         <div className=" md:w-6/12 md:text-left text-center py-2 ">
             <div className=" text-center md:text-start md:pl-6 pl-4 pr-8 md:ml-8 md:mt-5">
                 <h1 className="text-5xl font-mono text-yellow-400 text-center md:pl-8 md:text-start font-semibold mb-4">{profiledata?.clubName}</h1>
+            
                 {/* <p className='font-bold text-2xl font-mono p-1 text-black '>place:{profiledata?.address}</p> */}
-                <p className='font-bold text-2xl font-mono p-1 text-black '>
+                <p className='text-start pl-4 block font-bold text-2xl font-mono p-1 text-black '>
                 place: {profiledata?.address?.split(' ').slice(0, 4).join(' ')}</p>
-                <p className='font-bold text-2xl font-mono p-1 text-black '>member:{profiledata?.members?.length}</p>
-                <p className='font-bold text-2xl font-mono p-1 text-black '>category:{profiledata?.category}</p>
-                <p className='font-bold text-2xl font-mono p-1 text-black '>register no:{profiledata?.registerNo}</p>
-                <p className='font-bold text-2xl font-mono p-1 text-black '>about:{profiledata?.about}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>member:{profiledata?.members?.length}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>category:{profiledata?.category}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>register no:{profiledata?.registerNo}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>about:{profiledata?.about}</p>
+      
                {(userRole ==='president' || userRole === 'secretory') && (<div className=' md:flex justify-evenly p-2 '>
                 <div className="mt-4 ">
                     <button
@@ -406,6 +408,32 @@ function ClubProfileFst() {
      {/* ///////////////////////////// */}
 
 
+
+
+ {(userRole == 'member') && (<div className='flex justify-center  pb-4'>
+      <button 
+          onClick={leaveclub}
+          className="btn text-black font-mono rounded-lg px-2 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
+            Leave club
+          </button>
+        </div>)}
+    </div>
+    </section> 
+    <ToastContainer/>
+    </div>
+  )
+}
+
+export default ClubProfileFst
+
+
+
+
+
+
+
+
+
  {/* <div className="bg-red-400 flex justify-center p-8 space-x-4 flex-wrap">
  {postdata?.length > 0 ? (
     postdata?.map((post, index) => (
@@ -457,32 +485,6 @@ function ClubProfileFst() {
   </div>
     )}
 </div> */}
-
-
- {(userRole == 'member') && (<div className='flex justify-center  pb-4'>
-      <button 
-          onClick={leaveclub}
-          className="btn text-black font-mono rounded-lg px-2 py-1 bg-primary border-2 border-black md:border-2 ml-4 hover:bg-primary hover:text-white transition ease-out duration-500">
-            Leave club
-          </button>
-        </div>)}
-    </div>
-    </section> 
-    <ToastContainer/>
-    </div>
-  )
-}
-
-export default ClubProfileFst
-
-
-
-
-
-
-
-
-
 
 
 
