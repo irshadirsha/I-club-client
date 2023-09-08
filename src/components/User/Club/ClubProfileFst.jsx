@@ -335,10 +335,81 @@ function ClubProfileFst() {
  <div>
     <h1 className=' pl-16 font-extrabold text-2xl font-mono text-yellow-400 ' >POSTS</h1>
  </div>
- <div className=" flex justify-center p-8 space-x-4 flex-wrap">
+     
+     {/* ///////////////////////////// */}
+     <div className=" grid grid-cols-1 md:grid-cols-4 gap-4 p-8">
+  {postdata?.length > 0 ? (
+    postdata?.map((post, index) => (
+      <div key={index} className="bg-gray-200 w-full border border-gray-300 rounded-lg shadow-md overflow-hidden">
+        {/* Rest of your card content */}
+        {(userRole ==='president' || userRole === 'secretory') && (
+         ( <div  onClick={() => handleDeletePost(post._id)}  className=' p-1 w-12'>
+        <svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-2 w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+   />
+</svg>
+      </div>))}
+        <img
+          className="w-full h-56 object-contain"
+          src={post.postimg}
+          alt="Post"
+        />
+        <div className="flex justify-between pr-8 py-1">
+          <p className="px-6">{new Date(post.date).toLocaleDateString()}</p>
+          <p
+            onClick={() => handlelike(post._id)}
+            className="px-2 text-gray-700 text-lg text-center font-semibold"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill={post.likes.includes(currentUser) ? '-2.733C5' : 'none'}
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              />
+            </svg>
+            <p>{post?.likes.length}</p>
+          </p>
+        </div>
+        <div className="p-1">
+          <p className="text-gray-700 text-lg text-center font-semibold">
+            {post.desc}
+          </p>
+        </div>
+      </div>
+    ))
+  ) : (
+    <div className="w-full md:col-span-1 p-6">
+      <div className="bg-gray-200 border border-gray-300 rounded-lg shadow-md overflow-hidden">
+        {/* Placeholder content for empty data */}
+        <img
+          className="w-full h-56 object-contain"
+          src="https://img.republicworld.com/republic-prod/stories/promolarge/hdpi/1kutzil5lj0nvfsf_1596544016.jpeg"
+          alt="Post"
+        />
+        <div className="p-4">
+          <p className="text-gray-700 text-center text-lg font-semibold">
+            Images
+          </p>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
+     {/* ///////////////////////////// */}
+
+
+ {/* <div className="bg-red-400 flex justify-center p-8 space-x-4 flex-wrap">
  {postdata?.length > 0 ? (
     postdata?.map((post, index) => (
-      <div className="bg-green-700 w-full md:w-1/4 p-6 overflow-hidden">
+      <div  className="bg-green-700 w-full md:w-1/4 p-6 overflow-hidden">
 
       <div className="bg-gray-900 border border-gray-300 rounded-lg shadow-md ">
         {(userRole ==='president' || userRole === 'secretory') && (
@@ -358,7 +429,7 @@ function ClubProfileFst() {
               <p onClick={()=>handlelike(post._id) }
               className=" px-2  text-gray-700 text-lg text-center font-semibold">
                 <svg xmlns="http://www.w3.org/2000/svg"  fill={post.likes.includes(currentUser) ? '-2.733C5'  :'none' }  viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+           <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
               </svg>
               <p>{post?.likes.length}</p>
               </p>
@@ -385,7 +456,9 @@ function ClubProfileFst() {
       </div>
   </div>
     )}
-</div>
+</div> */}
+
+
  {(userRole == 'member') && (<div className='flex justify-center  pb-4'>
       <button 
           onClick={leaveclub}
