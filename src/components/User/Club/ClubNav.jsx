@@ -50,10 +50,7 @@ function ClubNav() {
         const count=await axiosInstance.get('/fetch-reqcount',{
             params:{clubName}
         })
-        console.log("7777777777777777777777777777",count);
-        console.log(count.data.newMemberCount);
         setReqCount(count.data.newMemberCount)
-        // console.log(count.newMemberCount);
     }
 
 

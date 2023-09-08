@@ -115,11 +115,8 @@ function UserSignup() {
         });
         return;
       }
-      console.log("befoor", user)
       const { data } = await axiosInstance.post('/signup', { ...user }, { withCredentials: true },)
-      console.log('singupdata', data)
       if (data) {
-        console.log("downnnn"); 
         if (data.errors) {
           setErrors({
             ...data.errors,
@@ -143,11 +140,8 @@ function UserSignup() {
       console.log(otp)
       const {data}= await axiosInstance.post('/verify-otp',{otp,email:user.email})
       const { token } = data;
-       console.log("res",data);
-       console.log(data.data);
-       console.log(data.data.email);
 
-       console.log(token);
+
        if (data) {
         console.log("downnnn"); 
            

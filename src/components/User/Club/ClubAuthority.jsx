@@ -13,7 +13,6 @@ const fetchdata=async()=>{
     const {data}=await axiosInstance.get('/get-authority',{
         params: { clubName }
     })
-    console.log("authority",data);
     setAthority(data.data)
     setLoading(false) 
 }

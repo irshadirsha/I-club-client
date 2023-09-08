@@ -98,10 +98,8 @@ function CreateClub() {
         return;
       }
 
-      console.log(createClub)
       setLoading(true)
       const response = await axiosInstance.post('/createclub', { ...createClub }, { withCredentials: true });
-      console.log("response", response.data);
 
       if (response.data.message) {
         toast.success(response.data.message);

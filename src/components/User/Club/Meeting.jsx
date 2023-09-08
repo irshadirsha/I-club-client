@@ -37,7 +37,6 @@ function Meetings() {
       });
       setConferenceLink('');
       fetchData();
-      console.log(data);
       if (data.message) {
         toast.success(data.message)}
     } catch (error) {
@@ -49,7 +48,6 @@ function Meetings() {
     try {
       const {data} = await axiosInstance.post('/remove-link', { clubName });
       fetchData();
-      console.log(data);
       if (data.message) {
         toast.success(data.message)}
     } catch (error) {

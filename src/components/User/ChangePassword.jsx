@@ -10,16 +10,9 @@ const navigate=useNavigate()
   const userId = queryParams.get('userId');
   const token = queryParams.get('token');
 
-  console.log('User ID:', userId);
-  console.log('Token:', token);
-
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     const { data } = await axiosInstance.post(`/reset-password/?userId=${userId}&token=${token}`)
-    console.log(data)
     if (data.status === true) {
            navigate('/new-password',{ state: { email: data.email } })
     } 

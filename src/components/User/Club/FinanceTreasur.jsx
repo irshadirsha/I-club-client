@@ -5,7 +5,6 @@ import Loader from '../../Loader/Loader';
 
 function FinanceTreasur({state,callbackFunction}) {
   const clubName=state
-console.log("tresurer",clubName);
 const [loading, setLoading] = useState(true);
 const [account,setAccount]=useState([])
 const [expenseData, setExpenseData] = useState({
@@ -28,7 +27,6 @@ const fetchdata=async ()=>{
     const {data}=await axiosInstance.get('/get-accounts',{
         params:{clubName}
     })
-    console.log("acc",data);
     setAccount(data)
     setLoading(false)
   } catch (error) {
@@ -58,7 +56,6 @@ const handleExpense = async (e) => {
       ...expenseData,
     });
     callbackFunction(response.data)
-    console.log(response);
     fetchdata()
     if (response.data.message) {
       toast.success(response.data.message);

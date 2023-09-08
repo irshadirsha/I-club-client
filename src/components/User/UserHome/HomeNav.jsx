@@ -21,7 +21,6 @@ const HomeNav = () => {
 
   const handleLogout=(e)=>{
      localStorage.removeItem('user')
-     console.log("user logout");
      dispatch(logoutUser())
        navigate('/login')
 

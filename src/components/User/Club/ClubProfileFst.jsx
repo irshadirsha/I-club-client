@@ -43,7 +43,6 @@ function ClubProfileFst() {
         setUserRole(datas.data.userRole)
         setPostData(datas.data.postdata)
         setLoading(false)
-        console.log(datas.data.postdata)
     }
 
     const openImageModal = () => {
@@ -62,7 +61,6 @@ function ClubProfileFst() {
       };
       const uploadProfileImage =async(e)=>{
           e.preventDefault()
-          console.log("+++++");
           if( profileimage == null){
             setErrors({
               ...errors,
@@ -73,21 +71,17 @@ function ClubProfileFst() {
           const formData = new FormData();
           formData.append('file', profileimage);
           formData.append('upload_preset', 'I-club');
-          console.log(formData)
-
           const  data = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
           closeImageModal()
           console.log(data.data.secure_url);
           const imageUrl = data.data.secure_url;
           setProfileImage(imageUrl)
           const doce =await axiosInstance.post('/add-clubprofile',{clubName,imageUrl})
-          console.log(doce)
           setProfileImage(null)
           if (doce.data.message) {
             toast.success(doce.data.message)
             fetchdata() 
         }
-          console.log(doce.data)
       }
 
       const handlePostImageUpload = async (e) => {
@@ -104,7 +98,6 @@ function ClubProfileFst() {
         formData.append('upload_preset', 'I-club');
         try {
             const  response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
-        console.log(response)
         setPostImage({
           image: null,
           description: '',
@@ -117,10 +110,7 @@ function ClubProfileFst() {
             postimageUrl,
             description: postimage.description,
           };
-          console.log(postData,"_____________________________________________");
           const res=await axiosInstance.post('/add-clubpost',postData)
-          console.log(res,"----------------------------------------------------");
-          console.log(res.data.message);
           if (res.data.message) {
             toast.success(res.data.message)
             fetchdata()
@@ -160,13 +150,10 @@ function ClubProfileFst() {
           cancelButtonText: 'Cancel',
         }).then(async (result) => {
           if (result.isConfirmed) {
-            console.log('leave', clubName);
             const response = await axiosInstance.post('/leave-club', { clubName });
-      
             if (response.data.message) {
               Swal.fire('Success', response.data.message, 'success');
             }
-            console.log(response);
             navigate('/');
           }
         });
@@ -176,7 +163,6 @@ function ClubProfileFst() {
         // e.preventDefault()
         try {
           const {data}= await axiosInstance.post('/post-like',{clubName,postId:id}) 
-          console.log(data);
           fetchdata()
         } catch (error) {
           console.log("error in add like api");

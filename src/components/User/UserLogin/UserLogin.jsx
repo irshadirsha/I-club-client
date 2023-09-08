@@ -32,9 +32,7 @@ function UserLogin() {
   const handleMail = async (e) => {
     e.preventDefault()
     try {
-      console.log("Email to be sent:", sendemail);
       const { data } = await axiosInstance.post('/sendmail', { email: sendemail })
-      console.log("react", data);
       if (data.status == true) {
         alert("check your email")
         setShowModal(false);
@@ -83,10 +81,7 @@ function UserLogin() {
       });        
       return;
     }
-      console.log("before", userlogin);
       const { data } = await axiosInstance.post('/login', { ...userlogin }, { withCredentials: true })
-      console.log("ssssssssssssssssssssss");
-      console.log(data);
       const { token } = data
       if (data.errors) {
         setErrors({
@@ -94,7 +89,6 @@ function UserLogin() {
           general: data.errors.general || "", // General error message
         });
       } else {
-        console.log("nav to home", data);
         localStorage.setItem('user', JSON.stringify({ token, user: data.userData }))
         dispatch(updateUser({username:data.userData.username,email:data.userData.email,id:data.userData._id}));
         navigate('/')

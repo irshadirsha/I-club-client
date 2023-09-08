@@ -13,7 +13,6 @@ function UserProfile() {
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-  console.log("redux",user);
   const navigate=useNavigate()
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({
@@ -33,7 +32,6 @@ function UserProfile() {
   useEffect(() => {
     fetchUserData();
   }, []);
-   console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",profile);
   const openImageModal = () => {
     setIsImageModalOpen(true);
   };
@@ -58,19 +56,14 @@ function UserProfile() {
     formData.append('file', selectedImage);
     formData.append('upload_preset', 'I-club')
     setIsImageModalOpen(false);
-    console.log(formData)
       const  data = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=I-club`,formData);
-      console.log(data.data.secure_url);
       if(data.data.secure_url){
       const imageUrl = data.data.secure_url;
     setSelectedImage(imageUrl);
     const user = JSON.parse(localStorage.getItem("user"))?.user || null;
     const email = user?.email;
-    console.log("getuserprofil", email)
       const response= await axiosInstance.post('/user-profileimgupdate',{imageUrl:imageUrl})
-      console.log(response.data);
       setSelectedImage(null)
-      console.log(response.data.status);
       if (response.data.status == true) {
         fetchUserData();
       }
@@ -85,11 +78,7 @@ function UserProfile() {
     try {
       const user = JSON.parse(localStorage.getItem("user"))?.user || null;
       const email = user?.email;
-      console.log("getuserprofil", email)
       const { data } = await axiosInstance.post('/getuser-profile');
-      console.log(data.userdata);
-      console.log("============",data)
-      console.log("fetching",data.userdata.clubs);
       setClubData(data.userdata.clubs)
       setProfile(data.userdata);
       setFetched(true);
@@ -103,10 +92,7 @@ function UserProfile() {
     e.preventDefault()
     const user = JSON.parse(localStorage.getItem("user"))?.user || null;
     const email = user?.email
-    console.log(profile)
-    console.log(email)
     const { data } = await axiosInstance.post('/user-profileupdate', { ...profile,selectedImage: selectedImage  })
-    console.log(data.userprofile)
     if (data.status == true) {
       setFetched(false);
       fetchUserData();

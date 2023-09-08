@@ -9,8 +9,6 @@ function JoinClub() {
  
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-  console.log("current user",user);
-  console.log("current user",user.id);
   const navigate=useNavigate()
   const [joinclub,setJoinclub]=useState({
     clubName:"",
@@ -43,9 +41,6 @@ function JoinClub() {
       }
       console.log(joinclub)
     const {data}=await axiosInstance.post('/joinclub',{...joinclub})
-    console.log(data)
-    // console.log(data.message)
-    // console.log("responseeeeeeeeeeeee",data.updatedClubData.clubName)
     if (data.message) {
       toast.error(data.message)      
     }
@@ -54,7 +49,6 @@ function JoinClub() {
         ...user, 
         clubName: data.updatedClubData.clubName, 
       };
-      console.log("8888888888",user)
       dispatch(updateUser(updatedUser));
       navigate('/clubhome')
     }

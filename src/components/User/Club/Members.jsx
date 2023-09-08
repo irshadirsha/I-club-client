@@ -21,10 +21,6 @@ function Members() {
         const doce = await axiosInstance.get('/get-member',{
            params: { clubName }
            })
-           console.log("getting .....",doce);
-           console.log(doce.data.clubExist.newmember);
-           console.log(doce.data.clubExist.members);
-           console.log(doce.data.userRole);
            setrequest(doce.data.clubExist.newmember)
            setMemberList(doce.data.clubExist.members)
            setUserRole(doce.data.userRole)
@@ -36,9 +32,7 @@ function Members() {
             clubName: clubName,
             adduser: adduser
           };
-      console.log("request",requestData);
         const {data}=await axiosInstance.post('/add-member',requestData)
-        console.log("resAddmem",data)
         SetAddUser('')
         if (data.message) {
             toast.success(data.message)
@@ -49,20 +43,17 @@ function Members() {
         if (data.errors) {
              toast.error(data.errors)
           }       
-            console.log(data.members.username)
            
     }
 
     const handleApprove = async (e, email) => {
       e.preventDefault();
-      console.log("+++++++++",email);
       const requestData = {
         clubName: clubName,
         adduser: email
       };
       try {
         const {data}=await axiosInstance.post('/add-member',requestData)
-        console.log(data);
         if (data.message) {
           toast.success(data.message)
         }
@@ -88,7 +79,6 @@ function Members() {
           },
         }).then(async (result) => {
           if (result.isConfirmed) {
-            console.log('leave', clubName);
             const {data}=await axiosInstance.post('/delete-member',{clubName,id})
             if (data.message) {
               Swal.fire('Success', data.message, 'success');

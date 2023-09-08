@@ -25,7 +25,6 @@ function Home() {
   const dispatch=useDispatch()
   const user=useSelector(state=>state.user)
   const currentuser=user.email
-  console.log("redux users",user);
   const [query, setQuery] = useState('');
   const [filteredClubs, setFilteredClubs] = useState([]);
   const [carosal, setCarosal] = useState();
@@ -35,9 +34,7 @@ function Home() {
   const handleSearch = async () => {
     try {
       const response = await axiosInstance.get(`/serch-clubs?q=${query}`);
-      console.log(response);
       setFilteredClubs(response.data)
-      console.log("after search",filteredClubs);
     } catch (error) {
       console.error('Error fetching clubs:', error);
     }
@@ -53,12 +50,8 @@ function Home() {
  
   const fetchBannerData = async ()=>{
       const {data}=await axiosInstance.get('/get-bannerhome')
-      console.log(data);
-      console.log(data.data);
       setCarosal(data.data)
-  }
-
- 
+  } 
   const NavToJoinclub=(e)=>{
     e.preventDefault()
     navigate('/joinclub')
@@ -81,7 +74,6 @@ function Home() {
           Swal.fire('Success',data.message, 'success');
           setRequest('requested')
         }
-        console.log(data);
       }
     });
     

@@ -39,7 +39,6 @@ function Finance() {
   };
 
   const callbackChange = (data) => {
-    console.log(data);
     setChangeData(!changeData)
   }
 

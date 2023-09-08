@@ -21,12 +21,10 @@ function Notification() {
     const { data } = await axiosInstance.get('/get-note', {
       params: { clubName }
     })
-    console.log(data)
     if (data.status === true) {
       setNotificationData(data.note)
       setUserRole(data.userRole)
       setLoading(false)
-      console.log(data.note);
     }
   }
   const handleSubmit = async (e) => {
@@ -39,7 +37,6 @@ function Notification() {
       return;
     }
     const { data } = await axiosInstance.post('/send-note', { note, clubName })
-    console.log(data);
     if (data.message) {
       toast.success(data.message, {
         autoClose: 2000,
@@ -57,7 +54,6 @@ function Notification() {
   const handleNoteDlt = async (e,id) =>{
     e.preventDefault()
     const {data}=await axiosInstance.post('/delete-note',{deleteid:id})
-    console.log(data)
     if (data.message) {
       toast.success(data.message, {
         autoClose: 2000,

@@ -17,7 +17,6 @@ function SetNewPass() {
 
    const handleSubmit=async(e)=>{
     e.preventDefault()
-    console.log(resetpassword);
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
        if(resetpassword.password == "" ){
         generateError('Please Enter New Password');
@@ -36,7 +35,6 @@ function SetNewPass() {
         return;
       }
     const {data}= await axiosInstance.post('/new-password',{...resetpassword,email},{withCredentials:true})
-        console.log(data)
         if(data.errors){
           const {password,confirmpassword}=data.errors
           if (password) generateError(password)

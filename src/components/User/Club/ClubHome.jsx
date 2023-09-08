@@ -16,10 +16,7 @@ function ClubHome() {
        const user=useSelector((state)=>state.user)
         const clubName=user.clubName
         const currentuser=user.id
-        console.log("mmm",user);
         console.log("current userrr",currentuser);
-
-        console.log(clubName);
        const navigate=useNavigate()       
        const [loading, setLoading] = useState(true);
        const [role,setRole]=useState('')
@@ -41,6 +38,28 @@ const [errors, setErrors] = useState({
      
      console.log(showmessage);
 
+     const fetchmessage = async () =>{
+      const response=await axiosInstance.get('/get-message',{
+          params:{clubName}
+      })
+  
+      setShowMessage(response.data.response)
+  }
+  
+  const handleSendMessage = async () => {
+    if (chatMessage.trim() !== '') {
+      // Send the message to the server using axiosInstance
+      const data = await axiosInstance.post('/send-message', {
+        text: chatMessage,
+        clubName: clubName,
+      });
+      socket.emit('chatMessage', { text: chatMessage, clubName: clubName });
+      console.log('Sent chatMessage:', chatMessage);
+    setChatMessage('');
+    fetchmessage();
+    }
+  };
+
      useEffect(() => {
         if (scrollableRef.current) {
           scrollableRef.current.scrollTop = scrollableRef.current.scrollHeight;
@@ -49,13 +68,12 @@ const [errors, setErrors] = useState({
       useEffect(()=>{
         fetchdata()
         fetchevent()
-       
       },[])
       
       useEffect(()=>{
-        fetchmessage()
-    socket.on("chatMessage", (newMessage) => {
-      setMessages((prevMessages) => [
+        fetchmessage()  
+        socket.on("chatMessage", (newMessage) => {
+          setMessages((prevMessages) => [
         ...(prevMessages?.length ? prevMessages : []),
         newMessage,
       ]);
@@ -67,17 +85,13 @@ const [errors, setErrors] = useState({
 const fetchevent=async()=>{
     const {data}= await axiosInstance.post('/get-event',{clubName})
     console.log("------------enents---------------------",data)
-    SetEvents(data.modifiedEventData);
-    console.log(events);    
+    SetEvents(data.modifiedEventData);  
 }
 
 
 const fetchdata=async()=>{
-
     const {data}= await axiosInstance.post('/clubhome',{clubName})
-    console.log("000000000000000",data)
     setClubData(data.data)
-    console.log(data.userRole);
     setRole(data.userRole)
     setLoading(false)
 }
@@ -94,9 +108,7 @@ const handleEventSubmit=async(e)=>{
         });
         return;
       }
-        console.log("eventss",messages,clubData?._id,);
         const {data} =await axiosInstance.post('/add-events',{messages,club:clubData?._id})
-        console.log("eventss---",data);
         if (data.message) {
             toast.success(data.message)
         }
@@ -138,30 +150,8 @@ const deleteEvent=async( id)=>{
     }  
 }
 
-const handleSendMessage = async () => {
-    if (chatMessage.trim() !== '') {
-      // Send the message to the server using axiosInstance
-      const data = await axiosInstance.post('/send-message', {
-        text: chatMessage,
-        clubName: clubName,
-      });
-      socket.emit('chatMessage', { text: chatMessage, clubName: clubName });
-      console.log('Sent chatMessage:', chatMessage);
-    setChatMessage('');
-    fetchmessage();
-    console.log(data);
-    }
-  };
 
 
-const fetchmessage = async () =>{
-    const response=await axiosInstance.get('/get-message',{
-        params:{clubName}
-    })
-
-    setShowMessage(response.data.response)
-    console.log(response);
-}
 
 const handleKeyDown = (event) => {
   if (event.key === 'Enter' && !event.shiftKey) {

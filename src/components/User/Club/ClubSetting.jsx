@@ -42,7 +42,7 @@ function ClubSetting() {
     const res=await axiosInstance.get('/get-clubform',{
         params:{clubName}
     })
-    console.log(res)
+
     setClub(res.data.club)
    }
 
@@ -99,13 +99,9 @@ function ClubSetting() {
   return;
 }
 
-    console.log(updateclub)
     setLoading(true)
     const {data}= await axiosInstance.post('/update-club',{...updateclub,club:clubName})
-    console.log(data);
-    console.log("response of updation",data.getclub.clubName)
     const club=data.getclub.clubName
-    console.log("clubdssss",club);
     dispatch(updateUser({
         id:user.id,
         username:user.username,
@@ -141,7 +137,6 @@ function ClubSetting() {
            const handlecommite= async (e) =>{
             e.preventDefault()
             try {
-              console.log("----------------------------",Committe)
               const presidetError = validatePresident(Committe.president);
               const secretoryError = validateSecretory(Committe.secretory);
               const treasurerError = validateTreasurer(Committe.treasurer);
@@ -155,7 +150,6 @@ function ClubSetting() {
                 return;
               }
               const res=await axiosInstance.post('/change-committe',{...Committe,clubName})
-              console.log(res);
               if (res.data.errors) {
                 toast.error(res.data.errors)}
               if (res.data.message) {
