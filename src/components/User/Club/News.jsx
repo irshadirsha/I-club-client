@@ -1,78 +1,75 @@
+
+
 import React, { useState, useEffect } from 'react';
 import ClubNav from './ClubNav';
-import axios from 'axios';
 import Loader from '../../Loader/Loader';
+import { axiosInstance } from '../../../../Api/config';
 
 function News() {
   const [loading, setLoading] = useState(true);
   const [news, setNews] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://bing-news-search1.p.rapidapi.com/news',
-        params: {
-          textFormat: 'Raw',
-          safeSearch: 'Off'
-        },
-        headers: {
-          'X-BingApis-SDK': 'true',
-          'X-RapidAPI-Key': 'ea1a506487msh5ce9cfcc5a6ff1dp1d3947jsn404693482ee6',
-          'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
-        }
-      };
 
+  useEffect(() => {
+    const fetchNews = async () => {
       try {
-        const response = await axios.request(options);
-        setNews(response.data.value);
+        const response = await axiosInstance.get('/api/news'); // Make a request to your backend route
+        console.log("news response-----",response);
+        setNews(response.data);
         setLoading(false);
       } catch (error) {
-        console.error(error);
-        // You can handle errors here, e.g., display an error message to the user
+        console.error('Error fetching news:', error);
       }
     };
 
-    fetchData();
+    fetchNews();
   }, []);
+  
+    
 
   return (
     <div>
-      <ClubNav />
-      {loading && <Loader />}
+      <ClubNav/>
+      {loading && <Loader/>}
       <div className="bg-primary container mb-4 mx-auto md:px-6">
-        <h1 className="text-4xl text-center pb-4 font-mono font-bold">News</h1>
+        <h1 className='text-4xl text-center pb-4 font-mono font-bold'>News</h1>
         {news.length > 0 ? (
-          <section className="mb-32 text-center">
-            {news?.map((article, index) => (
-              <div key={index} className="mb-12 flex flex-wrap justify-center">
-                <div className="w-full shrink-0 grow-0 basis-auto px-3 flex justify-center items-center md:w-10/12">
-                  <div className="relative h-72 md:w-96 mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20" data-te-ripple-init data-te-ripple-color="light">
-                    <img src={article.image?.thumbnail?.contentUrl} className="w-full" alt="News" />
-                    <a href={article.url}>
-                      <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100 bg-[hsla(0,0%,98.4%,.15)]"></div>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-8/12 xl:w-6/12">
-                  <h5 className="mb-3 text-lg font-bold">{article.name}</h5>
-                  <p className="mb-4 text-neutral-500 dark:text-neutral-300">
-                    <small>Published <u>{article.datePublished}</u> by <a href="#!">{article.provider[0]?.name}</a></small>
-                  </p>
-                  <p className="mb-6">{article.description}</p>
+            <section className="mb-32 text-center">
+           {news?.map((article, index) => (
+            <div key={index} className="mb-12 flex flex-wrap justify-center">
+              <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-10/12">
+                <div className="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20" data-te-ripple-init data-te-ripple-color="light">
+                  <img src={article.urlToImage} className="w-full" alt="News" />
+                  <a href={article.url}>
+                    <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100 bg-[hsla(0,0%,98.4%,.15)]">
+                    </div>
+                  </a>
                 </div>
               </div>
-            ))}
-          </section>
-        ) : (
-          <div className='flex justify-center items-center'>
-            <img src="https://media.istockphoto.com/id/1264074047/vector/breaking-news-background.jpg?s=612x612&w=0&k=20&c=C5BryvaM-X1IiQtdyswR3HskyIZCqvNRojrCRLoTN0Q=" alt="No news available" />
-          </div>
-        )}
+
+              <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-8/12 xl:w-6/12">
+                <h5 className="mb-3 text-lg font-bold">
+                  {article.title}
+                </h5>
+
+                <p className="mb-4 text-neutral-500 dark:text-neutral-300">
+                  <small>Published <u>{article.publishedAt}</u> by
+                    <a href="#!">{article.author}</a></small>
+                </p>
+                <p className="mb-6">
+                  {article.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </section>):(
+        <div className='flex justify-center items-center'>
+        <img
+          src= "https://media.istockphoto.com/id/1264074047/vector/breaking-news-background.jpg?s=612x612&w=0&k=20&c=C5BryvaM-X1IiQtdyswR3HskyIZCqvNRojrCRLoTN0Q="/>
+        </div>)}
       </div>
     </div>
-  );
+  )
 }
 
 export default News;
@@ -86,114 +83,35 @@ export default News;
 // function News() {
 //   const [loading, setLoading] = useState(true);
 //   const [news, setNews] = useState([]);
-  
-//   useEffect(async()=>{
-//    fetchNews()
-//   },[])
-//   const fetchNews=async()=>{
-//     const options = {
-//       method: 'GET',
-//       url: 'https://bing-news-search1.p.rapidapi.com/news',
-//       params: {
-//         textFormat: 'Raw',
-//         safeSearch: 'Off'
-//       },
-//       headers: {
-//         'X-BingApis-SDK': 'true',
-//         'X-RapidAPI-Key': 'ea1a506487msh5ce9cfcc5a6ff1dp1d3947jsn404693482ee6',
-//         'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const options = {
+//         method: 'GET',
+//         url: 'https://bing-news-search1.p.rapidapi.com/news',
+//         params: {
+//           textFormat: 'Raw',
+//           safeSearch: 'Off'
+//         },
+//         headers: {
+//           'X-BingApis-SDK': 'true',
+//           'X-RapidAPI-Key': 'ea1a506487msh5ce9cfcc5a6ff1dp1d3947jsn404693482ee6',
+//           'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
+//         }
+//       };
+
+//       try {
+//         const response = await axios.request(options);
+//         console.log(response)
+//         setNews(response.data.value);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error(error);
+//         // You can handle errors here, e.g., display an error message to the user
 //       }
 //     };
-    
-//     try {
-//       const response = await axios.request(options);
-//       console.log("-------------------------");
-//       console.log(response.data);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
 
-//   return (
-//     <div>
-//       <ClubNav/>
-//       {loading && <Loader/>}
-//       <div className="bg-primary container mb-4 mx-auto md:px-6">
-//         <h1 className='text-4xl text-center pb-4 font-mono font-bold'>News</h1>
-//         {news.length > 0 ? (
-//             <section className="mb-32 text-center">
-//            {news?.map((article, index) => (
-//             <div key={index} className="mb-12 flex flex-wrap justify-center">
-//               <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-10/12">
-//                 <div className="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20" data-te-ripple-init data-te-ripple-color="light">
-//                   <img src={article.urlToImage} className="w-full" alt="News" />
-//                   <a href={article.url}>
-//                     <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100 bg-[hsla(0,0%,98.4%,.15)]">
-//                     </div>
-//                   </a>
-//                 </div>
-//               </div>
-
-//               <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-8/12 xl:w-6/12">
-//                 <h5 className="mb-3 text-lg font-bold">
-//                   {article.title}
-//                 </h5>
-
-//                 <p className="mb-4 text-neutral-500 dark:text-neutral-300">
-//                   <small>Published <u>{article.publishedAt}</u> by
-//                     <a href="#!">{article.author}</a></small>
-//                 </p>
-//                 <p className="mb-6">
-//                   {article.description}
-//                 </p>
-//               </div>
-//             </div>
-//           ))}
-//         </section>):(
-//         <div className='flex justify-center items-center'>
-//         <img
-//           src= "https://media.istockphoto.com/id/1264074047/vector/breaking-news-background.jpg?s=612x612&w=0&k=20&c=C5BryvaM-X1IiQtdyswR3HskyIZCqvNRojrCRLoTN0Q="/>
-//         </div>)}
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default News;
-
-
-// import React, { useState, useEffect } from 'react';
-// import ClubNav from './ClubNav';
-// import axios from 'axios';
-// import Loader from '../../Loader/Loader';
-
-// function News() {
-//   const [loading, setLoading] = useState(true);
-//   const [news, setNews] = useState([]);
-
-//   useEffect(async () => {
-//     const options = {
-//       method: 'GET',
-//       url: 'https://bing-news-search1.p.rapidapi.com/news',
-//       params: {
-//         textFormat: 'Raw',
-//         safeSearch: 'Off',
-//       },
-//       headers: {
-//         'X-BingApis-SDK': 'true',
-//         'X-RapidAPI-Key':
-//           'ea1a506487msh5ce9cfcc5a6ff1dp1d3947jsn404693482ee6',
-//         'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com',
-//       },
-//     };
-
-//     try {
-//       const response = await axios.request(options);
-//       setNews(response.data.value); // Update news state with the articles
-//       setLoading(false);
-//     } catch (error) {
-//       console.error(error);
-//     }
+//     fetchData();
 //   }, []);
 
 //   return (
@@ -206,8 +124,8 @@ export default News;
 //           <section className="mb-32 text-center">
 //             {news?.map((article, index) => (
 //               <div key={index} className="mb-12 flex flex-wrap justify-center">
-//                 <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-10/12">
-//                   <div className="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20" data-te-ripple-init data-te-ripple-color="light">
+//                 <div className="w-full shrink-0 grow-0 basis-auto px-3 flex justify-center items-center md:w-10/12">
+//                   <div className="relative h-72 md:w-96 mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20" data-te-ripple-init data-te-ripple-color="light">
 //                     <img src={article.image?.thumbnail?.contentUrl} className="w-full" alt="News" />
 //                     <a href={article.url}>
 //                       <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100 bg-[hsla(0,0%,98.4%,.15)]"></div>
@@ -216,26 +134,18 @@ export default News;
 //                 </div>
 
 //                 <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-8/12 xl:w-6/12">
-//                   <h5 className="mb-3 text-lg font-bold">
-//                     {article.name}
-//                   </h5>
-
+//                   <h5 className="mb-3 text-lg font-bold">{article.name}</h5>
 //                   <p className="mb-4 text-neutral-500 dark:text-neutral-300">
-//                     <small>Published <u>{new Date(article.datePublished).toLocaleString()}</u> by <a href="#!">{article.provider[0]?.name}</a></small>
+//                     <small>Published <u>{article.datePublished}</u> by <a href="#!">{article.provider[0]?.name}</a></small>
 //                   </p>
-//                   <p className="mb-6">
-//                     {article.description}
-//                   </p>
+//                   <p className="mb-6">{article.description}</p>
 //                 </div>
 //               </div>
 //             ))}
 //           </section>
 //         ) : (
 //           <div className='flex justify-center items-center'>
-//             <img
-//               src="https://media.istockphoto.com/id/1264074047/vector/breaking-news-background.jpg?s=612x612&w=0&k=20&c=C5BryvaM-X1IiQtdyswR3HskyIZCqvNRojrCRLoTN0Q="
-//               alt="No news available"
-//             />
+//             <img src="https://media.istockphoto.com/id/1264074047/vector/breaking-news-background.jpg?s=612x612&w=0&k=20&c=C5BryvaM-X1IiQtdyswR3HskyIZCqvNRojrCRLoTN0Q=" alt="No news available" />
 //           </div>
 //         )}
 //       </div>
@@ -247,99 +157,22 @@ export default News;
 
 
 
+//   useEffect(() => {
 
+//     const apiKey = '1c58477c8f25464b99f032ff79cfb601'
+//     const apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=${apiKey}`
 
-// const options = {
-//   method: 'GET',
-//   url: 'https://bing-news-search1.p.rapidapi.com/news',
-//   params: {
-//     textFormat: 'Raw',
-//     safeSearch: 'Off'
-//   },
-//   headers: {
-//     'X-BingApis-SDK': 'true',
-//     'X-RapidAPI-Key': 'ea1a506487msh5ce9cfcc5a6ff1dp1d3947jsn404693482ee6',
-//     'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
-//   }
-// };
+//      // const apiKey="40e8bb805278062e42b667b66f2de862"
+//      // const apiUrl = `https://gnews.io/api/v4/top-headlines?country=in&category=sports&apikey=${apiKey}`
 
-// try {
-// 	const response = await axios.request(options);
-// 	console.log(response.data);
-// } catch (error) {
-// 	console.error(error);
-// }
-
-   // const apiKey = "40e8bb805278062e42b667b66f2de862";
-    // // API URL for GNews
-    // const apiUrl = `https://gnews.io/api/v4/top-headlines?country=in&category=sports&apikey=${apiKey}`;
-
-    // Fetch news data
-
-  // useEffect(() => {
-
-  //   const apiKey = '1c58477c8f25464b99f032ff79cfb601'
-  //   const apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=${apiKey}`
-
-  //    // const apiKey="40e8bb805278062e42b667b66f2de862"
-  //    // const apiUrl = `https://gnews.io/api/v4/top-headlines?country=in&category=sports&apikey=${apiKey}`
-
-  //   axios.get(apiUrl)
-  //     .then(response => {
-  //       setNews(response.data.articles);
-  //       console.log("---------------------------------news response",response);
-  //       setLoading(false)
-  //     })
-  //     .catch(error => {
-  //       console.log("error in news api ");
-  //       console.error('Error fetching news:', error);
-  //     });
-  // }, []);
-
-// import React from 'react'
-// import ClubNav from './ClubNav'
-
-// function News() {
-//   return (
-//     <div>
-//       <ClubNav/>
-//       <div class="bg-primary container my-4 mx-auto md:px-6">
-
-//    <h1 className='text-4xl text-center pb-4 font-mono font-bold'>News</h1>
-//   <section class="mb-32 text-center">
-//     <div class="mb-12 flex flex-wrap justify-center">
-//       <div class="w-full shrink-0 grow-0 basis-auto px-3 md:w-10/12">
-//         <div class="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20" data-te-ripple-init data-te-ripple-color="light">
-//           <img src="https://mdbcdn.b-cdn.net/img/new/slides/101.jpg" class="w-full" />
-//           <a href="#!">
-//             <div class="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100 bg-[hsla(0,0%,98.4%,.15)]">
-//             </div>
-//           </a>
-//         </div>
-//       </div>
-
-//       <div class="w-full shrink-0 grow-0 basis-auto px-3 md:w-8/12 xl:w-6/12">
-//         <h5 class="mb-3 text-lg font-bold">
-//           This is a very long post title
-//         </h5>
-
-//         <p class="mb-4 text-neutral-500 dark:text-neutral-300">
-//           <small>Published <u>13.01.2022</u> by
-//             <a href="#!">Anna Maria Doe</a></small>
-//         </p>
-//         <p class="mb-6">
-//           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa
-//           atque hic, officiis blanditiis accusantium veritatis ullam?
-//           Maiores atque autem velit officiis molestiae voluptates suscipit
-//           eligendi, vero expedita sequi, doloremque modi?
-//         </p>
-       
-//       </div>
-//     </div>
-//   </section>
-// </div>
-//     </div>
-//   )
-// }
-
-// export default News
+//     axios.get(apiUrl)
+//       .then(response => {
+//         setNews(response.data.articles);
+//         console.log("---------------------------------news response",response);
+//         setLoading(false)
+//       })
+//       .catch(error => {
+//         console.log("error in news api ");
+//         console.error('Error fetching news:', error);
+//       });
+//   }, []);
