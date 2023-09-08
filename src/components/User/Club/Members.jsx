@@ -133,16 +133,17 @@ function Members() {
           </div>
         </form>
         {request.length > 0 && (
-    <div className="py-4 px-4 m-4 bg-white border-t border-gray-200">
+    <div className="py-4 px-4 m-4  bg-white border-t border-gray-200">
       <h1 className="text-lg font-bold text-gray-800">
         Membership Requests
       </h1>
-      <ul className="mt-2 space-y-2">
+      <ul className="mt-2 space-y-2 ">
         {request.map((email, index) => (
-          <li key={index} className="text-gray-600">
+          <li key={index} className="text-gray-600 ">
           
             <div className='flex justify-between'>
-            {email}
+            {email.split('@')[0]}  
+            {/* {email} */}
             <button
               onClick={(e) => handleApprove(e,email)}
               className=" px-2 py-1  bg-green-600 hover:bg-green-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
