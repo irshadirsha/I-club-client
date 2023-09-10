@@ -9,6 +9,7 @@ export default {
       colors:{
         primary:{
           DEFAULT:'#8b00f7ff',
+          // DEFAULT:'rgba(83,112,255,255)',
         },
         secondary:{
           DEFAULT:'rgba(194, 252, 3,0.5)',

@@ -35,9 +35,6 @@ const [errors, setErrors] = useState({
 
      const [chatMessage, setChatMessage] = useState('');
      const [showmessage,setShowMessage]=useState([])
-     
-     console.log(showmessage);
-
      const fetchmessage = async () =>{
       const response=await axiosInstance.get('/get-message',{
           params:{clubName}
