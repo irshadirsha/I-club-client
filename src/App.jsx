@@ -54,8 +54,8 @@ function App() {
           <Route path='/login' element={<UserLoginPage/>}></Route>
           {/* <Route path='/sendmail' element={<EmailSendPage/>}></Route> */}
           <Route path='/about' element={<AboutPage/>}></Route>
-          <Route path='/reset-password' element={<ProtectedRoute><ChangePasswordPage/></ProtectedRoute>}></Route>
-          <Route path='/new-password' element={<ProtectedRoute><SetnewPassPage/></ProtectedRoute>}></Route>
+          <Route path='/reset-password' element={<ChangePasswordPage/>}></Route>
+          <Route path='/new-password' element={<SetnewPassPage/>}></Route>
           <Route path='/user-profile' element={<ProtectedRoute><UserProfilePage/></ProtectedRoute>}></Route>
          
 
@@ -73,7 +73,7 @@ function App() {
 
 
          <Route path='*' element={<PageNot/>}></Route>
-         <Route path='/admin*' element={<PageNot/>}></Route>
+         {/* <Route path='/admin*' element={<PageNot/>}></Route> */}
           </Routes>
           </BrowserRouter>
           
