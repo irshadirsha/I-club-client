@@ -21,7 +21,7 @@ const clubName=location.state?.club;
   });
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [payment, setPayment] = useState(false); // Initialize payment state to false
+  const [payment, setPayment] = useState(false); 
 
   const openPaymentModal = () => {
     setIsPaymentModalOpen(true);
@@ -33,21 +33,21 @@ const clubName=location.state?.club;
 
   const validateName = (name) => {
     if (!name.trim()) {
-      return "Please enter your name";
+      return "Please Enter Your Name";
     }
     return "";
   };
   
   const validateReason = (reason) => {
     if (!reason.trim()) {
-      return "Please enter a specific reason for payment";
+      return "Please Enter the Specific Reason for the Payment";
     }
     return "";
   };
   
   const validateAmount = (amount) => {
     if (!amount.trim()) {
-      return "Please enter the payment amount";
+      return "Please Please Enter The Amount";
     }
     if (isNaN(Number(amount))) {
       return "Amount must be in Number";
