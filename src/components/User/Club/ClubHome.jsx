@@ -165,11 +165,11 @@ return (
     <div className="flex flex-col md:flex-row items-center">
         <div className=" md:w-6/12 md:text-left text-center py-6 md:mt-3">
             <div className="text-center md:text-start md:pl-6 pl-4 pr-8 md:ml-8 md:mt-5">
-                <h2 className="font-normal text-2xl text-black-600 mb-3">
+                <h2 className="font-normal text-2xl text-white mb-3">
                     "Unites integrity, compassion, shared values; making a positive impact on the community with unity and purposeful actions."
                 </h2>
-                <h1 className="text-4xl font-mono md:pl-8 md:text-start font-semibold mb-4">{clubData ? clubData.clubName : clubName}</h1>
-                <p className="font-medium text-lg m-4">
+                <h1 className="text-4xl font-mono md:pl-8 md:text-start text-white font-semibold mb-4">{clubData ? clubData.clubName : clubName}</h1>
+                <p className="font-medium text-white text-lg m-4">
                 {clubData?.category}
                 </p>
                 <div className="mt-4 flex justify-start items-start">

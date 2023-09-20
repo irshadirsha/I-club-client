@@ -179,12 +179,12 @@ function ClubProfileFst() {
                 <h1 className="text-5xl font-mono text-yellow-400 text-center md:pl-8 md:text-start font-semibold mb-4">{profiledata?.clubName}</h1>
             
                 {/* <p className='font-bold text-2xl font-mono p-1 text-black '>place:{profiledata?.address}</p> */}
-                <p className='text-start pl-4 block font-bold text-2xl font-mono p-1 text-black '>
+                <p className='text-start pl-4 block font-bold text-2xl font-mono p-1 text-white '>
                 place: {profiledata?.address?.split(' ').slice(0, 4).join(' ')}</p>
-                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>member:{profiledata?.members?.length}</p>
-                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>category:{profiledata?.category}</p>
-                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>register no:{profiledata?.registerNo}</p>
-                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-black '>about:{profiledata?.about}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-white '>member:{profiledata?.members?.length}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-white '>category:{profiledata?.category}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-white '>register no:{profiledata?.registerNo}</p>
+                <p className='text-start pl-4 py-0 block font-bold text-2xl font-mono p-1 text-white '>about:{profiledata?.about}</p>
       
                {(userRole ==='president' || userRole === 'secretory') && (<div className=' md:flex justify-evenly p-2 '>
                 <div className="mt-4 ">
