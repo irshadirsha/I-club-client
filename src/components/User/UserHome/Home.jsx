@@ -216,6 +216,8 @@ function Home() {
 
   </div>
   <br></br>
+  <br></br>
+  <br></br>
  
   <div className="rounded-xl text-center mx-8 mt-10  bg-gray-800">
   <p className="p-1.5   text-gray-100">
@@ -226,6 +228,7 @@ function Home() {
         )}
 
 
+  <br></br>
 <br></br>
 
 <ToastContainer/>
