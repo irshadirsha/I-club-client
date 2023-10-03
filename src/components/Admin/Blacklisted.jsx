@@ -103,14 +103,3 @@ function Blacklisted() {
 }
 
 export default Blacklisted
-
-
-
-
-
-
-
-// console.log(id)
-// const res=await adminaxios.post('/removeblacklist',{id:id})
-// console.log(res)
-// fetchdata()
