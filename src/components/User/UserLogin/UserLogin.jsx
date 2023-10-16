@@ -108,7 +108,7 @@ function UserLogin() {
   }
   return (
     <div>
-      <section className="bg-primary h-screen overflow-y-hidden">
+      <section className="bg-primary md:h-screen overflow-y-hidden">
         <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-20">
           <div className="md:flex md:gap-x-6 md:items-center mb-10">
             <div className=" pr-10 md:w-1/2 ml-10 mb-5  md:mb-0 z-10">
