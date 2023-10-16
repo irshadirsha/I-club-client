@@ -89,7 +89,7 @@ function ClubNav() {
                             </li>
                             <li>
 
-                                <a onClick={(e)=>navigate('/finance')} className="block py-3 pl-3 pr-4  rounded  md:border-0 bg-blue-700  md:hover:text-blue-700 md:p-2.5">
+                                <a onClick={(e)=>navigate('/finance')} className="block py-3 pl-3 pr-4  rounded  md:border-0 text-blue-700 md:hover:text-blue-700 md:p-2.5">
                                     Finance</a>
                             </li>
                             <li>

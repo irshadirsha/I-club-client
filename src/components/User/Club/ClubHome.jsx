@@ -160,7 +160,7 @@ return (
 <div>
 {loading && <Loader/>}
 <ClubNav state={clubName}/>
-<section className="pt-16 bg-primary">
+<section className="pt-16 bg-primary h-full sm:h-screen ">
 <div className="container mx-auto">
     <div className="flex flex-col md:flex-row items-center">
         <div className=" md:w-6/12 md:text-left text-center py-6 md:mt-3">
