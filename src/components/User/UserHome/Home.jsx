@@ -80,7 +80,7 @@ function Home() {
   };
   return (
     <>
-    <div className='body bg-primary h-full sm:h-screen'>
+    <div className=' bg-primary h-full sm:h-screen'>
     <div className='flex justify-end'>
     <div className="nav-link fw-medium p-3"  aria-current="page">
         <input
@@ -228,8 +228,6 @@ function Home() {
         )}
 
 
-  <br></br>
-<br></br>
 
 <ToastContainer/>
 </div>
