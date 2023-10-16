@@ -2,7 +2,7 @@ import React from 'react'
 
 function About() {
   return (
-    <div>
+    <div className='flex justify-center'>
           <div className="container-fluid bg-gray-200 ">
       <div className="container text-center">
         <div className='bg-primary flex justify-center items-center'>
