@@ -135,8 +135,7 @@ function CreateClub() {
     <div>
       {loading && <Loader/>}
       {/* <section className={`bg-primary overflow-y-hidden ${loading && disabled:}`}> */}
-      <section className={`bg-primary overflow-y-hidden ${loading ? 'pointer-events-none' : ''}`}>
-
+      <section className={`bg-primary h-full sm:h-screen  overflow-y-hidden ${loading ? 'pointer-events-none' : ''}`}>
         <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-6">
           <div className=" md:flex md:gap-x-6 md:items-center mb-10">
             <div className=" mt-4 md:w-1/2 md:pl-8 mb-5  md:mb-0 z-10">
