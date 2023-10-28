@@ -171,7 +171,9 @@ function UserSignup() {
   }
   return (
     <div>
-      <section className="bg-primary h-full sm:h-screen  overflow-y-hidden md:pr-8">
+      {/* <section className="bg-primary h-full sm:h-screen  overflow-y-hidden md:pr-8">
+       */}
+       <section className="bg-primary overflow-y-hidden  md:pr-8">
         <div className="container px-4 md:px-5 text-center md:text-left my-5 pt-10">
           <div className=" md:flex md:gap-x-6 md:items-center mb-10">
             <div className=" pr-12 md:w-1/2 ml-10  pt-2  mb-5 md:mb-0 z-10">
