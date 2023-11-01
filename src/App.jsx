@@ -29,6 +29,7 @@ import Loader from './components/Loader/Loader';
 import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
 import PageNot from './components/PageNot';
 import './App.css'
+import ClubViewPage from './pages/user/ClubViewPage';
 function App() {
   
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path='/' element={<UserHomePage/>}></Route>
           <Route path='/signup' element={<UserSignupPage/>}></Route>
           <Route path='/login' element={<UserLoginPage/>}></Route>
+          <Route path='/club-list' element={<ClubViewPage/>}></Route>
           {/* <Route path='/sendmail' element={<EmailSendPage/>}></Route> */}
           <Route path='/about' element={<AboutPage/>}></Route>
           <Route path='/reset-password' element={<ChangePasswordPage/>}></Route>
